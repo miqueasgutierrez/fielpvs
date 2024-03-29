@@ -38,8 +38,8 @@
         <th class="sorting sorting_asc text-center">CEDULA</th>
         <th class="sorting sorting_asc text-center">NOMBRES</th>
         <th class="sorting sorting_asc text-center">APELLIDOS</th>
-        <th class="sorting sorting_asc text-center">PERFIL</th>
-        <th class="sorting sorting_asc text-center">ACCIONES</th>
+        <th class="sorting sorting_asc text-center">IMAGEN</th>
+        <th class="sorting sorting_asc text-center ">ACCIONES</th>
       </tr>
     </thead>
     <tbody>
