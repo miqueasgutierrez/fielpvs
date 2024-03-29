@@ -6,8 +6,20 @@
 @section('content')
     <x-app-layout>
     
+<div class="col-lg-6 col-12 mx-auto">
+                <!-- Si todos los campos están validados, mostramos un mensaje de EXITO -->
+                @if(Session::has('success'))
+                    <div class="alert alert-success text-center">
+                        {{Session::get('success')}}
+                    </div>
+                @endif   
+
+            </div>
+
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+
+                
                         <div class="grid grid-cols-1">
       <br>
        <br>

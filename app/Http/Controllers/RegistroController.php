@@ -21,7 +21,7 @@ class RegistroController extends Controller
 
     {
            
-        $registros = Registro::paginate(5);
+        $registros = Registro::paginate(1000);
          return view('registros.index', compact('registros'));
 
     }
@@ -47,7 +47,7 @@ class RegistroController extends Controller
     {
       
         $request->validate([
-            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'required|image|mimes:jpeg,png,svg|max:1024'
+            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','cargo' => 'required','ministerio' => 'required','dependencia' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','ministro_ordenado' => 'required','fecha_uncion' => 'nullable'
         ]);
 
          $registro = $request->all();
@@ -61,9 +61,9 @@ class RegistroController extends Controller
          
          Registro::create($registro);
           
-          return redirect()->route('registros.index');
-       
+           return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
 
+    
     }
 
     /**
@@ -115,7 +115,8 @@ class RegistroController extends Controller
          $registro->update($reg);
 
 
-        return redirect()->route('registros.index');
+        return redirect()->route('registros.index')->with('success', 'Registro Actualizado Exitosamente.');
+     
     }
 
     /**
