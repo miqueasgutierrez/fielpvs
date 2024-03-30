@@ -39,7 +39,7 @@
 
 								@error('cedula')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de Cedula No puede estar vacio</strong>
+                                    <strong>El campo de Cedula No puede estar vacio ni duplicado</strong>
                                 </span>
                                  @enderror
 
@@ -385,19 +385,6 @@
 </x-app-layout>
 
 <!-- Script para ver la imagen antes de CREAR UN NUEVO PRODUCTO -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
