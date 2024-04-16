@@ -5,6 +5,12 @@
 
 
 @section('content')
+
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
   
 
 <x-app-layout>
@@ -180,16 +186,28 @@
 
 
 
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+					<div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+
+<div class="grid grid-cols-1">
+
+<label for="ministro" class="block mb-2">Tipo de ministro:</label>
+  <select id="ministro" onchange="toggleSelect()" class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-500">
+  	<option value="">SELECCIONES UNA OPCION</option>
+    <option value="ordenado">ORDENADO</option>
+    <option value="no_ordenado">NO ORDENADO</option>
+  </select>
+
+</div>
+							<div id="select-container" class="hidden">
 						<div class="grid grid-cols-1">
-							<label for="exampleInputEmail1">MINISTERIO:</label>
+						
+							<label for="exampleInputEmail1">CATEGORIA:</label>
 							<select type="text" class="form-control   @error('ministerio') is-invalid @enderror" value="{{ old('ministerio') }}"  name="ministerio">
-	   <option value="">SELECCIONES UNA OPCION</option>
-	   <option value="PASTOR">PASTOR</option>
-	   <option value="EVANGELISTA">EVANGELISTA</option>
-	   <option value="PROFETA">PROFETA</option>
-	   <option value="MAESTRO">MAESTRO</option>
-	   <option value="NINGUNO">NINGUNO</option>
+	   <option value="" >SELECCIONES UNA OPCION</option>
+	  <option value="PASTOR">PASTOR</option>
+    <option value="PASTOR MISIONERO">PASTOR MISIONERO</option>
+    <option value="EVANGELISTA">EVANGELISTA</option>
+    <option value="MAESTRO">MAESTRO</option>
     </select>
      @error('ministerio')
                                 <span class="invalid-feedback" role="alert">
@@ -197,6 +215,31 @@
                                 </span>
                             @enderror
 						</div>
+							
+</div>
+							<div id="otro-select" class="hidden">
+								<div class="grid grid-cols-1">
+  <label for="otro-tipo">CATEGORIA:</label>
+  <select id="otro-tipo" class="form-control" >
+    <option value="Obrero Pastor">Obrero Pastor (el que está encargado de un campo Blanco)</option>
+    <option value="Predicador de circuito">Predicador (a) de circuito</option>
+    <option value="Predicador nacional">Predicador (a) nacional</option>
+    <option value="Misionera Reconocida">Misionera Reconocida</option>
+    <option value="Docente Titular">Docente Titular</option>
+    <option value="Docente a Prueba">Docente a Prueba</option>
+    <option value="Directivo de Jóvenes">Directivo de Jóvenes</option>
+    <option value="Directivo de Damas">Directivo de Damas</option>
+    <option value="Directivo de Evangelismo">Directivo de Evangelismo</option>
+    <option value="Directivo de Intercesión">Directivo de Intercesión</option>
+    <option value="Directivo de Escuela Dominical">Directivo de Escuela Dominical</option>
+    <option value="BESF">BESF (Jerarquía correspondiente)</option>
+    <option value="Coordinador de Zona">Coordinador de Zona</option>
+  </select>
+
+</div>
+
+</div>
+
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">DEPENDENCIA:</label>
 							<select type="text" class="form-control   @error('dependencia') is-invalid @enderror" value="{{ old('dependencia') }}"  name="dependencia">
@@ -256,7 +299,8 @@
                                     <strong>El campo de iglesia no puede estar vacio</strong>
                                 </span>
                             @enderror
-
+                      
+                       
 						</div>
 					</div>
 
@@ -397,6 +441,21 @@
 			  reader.readAsDataURL(this.files[0]); 
 		   });
 	    });
+
+
+  function toggleSelect() {
+  var ministro = document.getElementById("ministro").value;
+  var selectContainer = document.getElementById("select-container");
+  var otroSelect = document.getElementById("otro-select");
+
+  if (ministro === "ordenado") {
+    selectContainer.classList.remove("hidden");
+    otroSelect.classList.add("hidden");
+  } else {
+    selectContainer.classList.add("hidden");
+    otroSelect.classList.remove("hidden");
+  }
+}
 	
 </script>
 
