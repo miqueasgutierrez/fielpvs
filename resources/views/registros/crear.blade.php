@@ -191,10 +191,10 @@
 <div class="grid grid-cols-1">
 
 <label for="ministro" class="block mb-2">Tipo de ministro:</label>
-  <select id="ministro" onchange="toggleSelect()" class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-500">
+  <select id="ministro"  onchange="toggleSelect()" class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-500"  name="ministro_ordenado" >
   	<option value="">SELECCIONES UNA OPCION</option>
-    <option value="ordenado">ORDENADO</option>
-    <option value="no_ordenado">NO ORDENADO</option>
+    <option value="si">ORDENADO</option>
+    <option value="no">NO ORDENADO</option>
   </select>
 
 </div>
@@ -202,7 +202,7 @@
 						<div class="grid grid-cols-1">
 						
 							<label for="exampleInputEmail1">CATEGORIA:</label>
-							<select type="text" class="form-control   @error('ministerio') is-invalid @enderror" value="{{ old('ministerio') }}"  name="ministerio">
+							<select id="select-1" type="text" class="form-control   @error('ministerio') is-invalid @enderror" value="{{ old('ministerio') }}"  name="ministerio">
 	   <option value="" >SELECCIONES UNA OPCION</option>
 	  <option value="PASTOR">PASTOR</option>
     <option value="PASTOR MISIONERO">PASTOR MISIONERO</option>
@@ -220,7 +220,7 @@
 							<div id="otro-select" class="hidden">
 								<div class="grid grid-cols-1">
   <label for="otro-tipo">CATEGORIA:</label>
-  <select id="otro-tipo" class="form-control" >
+  <select id="select-2" class="form-control" name="ministerio" >
     <option value="Obrero Pastor">Obrero Pastor (el que está encargado de un campo Blanco)</option>
     <option value="Predicador de circuito">Predicador (a) de circuito</option>
     <option value="Predicador nacional">Predicador (a) nacional</option>
@@ -290,7 +290,27 @@
    
 						</div>
 
+
+
 						<div class="grid grid-cols-1">
+
+
+							<label for="exampleInputEmail1">Fecha de Uncion:</label>
+							<div class="flex items-center space-x-4">
+								<input type="date" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_uncion" placeholder="ej. 20/10/1980"  >
+
+							</div>
+
+						</div>
+
+						
+					</div>
+
+
+
+					<div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+						
+                         <div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">IGLESIA:</label>
 							<input type="text" class="form-control   @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}"  id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo"   >
 
@@ -302,12 +322,10 @@
                       
                        
 						</div>
-					</div>
 
-
-
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 						<div class="grid grid-cols-1">
+
+							
 							<label for="exampleInputEmail1">PASTOR:</label>
 							<input type="text" class="form-control   @error('pastor') is-invalid @enderror" value="{{ old('pastor') }}" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias"   >
 
@@ -342,7 +360,7 @@
 
 					</div>
 
-					<div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">direccion:</label>
 							<input type="text" class="form-control   @error('direccion') is-invalid @enderror" value="{{ old('direccion') }}"  id="direccion" name="direccion" placeholder=""   >
@@ -381,39 +399,6 @@
 						</div>
 
 
-						<div class="grid grid-cols-1">
-
-
-							<label for="exampleInputEmail1">¿Es un Ministro Ordenado?:</label>
-							<div class="flex items-center space-x-4">
-								<input type="radio" id="ministro_odenado" name="ministro_ordenado" value="si"  class="@error('ministro_ordenado') is-invalid @enderror" {{ old('ministro_ordenado') == 'si' ? 'checked' : '' }}>
-								<label for="ministro_odenado">Si</label>
-
-								<input type="radio" id="ministro_odenado" name="ministro_ordenado" value="no" class="@error('ministro_ordenado') is-invalid @enderror" {{ old('ministro_ordenado') == 'no' ? 'checked' : '' }}>
-								<label for="ministro_odenado">No</label>
-
-
-								 @error('ministro_ordenado')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de Ministro Ordenado  no puede estar vacio</strong>
-                                </span>
-                            @enderror
-
-							</div>
-
-						</div>
-
-
-						<div class="grid grid-cols-1">
-
-
-							<label for="exampleInputEmail1">Fecha de Uncion:</label>
-							<div class="flex items-center space-x-4">
-								<input type="date" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_uncion" placeholder="ej. 20/10/1980"  >
-
-							</div>
-
-						</div>
 
 					</div>
 
@@ -448,7 +433,7 @@
   var selectContainer = document.getElementById("select-container");
   var otroSelect = document.getElementById("otro-select");
 
-  if (ministro === "ordenado") {
+  if (ministro === "si") {
     selectContainer.classList.remove("hidden");
     otroSelect.classList.add("hidden");
   } else {
@@ -456,6 +441,18 @@
     otroSelect.classList.remove("hidden");
   }
 }
+
+
+
+
+ document.getElementById('select-1').addEventListener('change', function() {
+        document.getElementById('select-2').disabled = this.value !== '';
+    });
+
+    document.getElementById('select-2').addEventListener('change', function() {
+        document.getElementById('select-1').disabled = this.value !== '';
+    });
+
 	
 </script>
 
