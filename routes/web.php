@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\RegistrosImportController;
+use App\Http\Controllers\DependenciaController;
+use App\Http\Controllers\CargoController;
+use App\Http\Controllers\CargoDependenciaController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +40,33 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/dependencias', DependenciaController::class);
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/cargos', CargoController::class);
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/cargosdependencias', CargoDependenciaController::class);
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+Route::delete('/cargosdependencias/{id1}/{id2}', [CargoDependenciaController::class, 'destroy'])->name('cargosdependencias.destroy');
+
 
 Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');
 

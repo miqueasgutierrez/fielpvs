@@ -13,7 +13,6 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Basic-Configuration
     |
     */
-
     'title' => 'CONEF',
     'title_prefix' => '',
     'title_postfix' => '',
@@ -331,6 +330,29 @@ return [
             
         ],
 
+         [
+            'text' => 'Dependencias',
+            'icon' => 'fas fa-sitemap',
+            'submenu' => [
+                [
+                    'text' => 'Listado de Dependencias',
+                    'url' => 'dependencias',
+                ],
+
+
+                [
+                    'text' => 'Cargos de Dependencias',
+                    'url' => 'cargosdependencias',
+                ],
+
+                [
+                    'text' => 'Cargos',
+                    'url' => 'cargos',
+                ],
+
+            ],
+        ],
+
         [
             'text' => 'Elecciones',
             'url' => 'elecciones',
@@ -359,6 +381,7 @@ return [
         ],
         [
             'text' => 'multilevel',
+            'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-share',
             'submenu' => [
                 [

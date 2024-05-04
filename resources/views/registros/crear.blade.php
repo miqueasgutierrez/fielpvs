@@ -173,7 +173,30 @@
 
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">CARGO ACTUAL:</label>
-							<input type="text" class="form-control   @error('cargo') is-invalid @enderror" value="{{ old('cargo') }}"   name="cargo" placeholder="ej. Presidente, Vocal, Pastor"   >
+
+                            <label for="exampleInputEmail2">CARGOS A ELEGIR SEGÚN LAS DEPENDENCIAS:</label>
+
+                              <label for="exampleInputEmail2">1-SONADAM – SONAJOV – INTERCESION - EVANGELISMO Y MISIONES:</label>
+							
+                            <label for="cargos">Cargos:</label>
+        <div id="cargos">
+            <div>
+                <input type="checkbox" id="presidente" name="cargo" value="Presidente">
+                <label for="presidente">Presidente</label>
+            </div>
+            <div>
+                <input type="checkbox" id="vicepresidente" name="cargo" value="Vicepresidente">
+                <label for="vicepresidente">Vicepresidente</label>
+            </div>
+            <!-- Agrega el resto de los cargos como casillas de verificación -->
+            <!-- Por ejemplo: -->
+            <!-- <div>
+                <input type="checkbox" id="secretario" name="cargo" value="Secretario(a)">
+                <label for="secretario">Secretario(a)</label>
+            </div> -->
+        </div>
+
+
 
 							@error('cargo')
                                 <span class="invalid-feedback" role="alert">
