@@ -46,14 +46,18 @@ class CargoDependenciaController extends Controller
     {
        
        $request->validate([
-            'id_dependencia' => 'required','id_cargo' => 'required' 
-        ]);
+        'id_dependencia' => 'required|exists:dependencias,id',
+        'id_cargo' => 'required|exists:cargos,id', 
+    ]);
 
-         $dependenciacargo = $request->all();
-         
-         dependencia_cargo::create($dependenciacargo);
-          
-           return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
+    // Obtener los datos del formulario
+    $data = $request->only(['id_dependencia', 'id_cargo']);
+    
+    // Usar firstOrCreate para evitar duplicados
+    dependencia_cargo::firstOrCreate($data);
+
+    // Redirigir con un mensaje de éxito
+    return back()->with('success', 'Registro Realizado Exitosamente.');
 
 
     }

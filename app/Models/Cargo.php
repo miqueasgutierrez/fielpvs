@@ -14,7 +14,7 @@ class Cargo extends Model
 
      public function dependencias()
     {
-        return $this->belongsToMany(Dependencia::class, 'dependencia_cargo')->withPivot('id_dependencia');
+         return $this->belongsToMany(Dependencia::class, 'dependencia_cargos', 'id_cargo', 'id_dependencia');
     }
      
 }

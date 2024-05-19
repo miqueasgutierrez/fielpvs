@@ -6,6 +6,13 @@ use App\Models\Registro;
 
 use Illuminate\Http\Request;
 
+use App\Models\dependencia_cargo;
+
+use App\Models\Dependencia;
+
+use App\Models\Cargo;
+
+
 class RegistroController extends Controller
 {
     /**
@@ -28,8 +35,16 @@ class RegistroController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     {
-        return view('registros.crear');
+
+        $dependencias = Dependencia::with('cargos')->get();
+   
+
+         /*$dependencias = Dependencia::paginate(1000);
+           $cargos = Cargo::paginate(1000); **/
+           
+        return view('registros.crear', compact('dependencias'));
        
     }
 

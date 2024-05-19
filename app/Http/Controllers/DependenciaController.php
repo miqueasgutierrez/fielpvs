@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Dependencia;
+use App\Models\dependencia_cargo;
+
+use App\Models\Cargo;
 
 class DependenciaController extends Controller
 {
@@ -50,6 +53,19 @@ class DependenciaController extends Controller
           
            return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
     }
+
+
+    public function getCargos($dependencia_id)
+    {
+        // Obtener los cargos asociados a la dependencia
+        $cargos = Cargo::whereHas('dependencias', function($query) use ($dependencia_id) {
+            $query->where('dependencias.id', $dependencia_id);
+        })->get();
+
+        // Retornar los cargos como respuesta JSON
+        return response()->json($cargos);
+    }
+
 
     /**
      * Display the specified resource.

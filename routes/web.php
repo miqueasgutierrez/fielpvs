@@ -70,6 +70,11 @@ Route::delete('/cargosdependencias/{id1}/{id2}', [CargoDependenciaController::cl
 
 Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');
 
+Route::get('/cargos/{dependencia_id}', [DependenciaController::class, 'getCargos']);
+
+
+
+
 
 
 

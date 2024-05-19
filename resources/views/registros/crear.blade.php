@@ -171,42 +171,40 @@
                             @enderror
 						</div>
 
+
+
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">CARGO ACTUAL:</label>
 
-                            <label for="exampleInputEmail2">CARGOS A ELEGIR SEGÚN LAS DEPENDENCIAS:</label>
 
-                              <label for="exampleInputEmail2">1-SONADAM – SONAJOV – INTERCESION - EVANGELISMO Y MISIONES:</label>
-							
-                            <label for="cargos">Cargos:</label>
-        <div id="cargos">
-            <div>
-                <input type="checkbox" id="presidente" name="cargo" value="Presidente">
-                <label for="presidente">Presidente</label>
-            </div>
-            <div>
-                <input type="checkbox" id="vicepresidente" name="cargo" value="Vicepresidente">
-                <label for="vicepresidente">Vicepresidente</label>
-            </div>
-            <!-- Agrega el resto de los cargos como casillas de verificación -->
-            <!-- Por ejemplo: -->
-            <!-- <div>
-                <input type="checkbox" id="secretario" name="cargo" value="Secretario(a)">
-                <label for="secretario">Secretario(a)</label>
-            </div> -->
+							<div>
+        <label for="dependencia">Dependencia:</label>
+        <select id="dependencia" name="dependencia">
+
+
+            @foreach($dependencias as $dependencia)
+                <option value="{{ $dependencia->id }}">{{ $dependencia->nombre }}</option>
+            @endforeach  
+           
+        </select>
+    </div>
+    
+
+    <div id="cargos">
+            @foreach($dependencias as $dependencia)
+                <div id="{{ $dependencia->id }}" class="dependencia">
+                    <label>Cargos {{ $dependencia->nombre }}:</label>
+                    @foreach($dependencia->cargos as $cargo)
+                        <div>
+                            <input type="checkbox" id="cargo{{ $cargo->id }}" name="cargo[]" value="{{ $cargo->id }}">
+                            <label for="cargo{{ $cargo->id }}">{{ $cargo->nombre }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
-
-
-
-							@error('cargo')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de cargo no puede estar vacio</strong>
-                                </span>
-                            @enderror
-
-						</div>
-					</div>
-
+    </div>
+                   </div>
 
 
 					<div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
@@ -477,6 +475,25 @@
     });
 
 	
+</script>
+
+
+<script>
+    // Función para mostrar los campos de acuerdo a la dependencia seleccionada
+    function mostrarCargos() {
+        var dependenciaSeleccionada = document.getElementById('dependencia').value;
+        var dependencias = document.getElementsByClassName('dependencia');
+        for (var i = 0; i < dependencias.length; i++) {
+            dependencias[i].style.display = 'none';
+        }
+        document.getElementById(dependenciaSeleccionada.toLowerCase()).style.display = 'block';
+    }
+
+    // Evento change para el select de dependencia
+    document.getElementById('dependencia').addEventListener('change', mostrarCargos);
+
+    // Llamar a la función al cargar la página para mostrar los cargos iniciales
+    mostrarCargos();
 </script>
 
 
