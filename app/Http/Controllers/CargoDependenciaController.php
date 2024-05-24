@@ -43,6 +43,9 @@ class CargoDependenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
+
+    dd($request);
     {
        
        $request->validate([

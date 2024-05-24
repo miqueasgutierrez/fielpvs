@@ -13,6 +13,15 @@
 </style>
   
 
+  <style>
+        .dependencia-item {
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+
 <x-app-layout>
 	<x-slot name="header">
 		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -172,146 +181,139 @@
 						</div>
 
 
+<div class="grid grid-cols-1">
+   <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia :</label>
+<button id="openModalBtn" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button>
 
-						<div class="grid grid-cols-1">
-							<label for="exampleInputEmail1">CARGO ACTUAL:</label>
+	</div>
+
+						</div>
 
 
-							<div>
-        <label for="dependencia">Dependencia:</label>
-        <select id="dependencia" name="dependencia">
 
 
-            @foreach($dependencias as $dependencia)
-                <option value="{{ $dependencia->id }}">{{ $dependencia->nombre }}</option>
-            @endforeach  
-           
-        </select>
+
+    <!-- Modal -->
+    <div id="myModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+            <div class="grid grid-cols-1">
+
+            <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia :</label>
+    <div id="cargos-dependencias-lista">
+        @foreach($cargosDependencias as $cargoDependencia)
+            <div class="dependencia-item" data-dependencia-id="{{ $cargoDependencia->dependencia->id }}">
+                <input type="checkbox" id="cargo_dependencia{{ $cargoDependencia->id }}" name="cargo_dependencia[]" value="{{ $cargoDependencia->id }}">
+                <label for="dependencia_cargo{{ $cargoDependencia->id }}">{{ $cargoDependencia->cargo->nombre }} en {{ $cargoDependencia->dependencia->nombre}}</label>
+            </div>
+        @endforeach
     </div>
-    
-
-    <div id="cargos">
-            @foreach($dependencias as $dependencia)
-                <div id="{{ $dependencia->id }}" class="dependencia">
-                    <label>Cargos {{ $dependencia->nombre }}:</label>
-                    @foreach($dependencia->cargos as $cargo)
-                        <div>
-                            <input type="checkbox" id="cargo{{ $cargo->id }}" name="cargo[]" value="{{ $cargo->id }}">
-                            <label for="cargo{{ $cargo->id }}">{{ $cargo->nombre }}</label>
-                        </div>
-                    @endforeach
-                </div>
-            @endforeach
+</div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button id="closeModalBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Aceptar
+                </button>
+            </div>
         </div>
     </div>
-                   </div>
 
 
-					<div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 
 <div class="grid grid-cols-1">
 
 <label for="ministro" class="block mb-2">Tipo de ministro:</label>
-  <select id="ministro"  onchange="toggleSelect()" class="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-blue-500"  name="ministro_ordenado" >
-  	<option value="">SELECCIONES UNA OPCION</option>
-    <option value="si">ORDENADO</option>
-    <option value="no">NO ORDENADO</option>
-  </select>
 
-</div>
-							<div id="select-container" class="hidden">
-						<div class="grid grid-cols-1">
-						
-							<label for="exampleInputEmail1">CATEGORIA:</label>
-							<select id="select-1" type="text" class="form-control   @error('ministerio') is-invalid @enderror" value="{{ old('ministerio') }}"  name="ministerio">
-	   <option value="" >SELECCIONES UNA OPCION</option>
-	  <option value="PASTOR">PASTOR</option>
-    <option value="PASTOR MISIONERO">PASTOR MISIONERO</option>
-    <option value="EVANGELISTA">EVANGELISTA</option>
-    <option value="MAESTRO">MAESTRO</option>
-    </select>
-     @error('ministerio')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de ministerio no puede estar vacio</strong>
-                                </span>
-                            @enderror
-						</div>
-							
-</div>
-							<div id="otro-select" class="hidden">
-								<div class="grid grid-cols-1">
-  <label for="otro-tipo">CATEGORIA:</label>
-  <select id="select-2" class="form-control" name="ministerio" >
-    <option value="Obrero Pastor">Obrero Pastor (el que está encargado de un campo Blanco)</option>
-    <option value="Predicador de circuito">Predicador (a) de circuito</option>
-    <option value="Predicador nacional">Predicador (a) nacional</option>
-    <option value="Misionera Reconocida">Misionera Reconocida</option>
-    <option value="Docente Titular">Docente Titular</option>
-    <option value="Docente a Prueba">Docente a Prueba</option>
-    <option value="Directivo de Jóvenes">Directivo de Jóvenes</option>
-    <option value="Directivo de Damas">Directivo de Damas</option>
-    <option value="Directivo de Evangelismo">Directivo de Evangelismo</option>
-    <option value="Directivo de Intercesión">Directivo de Intercesión</option>
-    <option value="Directivo de Escuela Dominical">Directivo de Escuela Dominical</option>
-    <option value="BESF">BESF (Jerarquía correspondiente)</option>
-    <option value="Coordinador de Zona">Coordinador de Zona</option>
-  </select>
-
+<button id="openModalBtn2" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button> 
 </div>
 
+    <div id="myModal2" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+            <div class="grid grid-cols-1">
+
+            <label for="">MINISTRO ORDENADO :</label>
+    <div id="">
+
+           
+                <input type="checkbox" id="" name="ministerio[]" value="PASTOR">
+                <label for=""> PASTOR</label>
+
+                 <input type="checkbox" id="" name="ministerio[]" value="PASTOR MISIONERO">
+                <label for="">PASTOR MISIONERO</label>
+                <input type="checkbox" id="" name="ministerio[]" value="EVANGELISTA">
+                <label for="">EVANGELISTA</label>
+                <input type="checkbox" id="" name="ministerio[]" value="MAESTRO">
+                <label for="">MAESTRO</label>
+ 
+ <label for="">MINISTRO NO ORDENADO :</label>
+
+ <label>
+    <input type="checkbox" id="obrero_pastor" name="ministerio[]" value="Obrero Pastor">
+    Obrero Pastor (el que está encargado de un campo Blanco)
+</label><br>
+<label>
+    <input type="checkbox" id="predicador_circuito" name="ministerio[]" value="Predicador de circuito">
+    Predicador (a) de circuito
+</label><br>
+<label>
+    <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador nacional">
+    Predicador (a) nacional
+</label><br>
+<label>
+    <input type="checkbox" id="misionera_reconocida" name="ministerio[]" value="Misionera Reconocida">
+    Misionera Reconocida
+</label><br>
+<label>
+    <input type="checkbox" id="docente_titular" name="ministerio[]" value="Docente Titular">
+    Docente Titular
+</label><br>
+<label>
+    <input type="checkbox" id="docente_prueba" name="ministerio[]" value="Docente a Prueba">
+    Docente a Prueba
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_jovenes" name="ministerio[]" value="Directivo de Jóvenes">
+    Directivo de Jóvenes
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_damas" name="ministerio[]" value="Directivo de Damas">
+    Directivo de Damas
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_evangelismo" name="ministerio[]" value="Directivo de Evangelismo">
+    Directivo de Evangelismo
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_intercesion" name="ministerio[]" value="Directivo de Intercesión">
+    Directivo de Intercesión
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_escuela_dominical" name="ministerio[]" value="Directivo de Escuela Dominical">
+    Directivo de Escuela Dominical
+</label><br>
+<label>
+    <input type="checkbox" id="besf" name="ministerio[]" value="BESF">
+    BESF (Jerarquía correspondiente)
+</label><br>
+<label>
+    <input type="checkbox" id="coordinador_zona" name="ministerio[]" value="Coordinador de Zona">
+    Coordinador de Zona
+</label><br>
+
+
+    
+    
+ 
+    </div>
 </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button id="closeModalBtn2" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
 
-						<div class="grid grid-cols-1">
-							<label for="exampleInputEmail1">DEPENDENCIA:</label>
-							<select type="text" class="form-control   @error('dependencia') is-invalid @enderror" value="{{ old('dependencia') }}"  name="dependencia">
-	   <option value="">SELECCIONES UNA OPCION</option>
-	   <option value="ANCIANO NACIONAL">ANCIANO NACIONAL</option>
-	   <option value="ANCIANO REGIONAL">ANCIANO REGIONAL</option>
-	   <option value="PRESBITERIO NACIONAL">PRESBITERIO NACIONAL</option>
-	   <option value="PRESBITERIO REGIONAL">PRESBITERIO REGIONAL</option>
-	   <option value="DAMAS NACIONAL">DAMAS NACIONAL</option>
-	   <option value="DAMAS REGIONAL">DAMAS REGIONAL</option>
-	   <option value="DAMAS ZONAL">DAMAS ZONAL</option>
-	   <option value="DAMAS LOCAL">DAMAS LOCAL</option>
-	   <option value="JÓVENES NACIONAL">JÓVENES NACIONAL</option>
-	   <option value="JÓVENES REGIONAL">JÓVENES REGIONAL</option>
-	   <option value="JOVENES ZONAL">JOVENES ZONAL</option>
-	   <option value="JOVENES LOCAL">JOVENES LOCAL</option>
-	   <option value="EVANGELISMO NACIONAL">EVANGELISMO NACIONAL</option>
-	   <option value="EVANGELISMO REGIONAL">EVANGELISMO REGIONAL</option>
-	   <option value="EVANGELISMO ZONAL">EVANGELISMO ZONAL</option>
-	   <option value="EVANGELISMO LOCAL">EVANGELISMO LOCAL</option>
-	   <option value="INTERCESION NACIONAL">INTERCESION NACIONAL</option>
-	   <option value="INTERCESION REGIONAL">INTERCESION REGIONAL</option>
-	   <option value="INTERCESION ZONAL">INTERCESION ZONAL</option>
-	   <option value="INTERCESION LOCAL">INTERCESION LOCAL</option>
-	   <option value="IBF NACIONAL">IBF NACIONAL</option>
-	   <option value="IBF REGIONAL">IBF REGIONAL</option>
-	   <option value="IBF ZONAL">IBF ZONAL</option>
-	   <option value="IBF LOCAL">IBF LOCAL</option>
-	   <option value="ESCUELA DOMINICAL NACIONAL">ESCUELA DOMINICAL NACIONAL</option>
-	   <option value="ESCUELA DOMINICAL REGIONAL">ESCUELA DOMINICAL REGIONAL</option>
-	   <option value="ESCUELA DOMINICAL ZONAL">ESCUELA DOMINICAL ZONAL</option>
-	   <option value="ESCUELA DOMINICAL LOCAL">ESCUELA DOMINICAL LOCAL</option>
-	   <option value="BRIGADA NACIONAL">BRIGADA NACIONAL</option>
-	   <option value="BRIGADA REGIONAL">BRIGADA REGIONAL</option>
-	   <option value="BRIGADA ZONA">BRIGADA ZONAL</option>
-	   <option value="BRIGADA LOCAL">BRIGADA LOCAL</option>
-	   <option value="CONEF NACIONAL">CONEF NACIONAL</option>
-	   <option value="CONEF REGIONAL">CONEF REGIONAL</option>
-	   <option value="CONEF ZONAL">CONEF ZONAL</option>
-    </select>
-
-     @error('dependencia')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de dependencia no puede estar vacio</strong>
-                                </span>
-                            @enderror
-
-   
-						</div>
-
-
+					
 
 						<div class="grid grid-cols-1">
 
@@ -324,14 +326,8 @@
 
 						</div>
 
-						
-					</div>
 
-
-
-					<div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
-						
-                         <div class="grid grid-cols-1">
+						 <div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">IGLESIA:</label>
 							<input type="text" class="form-control   @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}"  id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo"   >
 
@@ -343,6 +339,15 @@
                       
                        
 						</div>
+
+						
+					</div>
+
+
+
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+						
+                        
 
 						<div class="grid grid-cols-1">
 
@@ -479,23 +484,96 @@
 
 
 <script>
-    // Función para mostrar los campos de acuerdo a la dependencia seleccionada
-    function mostrarCargos() {
-        var dependenciaSeleccionada = document.getElementById('dependencia').value;
-        var dependencias = document.getElementsByClassName('dependencia');
-        for (var i = 0; i < dependencias.length; i++) {
-            dependencias[i].style.display = 'none';
-        }
-        document.getElementById(dependenciaSeleccionada.toLowerCase()).style.display = 'block';
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const dependenciaCheckboxes = document.querySelectorAll('.dependencia-checkbox');
+    const cargosDivs = document.querySelectorAll('.dependencia-cargos');
 
-    // Evento change para el select de dependencia
-    document.getElementById('dependencia').addEventListener('change', mostrarCargos);
+    dependenciaCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const divId = 'dependencia-' + this.value;
+            const div = document.getElementById(divId);
 
-    // Llamar a la función al cargar la página para mostrar los cargos iniciales
-    mostrarCargos();
+            if (this.checked) {
+                div.style.display = 'block';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+    });
+});
 </script>
 
+
+
+ <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const colors = [
+                '#FF5733', '#056C0D', '#3357FF', '#FF33A8', '#FFBD33',
+                '#33FFBD', '#A833FF', '#FF5733', '#FF33A8', '#33A8FF'
+            ];
+
+            const usedColors = {};
+
+            document.querySelectorAll('.dependencia-item').forEach(item => {
+                const dependenciaId = item.getAttribute('data-dependencia-id');
+
+                if (!usedColors[dependenciaId]) {
+                    usedColors[dependenciaId] = colors[Object.keys(usedColors).length % colors.length];
+                }
+
+                item.style.backgroundColor = usedColors[dependenciaId];
+            });
+        });
+    </script>
+
+
+   <script>
+        // JavaScript to handle modal open and close
+        const openModalBtn2 = document.getElementById('openModalBtn2');
+        const closeModalBtn2 = document.getElementById('closeModalBtn2');
+        const myModal2 = document.getElementById('myModal2');
+
+        openModalBtn2.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal2.classList.remove('hidden');
+        });
+
+        closeModalBtn2.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal2.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == myModal2) {
+                myModal2.classList.add('hidden');
+            }
+        });
+    </script>
+
+
+
+    <script>
+        // JavaScript to handle modal open and close
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const myModal = document.getElementById('myModal');
+
+        openModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == myModal) {
+                myModal.classList.add('hidden');
+            }
+        });
+    </script>
 
 @stop
 

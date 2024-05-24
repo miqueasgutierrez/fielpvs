@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('dependencia_cargo', function (Blueprint $table) {
+         Schema::create('registro_dependencia_cargo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_dependencia')->constrained('dependencias');
-            $table->foreignId('id_cargo')->constrained('cargos');
-            $table->primary(['id_dependencia', 'id_cargo']);
+
+            $table->foreignId('id_registro')->constrained('registros');
+            
+            $table->foreignId('id_dependencia_cargo')->constrained('dependencia_cargos');
+
             $table->timestamps();
-        });
+           
     }
 
     /**
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dependencia_cargo');
+        Schema::dropIfExists('registro_dependencia_cargo');
     }
 };

@@ -12,6 +12,10 @@ use App\Models\Dependencia;
 
 use App\Models\Cargo;
 
+use App\Models\CargoActual;
+
+use App\Models\RegistroDependenciaCargo;
+
 
 class RegistroController extends Controller
 {
@@ -38,13 +42,17 @@ class RegistroController extends Controller
 
     {
 
-        $dependencias = Dependencia::with('cargos')->get();
-   
 
-         /*$dependencias = Dependencia::paginate(1000);
-           $cargos = Cargo::paginate(1000); **/
+       $cargosDependencias = dependencia_cargo::with(['cargo', 'dependencia'])
+
+        ->join('dependencias', 'dependencia_cargos.id_dependencia', '=', 'dependencias.id')
+            ->orderBy('dependencias.nombre')
+            ->select('dependencia_cargos.*') 
+            ->get();
+
+      
            
-        return view('registros.crear', compact('dependencias'));
+        return view('registros.crear', compact('cargosDependencias'));
        
     }
 
@@ -56,10 +64,14 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-      
+
+  
+ //dd($request);
+
         $request->validate([
-            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','cargo' => 'required','ministerio' => 'required','dependencia' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','ministro_ordenado' => 'required','fecha_uncion' => 'nullable'
+            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','ministerio' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','ministro_ordenado' => 'required','fecha_uncion' => 'nullable'
         ]);
+
 
          $registro = $request->all();
 
@@ -70,9 +82,28 @@ class RegistroController extends Controller
              $registro['imagen'] = "$imagenRegistro";             
          }
          
-         Registro::create($registro);
+
+
+         $nuevoRegistro = Registro::create($registro);
+         
+
+
+         if ($request->has('cargo_dependencia')) {
+        foreach ($request->cargo_dependencia as $cargoDependenciaId) {
+
+            RegistroDependenciaCargo::create([
+                'registro_id' => $nuevoRegistro->id,
+                'dependencia_cargos_id' => $cargoDependenciaId,
+            ]);
+        }
+    }
+
+
+       
+
           
            return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
+
 
     
     }
