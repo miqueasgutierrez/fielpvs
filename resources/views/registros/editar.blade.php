@@ -71,9 +71,23 @@
                     </div>
 
 
-
-
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+
+
+   <label for="exampleInputEmail1">Probando codigo:</label>
+
+<div class="flex items-center space-x-4">
+    <input type="checkbox" id="genero_masculino" name="ministerio[]" value="PASTOR" class="form-checkbox" 
+        {{ in_array('PASTOR', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="genero_masculino">Masculino</label>
+
+    <input type="checkbox" id="genero_femenino" name="ministerio[]" value="EVANGELISTA" class="form-checkbox" 
+        {{ in_array('EVANGELISTA', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="genero_femenino">Femenino</label>
+</div>
+                             
+
+
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">Genero:</label>
                             <div class="flex items-center space-x-4">
@@ -101,57 +115,132 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">MINISTERIO:</label>
-                            <select type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="ministerio">
-            <option value="">SELECCIONA UNA OPCIÓN</option>
-            <option value="PASTOR" {{ $registro->ministerio === 'PASTOR' ? 'selected' : '' }}>PASTOR</option>
-            <option value="EVANGELISTA" {{ $registro->ministerio === 'EVANGELISTA' ? 'selected' : '' }}>EVANGELISTA</option>
-            <option value="PROFETA" {{ $registro->ministerio === 'PROFETA' ? 'selected' : '' }}>PROFETA</option>
-            <option value="MAESTRO" {{ $registro->ministerio === 'MAESTRO' ? 'selected' : '' }}>MAESTRO</option>
-            <option value="N/A" {{ $registro->ministerio === 'NINGUNO' ? 'selected' : '' }}>NINGUNO</option>
-        </select>
+
+<label for="ministro" class="block mb-2">Tipo de ministro:</label>
+
+<button id="openModalBtn2" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button> 
+</div>
+
+    <div id="myModal2" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+            <div class="grid grid-cols-1">
+
+           <label for="">MINISTRO ORDENADO :</label>
+<div id="">
+    <input type="checkbox" id="pastor" name="ministerio[]" value="PASTOR"
+        {{ in_array('PASTOR', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="pastor"> PASTOR</label><br>
+
+    <input type="checkbox" id="pastor_misionero" name="ministerio[]" value="PASTOR MISIONERO"
+        {{ in_array('PASTOR MISIONERO', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="pastor_misionero">PASTOR MISIONERO</label><br>
+    
+    <input type="checkbox" id="evangelista" name="ministerio[]" value="EVANGELISTA"
+        {{ in_array('EVANGELISTA', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="evangelista">EVANGELISTA</label><br>
+    
+    <input type="checkbox" id="maestro" name="ministerio[]" value="MAESTRO"
+        {{ in_array('MAESTRO', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="maestro">MAESTRO</label><br>
+</div>
+
+<label for="">MINISTRO NO ORDENADO :</label>
+<div id="">
+    <label>
+        <input type="checkbox" id="obrero_pastor" name="ministerio[]" value="Obrero Pastor"
+            {{ in_array('Obrero Pastor', $selectedMinisterios) ? 'checked' : '' }}>
+        Obrero Pastor (el que está encargado de un campo Blanco)
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="predicador_circuito" name="ministerio[]" value="Predicador de circuito"
+            {{ in_array('Predicador de circuito', $selectedMinisterios) ? 'checked' : '' }}>
+        Predicador (a) de circuito
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador nacional"
+            {{ in_array('Predicador nacional', $selectedMinisterios) ? 'checked' : '' }}>
+        Predicador (a) nacional
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="misionera_reconocida" name="ministerio[]" value="Misionera Reconocida"
+            {{ in_array('Misionera Reconocida', $selectedMinisterios) ? 'checked' : '' }}>
+        Misionera Reconocida
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="docente_titular" name="ministerio[]" value="Docente Titular"
+            {{ in_array('Docente Titular', $selectedMinisterios) ? 'checked' : '' }}>
+        Docente Titular
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="docente_prueba" name="ministerio[]" value="Docente a Prueba"
+            {{ in_array('Docente a Prueba', $selectedMinisterios) ? 'checked' : '' }}>
+        Docente a Prueba
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="directivo_jovenes" name="ministerio[]" value="Directivo de Jóvenes"
+            {{ in_array('Directivo de Jóvenes', $selectedMinisterios) ? 'checked' : '' }}>
+        Directivo de Jóvenes
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="directivo_damas" name="ministerio[]" value="Directivo de Damas"
+            {{ in_array('Directivo de Damas', $selectedMinisterios) ? 'checked' : '' }}>
+        Directivo de Damas
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="directivo_evangelismo" name="ministerio[]" value="Directivo de Evangelismo"
+            {{ in_array('Directivo de Evangelismo', $selectedMinisterios) ? 'checked' : '' }}>
+        Directivo de Evangelismo
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="directivo_intercesion" name="ministerio[]" value="Directivo de Intercesión"
+            {{ in_array('Directivo de Intercesión', $selectedMinisterios) ? 'checked' : '' }}>
+        Directivo de Intercesión
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="directivo_escuela_dominical" name="ministerio[]" value="Directivo de Escuela Dominical"
+            {{ in_array('Directivo de Escuela Dominical', $selectedMinisterios) ? 'checked' : '' }}>
+        Directivo de Escuela Dominical
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="besf" name="ministerio[]" value="BESF"
+            {{ in_array('BESF', $selectedMinisterios) ? 'checked' : '' }}>
+        BESF (Jerarquía correspondiente)
+    </label><br>
+
+    <label>
+        <input type="checkbox" id="coordinador_zona" name="ministerio[]" value="Coordinador de Zona"
+            {{ in_array('Coordinador de Zona', $selectedMinisterios) ? 'checked' : '' }}>
+        Coordinador de Zona
+    </label><br>
+
+
+
+    
+    
+ 
+    </div>
+</div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button id="closeModalBtn2" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+                           
                         </div>
 
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">DEPENDENCIA:</label>
-                            <select type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="dependencia">
-       <option value="">SELECCIONES UNA OPCION</option>
-         <option value="ANCIANO NACIONAL" {{ $registro->dependencia === 'ANCIANO NACIONAL' ? 'selected' : '' }} >ANCIANO NACIONAL</option>
-       <option value="ANCIANO REGIONAL" {{ $registro->dependencia === 'ANCIANO REGIONAL' ? 'selected' : '' }} >ANCIANO NACIONAL</option>
-       <option value="PRESBITERIO NACIONAL"{{ $registro->dependencia === 'PRESBITERIO NACIONAL' ? 'selected' : '' }}>PRESBITERIO NACIONAL</option>
-       <option value="PRESBITERIO REGIONAL"{{ $registro->dependencia === ' PRESBITERIO REGIONAL ' ? 'selected' : '' }}>PRESBITERIO REGIONAL</option>
-       <option value="DAMAS NACIONAL"{{ $registro->dependencia === 'DAMAS NACIONAL' ? 'selected' : '' }}>DAMAS NACIONAL</option>
-       <option value="DAMAS REGIONAL"{{ $registro->dependencia === 'DAMAS REGIONAL' ? 'selected' : '' }}>DAMAS REGIONAL</option>
-       <option value="DAMAS ZONAL"{{ $registro->dependencia === 'DAMAS ZONAL' ? 'selected' : '' }}>DAMAS ZONAL</option>
-       <option value="DAMAS LOCAL"{{ $registro->dependencia === 'DAMAS LOCAL' ? 'selected' : '' }}>DAMAS LOCAL</option>
-       <option value="JÓVENES NACIONAL"{{ $registro->dependencia === 'JÓVENES NACIONAL' ? 'selected' : '' }}>JÓVENES NACIONAL</option>
-       <option value="JÓVENES REGIONAL"{{ $registro->dependencia === 'JÓVENES REGIONAL' ? 'selected' : '' }}>JÓVENES REGIONAL</option>
-       <option value="JOVENES ZONAL"{{ $registro->dependencia === 'JOVENES ZONAL' ? 'selected' : '' }}>JOVENES ZONAL</option>
-       <option value="JOVENES LOCAL"{{ $registro->dependencia === ' -- ' ? 'selected' : '' }}>JOVENES LOCAL</option>
-       <option value="EVANGELISMO NACIONAL"{{ $registro->dependencia === 'EVANGELISMO NACIONAL' ? 'selected' : '' }}>EVANGELISMO NACIONAL</option>
-       <option value="EVANGELISMO REGIONAL"{{ $registro->dependencia === 'EVANGELISMO REGIONAL' ? 'selected' : '' }}>EVANGELISMO REGIONAL</option>
-       <option value="EVANGELISMO ZONAL"{{ $registro->dependencia === 'EVANGELISMO ZONAL' ? 'selected' : '' }}>EVANGELISMO ZONAL</option>
-       <option value="EVANGELISMO LOCAL"{{ $registro->dependencia === 'EVANGELISMO LOCAL' ? 'selected' : '' }}>EVANGELISMO LOCAL</option>
-       <option value="INTERCESION NACIONAL"{{ $registro->dependencia === 'INTERCESION NACIONAL' ? 'selected' : '' }}>INTERCESION NACIONAL</option>
-       <option value="INTERCESION REGIONAL"{{ $registro->dependencia === 'INTERCESION REGIONAL' ? 'selected' : '' }}>INTERCESION REGIONAL</option>
-       <option value="INTERCESION ZONAL"{{ $registro->dependencia === 'INTERCESION ZONAL' ? 'selected' : '' }}>INTERCESION ZONAL</option>
-       <option value="INTERCESION LOCAL"{{ $registro->dependencia === 'INTERCESION LOCAL' ? 'selected' : '' }}>INTERCESION LOCAL</option>
-       <option value="IBF NACIONAL"{{ $registro->dependencia === 'IBF NACIONAL' ? 'selected' : '' }}>IBF NACIONAL</option>
-       <option value="IBF REGIONAL"{{ $registro->dependencia === 'IBF REGIONAL' ? 'selected' : '' }}>IBF REGIONAL</option>
-       <option value="IBF ZONAL"{{ $registro->dependencia === 'IBF ZONAL ' ? 'selected' : '' }}>IBF ZONAL</option>
-       <option value="IBF LOCAL"{{ $registro->dependencia === 'IBF LOCAL' ? 'selected' : '' }}>IBF LOCAL</option>
-       <option value="ESCUELA DOMINICAL NACIONAL"{{ $registro->dependencia === 'ESCUELA DOMINICAL NACIONAL' ? 'selected' : '' }}>ESCUELA DOMINICAL NACIONAL</option>
-       <option value="ESCUELA DOMINICAL REGIONAL"{{ $registro->dependencia === 'ESCUELA DOMINICAL REGIONAL' ? 'selected' : '' }}>ESCUELA DOMINICAL REGIONAL</option>
-       <option value="ESCUELA DOMINICAL ZONAL"{{ $registro->dependencia === 'ESCUELA DOMINICAL ZONAL' ? 'selected' : '' }}>ESCUELA DOMINICAL ZONAL</option>
-       <option value="ESCUELA DOMINICAL LOCAL"{{ $registro->dependencia === 'ESCUELA DOMINICAL LOCAL' ? 'selected' : '' }}>ESCUELA DOMINICAL LOCAL</option>
-       <option value="BRIGADA NACIONAL"{{ $registro->dependencia === 'BRIGADA NACIONAL' ? 'selected' : '' }}>BRIGADA NACIONAL</option>
-       <option value="BRIGADA REGIONAL"{{ $registro->dependencia === 'BRIGADA REGIONAL' ? 'selected' : '' }}>BRIGADA REGIONAL</option>
-       <option value="BRIGADA ZONAL"{{ $registro->dependencia === 'BRIGADA ZONAL' ? 'selected' : '' }}>BRIGADA ZONAL</option>
-       <option value="BRIGADA LOCAL"{{ $registro->dependencia === 'BRIGADA LOCAL' ? 'selected' : '' }}>BRIGADA LOCAL</option>
-       <option value="CONEF NACIONAL"{{ $registro->dependencia === 'CONEF NACIONAL' ? 'selected' : '' }}>CONEF NACIONAL</option>
-       <option value="CONEF REGIONAL"{{ $registro->dependencia === 'CONEF REGIONAL' ? 'selected' : '' }}>CONEF REGIONAL</option>
-       <option value="CONEF ZONAL"{{ $registro->dependencia === 'CONEF ZONAL' ? 'selected' : '' }}>CONEF ZONAL</option>
-    </select>
                         </div>
 
                         <div class="grid grid-cols-1">
@@ -273,6 +362,32 @@
         });
     });
 </script>
+
+
+
+<script>
+        // JavaScript to handle modal open and close
+        const openModalBtn2 = document.getElementById('openModalBtn2');
+        const closeModalBtn2 = document.getElementById('closeModalBtn2');
+        const myModal2 = document.getElementById('myModal2');
+
+        openModalBtn2.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal2.classList.remove('hidden');
+        });
+
+        closeModalBtn2.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal2.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == myModal2) {
+                myModal2.classList.add('hidden');
+            }
+        });
+    </script>
+
 @stop
 
 @section('css')

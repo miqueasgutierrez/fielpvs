@@ -44,8 +44,6 @@ class CargoDependenciaController extends Controller
      */
     public function store(Request $request)
 
-
-    dd($request);
     {
        
        $request->validate([

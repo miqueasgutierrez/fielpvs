@@ -16,6 +16,8 @@ use App\Models\CargoActual;
 
 use App\Models\RegistroDependenciaCargo;
 
+use App\Models\ministerio;
+
 
 class RegistroController extends Controller
 {
@@ -69,7 +71,7 @@ class RegistroController extends Controller
  //dd($request);
 
         $request->validate([
-            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','ministerio' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','ministro_ordenado' => 'required','fecha_uncion' => 'nullable'
+            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable'
         ]);
 
 
@@ -99,6 +101,18 @@ class RegistroController extends Controller
     }
 
 
+
+     if ($request->has('ministerio')) {
+        foreach ($request->ministerio as $ministerionombre) {
+
+            ministerio::create([
+                'id_registro' => $nuevoRegistro->id,
+                'nombre' => $ministerionombre,
+            ]);
+        }
+    }
+
+
        
 
           
@@ -115,6 +129,7 @@ class RegistroController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Registro $registro)
+
     {
       return view('registros.show', compact('registro'));
     }
@@ -127,7 +142,12 @@ class RegistroController extends Controller
      */
     public function edit(Registro $registro)
     {
-           return view('registros.editar', compact('registro'));
+
+      $ministerios = $registro->ministerios; // Asumiendo que tienes una relación 
+
+       $selectedMinisterios = $ministerios->pluck('nombre')->toArray();
+
+    return view('registros.editar', compact('registro', 'selectedMinisterios'));
     }
 
 
