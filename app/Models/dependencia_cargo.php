@@ -28,5 +28,6 @@ class dependencia_cargo extends Model
     public function cargo()
     {
         return $this->belongsTo(Cargo::class, 'id_cargo');
-    }
+    }   
+
 }

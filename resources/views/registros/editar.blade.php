@@ -4,6 +4,16 @@
 
 
 @section('content')
+
+  <style>
+        .dependencia-item {
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+
    <x-app-layout>
     
     <x-slot name="header">
@@ -73,53 +83,69 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 
-
-   <label for="exampleInputEmail1">Probando codigo:</label>
-
-<div class="flex items-center space-x-4">
-    <input type="checkbox" id="genero_masculino" name="ministerio[]" value="PASTOR" class="form-checkbox" 
-        {{ in_array('PASTOR', $selectedMinisterios) ? 'checked' : '' }}>
-    <label for="genero_masculino">Masculino</label>
-
-    <input type="checkbox" id="genero_femenino" name="ministerio[]" value="EVANGELISTA" class="form-checkbox" 
-        {{ in_array('EVANGELISTA', $selectedMinisterios) ? 'checked' : '' }}>
-    <label for="genero_femenino">Femenino</label>
-</div>
-                             
-
-
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">Genero:</label>
                             <div class="flex items-center space-x-4">
-                                <input type="radio" id="genero_masculino" name="genero" value="masculino" class="form-radio" {{ $registro->genero === 'masculino' ? 'checked' : '' }} >
+                                <input type="radio" id="genero_masculino" name="genero" value="masculino" class="form-radio" {{ $registro->genero === 'masculino' ? 'checked' : '' }}  >
                                 <label for="genero_masculino">Masculino</label>
 
-                                <input type="radio" id="genero_femenino" name="genero" value="femenino" class="form-radio" {{ $registro->genero === 'femenino' ? 'checked' : '' }}>
+                                <input type="radio" id="genero_femenino" name="genero" value="femenino" class="form-radio" {{ $registro->genero === 'femenino' ? 'checked' : '' }} >
                                 <label for="genero_femenino">Femenino</label>
-
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">PROFESION U OFICIO:</label>
-                            <input type="profesion" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogas" value="{{ $registro->profesion}}" required>
+                            <input type="profesion" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogar" value="{{ $registro->profesion}}" required>
                         </div>
 
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">CARGO ACTUAL:</label>
-                            <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="cargo" placeholder="ej. Presidente, Vocal, Pastor" value="{{ $registro->cargo}}" required>
+
+
+
+                             <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia :</label>
+<button id="openModalBtn" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button>
+
+    </div>
+
                         </div>
+
+
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+            <div class="grid grid-cols-1">
+
+            <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia :</label>
+    <div id="cargos-dependencias-lista">
+        @foreach($cargosDependencias as $cargoDependencia)
+            <div class="dependencia-item" data-dependencia-id="{{ $cargoDependencia->dependencia->id }}">
+                <input type="checkbox" id="cargo_dependencia{{ $cargoDependencia->id }}" name="cargo_dependencia[]" value="{{ $cargoDependencia->id }}" 
+
+                {{ in_array($cargoDependencia->id, $registroDependenciaCargos->pluck('dependencia_cargos_id')->toArray()) ? 'checked' : '' }} >
+                <label for="dependencia_cargo{{ $cargoDependencia->id }}">{{ $cargoDependencia->cargo->nombre }} en {{ $cargoDependencia->dependencia->nombre}}</label>
+            </div>
+        @endforeach
+    </div>
+</div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button id="closeModalBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+                         
                     </div>
-
-
-
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
 
 <label for="ministro" class="block mb-2">Tipo de ministro:</label>
 
 <button id="openModalBtn2" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button> 
-</div>
+
 
     <div id="myModal2" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
         <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
@@ -237,19 +263,29 @@
                 </button>
             </div>
         </div>
-                           
-                        </div>
+                 </div>             
+                   
 
-                        <div class="grid grid-cols-1">
-                        </div>
+                          </div>
+
+                          
+
+                            <div class="grid grid-cols-1">
+        <label for="anio_uncion">Año de Unción: si ha sido ungido más de una vez, ingrese el año de su última unción.</label>
+        <div class="flex items-center space-x-4">
+            <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ $registro->fecha_uncion}}">
+        </div>
+    </div>
+
+
+                
 
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">IGLESIA:</label>
                             <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $registro->iglesia}}" required>
                         </div>
-                    </div>
-
-
+              
+ </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
@@ -270,8 +306,7 @@
 
 
 
-
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">direccion:</label>
                             <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"  name="direccion" placeholder="" value="{{ $registro->direccion}}" required>
@@ -289,40 +324,18 @@
                                 <input type="radio" id="estado_casado" name="estado_civil" value="casado" class="form-radio" {{ $registro->estado_civil === 'casado' ? 'checked' : '' }}>
                                 <label for="estado_casado">Casado</label>
 
+                           
+                             @error('estado_civil')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>El campo de estado civil no puede estar vacio</strong>
+                                </span>
+                            @enderror
+                            
                             </div>
-
-
-                        </div>
-
-
-                        <div class="grid grid-cols-1">
-
-
-                            <label for="exampleInputEmail1">¿Es un Ministro Ordenado?:</label>
-                            <div class="flex items-center space-x-4">
-                                <input type="radio" id="ministro_odenado" name="ministro_ordenado" value="si" class="form-radio" {{ $registro->ministro_ordenado === 'si' ? 'checked' : '' }}>
-                                <label for="ministro_odenado">Si</label>
-
-                                <input type="radio" id="ministro_odenado" name="ministro_ordenado" value="no" class="form-radio" {{ $registro->ministro_ordenado === 'no' ? 'checked' : '' }}>
-                                <label for="ministro_odenado">No</label>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="grid grid-cols-1">
-
-
-                            <label for="exampleInputEmail1">Fecha de Uncion:</label>
-                            <div class="flex items-center space-x-4">
-                                <input type="date" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_nacimiento" placeholder="ej. 20/10/1980" value="{{ $registro->fecha_uncion}}" required>
-
-                            </div>
-
                         </div>
 
                     </div>
+
 
                 <div class='flex items-center justify-center  md:gap-8 gap-4 pt-5 pb-5'>
                 <a href="{{ route('registros.index') }}" class='w-auto bg-gray-500 hover:bg-gray-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Cancelar</a>
@@ -330,11 +343,9 @@
                  <form action="{{ route('registros.update',$registro->id) }}"  method="POST" class="formEditar"> 
 
                 <button  type="submit" class='w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'>Guardar</button>
+</div>
+                </form>
 
-            
-                </div>
-            </form>
-                
             </div>
         </div>
     </div>
@@ -364,6 +375,30 @@
 </script>
 
 
+<script>
+        // JavaScript to handle modal open and close
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const myModal = document.getElementById('myModal');
+
+        openModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();  // Prevent default action if it's a link or button with a form
+            myModal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == myModal) {
+                myModal.classList.add('hidden');
+            }
+        });
+    </script>
+
+
 
 <script>
         // JavaScript to handle modal open and close
@@ -387,6 +422,51 @@
             }
         });
     </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dependenciaCheckboxes = document.querySelectorAll('.dependencia-checkbox');
+    const cargosDivs = document.querySelectorAll('.dependencia-cargos');
+
+    dependenciaCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const divId = 'dependencia-' + this.value;
+            const div = document.getElementById(divId);
+
+            if (this.checked) {
+                div.style.display = 'block';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+
+
+
+ <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const colors = [
+                '#FF5733', '#056C0D', '#3357FF', '#FF33A8', '#FFBD33',
+                '#33FFBD', '#A833FF', '#FF5733', '#FF33A8', '#33A8FF'
+            ];
+
+            const usedColors = {};
+
+            document.querySelectorAll('.dependencia-item').forEach(item => {
+                const dependenciaId = item.getAttribute('data-dependencia-id');
+
+                if (!usedColors[dependenciaId]) {
+                    usedColors[dependenciaId] = colors[Object.keys(usedColors).length % colors.length];
+                }
+
+                item.style.backgroundColor = usedColors[dependenciaId];
+            });
+        });
+    </script>
+    
 
 @stop
 

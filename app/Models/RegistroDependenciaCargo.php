@@ -17,4 +17,11 @@ class RegistroDependenciaCargo extends Model
     {
         return $this->belongsTo(Registro::class);
     }
+
+
+    public function dependenciaCargo()
+    {
+        return $this->belongsTo(dependencia_cargo::class, 'dependencia_cargos_id');
+    }
+
 }

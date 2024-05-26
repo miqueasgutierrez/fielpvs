@@ -21,4 +21,10 @@ public function cargosActuales()
         return $this->hasMany(ministerio::class, 'id_registro');
     }
 
+     public function registroDependenciaCargos()
+    
+    {
+        return $this->hasMany(RegistroDependenciaCargo::class);
+    }
+
 } 

@@ -50,7 +50,7 @@
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">Cedula:</label>
-							<input type="number"   class="form-control   @error('cedula') is-invalid @enderror"  id="cedula" name="cedula" placeholder="Ingrese su Cedula"  value="{{ old('cedula') }}">
+							<input type="number"   class="form-control   @error('cedula') is-invalid @enderror"  id="cedula" name="cedula" placeholder="Ingrese su Cedula"  value="{{ old('cedula') }}" required>
 
 								@error('cedula')
                                 <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
 
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">Nombres:</label>
-							<input type="text"  class="form-control   @error('nombres') is-invalid @enderror" id="nombres" name="nombres" minlength="5" placeholder="ej. Pedro, Juan"   min="5" max="20" value="{{ old('nombres') }}" >
+							<input type="text"  class="form-control   @error('nombres') is-invalid @enderror" id="nombres" name="nombres" minlength="5" placeholder="ej. Pedro, Juan"   min="5" max="20" value="{{ old('nombres') }}" required>
 
 							@error('nombres')
                                 <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
 						</div>
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">Apellidos:</label>
-							<input type="text"  class="form-control   @error('apellidos') is-invalid @enderror" id="apellidos" name="apellidos" placeholder="ej. Armada"  value="{{ old('apellidos') }}" >
+							<input type="text"  class="form-control   @error('apellidos') is-invalid @enderror" id="apellidos" name="apellidos" placeholder="ej. Armada"  value="{{ old('apellidos') }}" required>
 
 							@error('apellidos')
                                 <span class="invalid-feedback" role="alert">
@@ -112,7 +112,7 @@
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">Fecha de Nacimiento:</label>
-							<input type="date"  class="form-control   @error('fecha_nacimiento') is-invalid @enderror" value="{{ old('fecha_nacimiento') }}" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="ej. 20/10/1980"  >
+							<input type="date"  class="form-control   @error('fecha_nacimiento') is-invalid @enderror" value="{{ old('fecha_nacimiento') }}" name="fecha_nacimiento" id="fecha_nacimiento" placeholder="ej. 20/10/1980" required>
 
 							@error('fecha_nacimiento')
                                 <span class="invalid-feedback" role="alert">
@@ -124,7 +124,7 @@
 
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">Telefono:</label>
-							<input type="number"  class="form-control   @error('telefono') is-invalid @enderror" value="{{ old('telefono') }}"  id="telefono" name="telefono" placeholder="Numero Celular"  >
+							<input type="number"  class="form-control   @error('telefono') is-invalid @enderror" value="{{ old('telefono') }}"  id="telefono" name="telefono" placeholder="Numero Celular"  required>
 
 							@error('telefono')
                                 <span class="invalid-feedback" role="alert">
@@ -135,7 +135,7 @@
 						</div>
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">Edad:</label>
-							<input type="number" class="form-control   @error('edad') is-invalid @enderror" value="{{ old('edad') }}" name="edad" id="edad" placeholder="Indique su Edad"   >
+							<input type="number" class="form-control   @error('edad') is-invalid @enderror" value="{{ old('edad') }}" name="edad" id="edad" placeholder="Indique su Edad" required>
 
 
 							@error('edad')
@@ -154,10 +154,10 @@
 							<label for="exampleInputEmail1">Genero:</label>
 							<div class="flex items-center space-x-4">
 								
-								<input type="radio" id="genero_masculino" name="genero" value="masculino" class="@error('genero') is-invalid @enderror" {{ old('genero') == 'masculino' ? 'checked' : '' }} >
+								<input type="radio" id="genero_masculino" name="genero" value="masculino" class="@error('genero') is-invalid @enderror" {{ old('genero') == 'masculino' ? 'checked' : '' }} required>
             <label for="genero_masculino">Masculino</label>
 
-            <input type="radio" id="genero_femenino" name="genero" value="femenino" class="form-radio" {{ old('genero') == 'femenino' ? 'checked' : '' }}>
+            <input type="radio" id="genero_femenino" name="genero" value="femenino" class="form-radio" {{ old('genero') == 'femenino' ? 'checked' : '' }} required>
             <label for="genero_femenino">Femenino</label>
 
 								@error('genero')
@@ -171,7 +171,7 @@
 
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">PROFESION U OFICIO:</label>
-							<input type="profesion" class="form-control   @error('profesion') is-invalid @enderror" value="{{ old('profesion') }}"  id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogar"   >
+							<input type="profesion" class="form-control   @error('profesion') is-invalid @enderror" value="{{ old('profesion') }}"  id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogar"   required>
 
 							@error('profesion')
                                 <span class="invalid-feedback" role="alert">
@@ -313,23 +313,18 @@
         </div>
     </div>
 
-					
-
-						<div class="grid grid-cols-1">
-
-
-							<label for="exampleInputEmail1">Fecha de Uncion:</label>
-							<div class="flex items-center space-x-4">
-								<input type="date" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_uncion" placeholder="ej. 20/10/1980"  >
-
-							</div>
-
-						</div>
+				
+					<div class="grid grid-cols-1">
+        <label for="anio_uncion">Año de Unción: si ha sido ungido más de una vez, ingrese el año de su última unción.</label>
+        <div class="flex items-center space-x-4">
+            <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ old('fecha_uncion') }}">
+        </div>
+    </div>
 
 
 						 <div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">IGLESIA:</label>
-							<input type="text" class="form-control   @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}"  id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo"   >
+							<input type="text" class="form-control   @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}"  id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo"   required>
 
 							 @error('iglesia')
                                 <span class="invalid-feedback" role="alert">
@@ -353,7 +348,7 @@
 
 							
 							<label for="exampleInputEmail1">PASTOR:</label>
-							<input type="text" class="form-control   @error('pastor') is-invalid @enderror" value="{{ old('pastor') }}" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias"   >
+							<input type="text" class="form-control   @error('pastor') is-invalid @enderror" value="{{ old('pastor') }}" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias"   required>
 
 							 @error('pastor')
                                 <span class="invalid-feedback" role="alert">
@@ -364,7 +359,7 @@
 
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">CIRCUITO:</label>
-							<input type="text" class="form-control   @error('circuito') is-invalid @enderror" value="{{ old('circuito') }}" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur"   >
+							<input type="text" class="form-control   @error('circuito') is-invalid @enderror" value="{{ old('circuito') }}" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur"   required>
 
 							 @error('circuito')
                                 <span class="invalid-feedback" role="alert">
@@ -374,7 +369,7 @@
 						</div>
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">ZONA:</label>
-							<input type="number" class="form-control   @error('zona') is-invalid @enderror" value="{{ old('zona') }}" id="zona" name="zona" placeholder="ej. 1, 2,3">
+							<input type="number" class="form-control   @error('zona') is-invalid @enderror" value="{{ old('zona') }}" id="zona" name="zona" placeholder="ej. 1, 2,3" required>
 
 							 @error('circuito')
                                 <span class="invalid-feedback" role="alert">
@@ -389,7 +384,7 @@
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">direccion:</label>
-							<input type="text" class="form-control   @error('direccion') is-invalid @enderror" value="{{ old('direccion') }}"  id="direccion" name="direccion" placeholder=""   >
+							<input type="text" class="form-control   @error('direccion') is-invalid @enderror" value="{{ old('direccion') }}"  id="direccion" name="direccion" placeholder="" required >
 
 							 @error('direccion')
                                 <span class="invalid-feedback" role="alert">
@@ -405,10 +400,10 @@
 
 							<label for="exampleInputEmail1">Estado Civil:</label>
 							<div class="flex items-center space-x-4">
-								   <input type="radio" id="estado_soltero" name="estado_civil" value="soltero" class="form-control @error('estado_civil') is-invalid @enderror" {{ old('estado_civil') == 'soltero' ? 'checked' : '' }}>
+								   <input type="radio" id="estado_soltero" name="estado_civil" value="soltero" class="form-control @error('estado_civil') is-invalid @enderror" {{ old('estado_civil') == 'soltero' ? 'checked' : '' }} required>
         <label for="estado_soltero">Soltero</label>
 
-        <input type="radio" id="estado_casado" name="estado_civil" value="casado" class="form-control @error('estado_civil') is-invalid @enderror" {{ old('estado_civil') == 'casado' ? 'checked' : '' }}>
+        <input type="radio" id="estado_casado" name="estado_civil" value="casado" class="form-control @error('estado_civil') is-invalid @enderror" {{ old('estado_civil') == 'casado' ? 'checked' : '' }} required>
         <label for="estado_casado">Casado</label>
 
 
@@ -546,6 +541,16 @@ document.addEventListener('DOMContentLoaded', function () {
         window.addEventListener('click', (e) => {
             if (e.target == myModal2) {
                 myModal2.classList.add('hidden');
+            }
+        });
+    </script>
+
+
+   <script>
+        document.getElementById('anio_uncion').addEventListener('input', function() {
+            const anio = this.value;
+            if (anio.length > 4) {
+                this.value = anio.slice(0, 4);
             }
         });
     </script>
