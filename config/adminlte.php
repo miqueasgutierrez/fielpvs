@@ -359,6 +359,32 @@ return [
             'icon' => 'fas fa-hands-helping',
             
         ],
+        
+        [
+            'text' => 'Zonas',
+            'url' => 'zonas',
+            'icon' => 'fas fa-hands-helping',
+            
+        ],
+
+
+
+        [
+            'text' => 'Circuitos',
+            'url' => 'circuitos',
+            'icon' => 'fas fa-hands-helping',
+            
+        ],
+
+
+         [
+            'text' => 'Iglesias',
+            'url' => 'iglesias',
+            'icon' => 'fas fa-hands-helping',
+            
+        ],
+
+
 
 
         [

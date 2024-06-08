@@ -81,22 +81,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">MINISTERIO:</label>
-
-
-                           
-                           
-                        </div>
-
-
-                         <div class="grid grid-cols-1">
-
-
-                            <label for="exampleInputEmail1">Año de Uncion:</label>
-                            <div class="flex items-center space-x-4">
-                                <input  class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_nacimiento" placeholder="ej. 20/10/1980" value="{{ $registro->fecha_uncion}}" readonly>
-
-                            </div>
-
+                           <input  required class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="cedula" name="cedula"  value="{{ $registro->ministerio }}"  readonly>
                         </div>
 
                         <div class="grid grid-cols-1">
@@ -106,6 +91,10 @@
               
 
 
+                    <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">DEPENDENCIA:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $registro->dependencia}}" readonly >
+                        </div>
       </div>
 
 
@@ -149,7 +138,27 @@
                         </div>
 
 
-                   
+                        <div class="grid grid-cols-1">
+
+
+                            <label for="exampleInputEmail1">¿Es un Ministro Ordenado?:</label>
+                            <div class="flex items-center space-x-4">
+                                <input  required class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="cedula" name="cedula"  value="{{ $registro->ministro_ordenado }}"  readonly>
+                            </div>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-1">
+
+
+                            <label for="exampleInputEmail1">Fecha de Uncion:</label>
+                            <div class="flex items-center space-x-4">
+                                <input type="date" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_nacimiento" placeholder="ej. 20/10/1980" value="{{ $registro->fecha_uncion}}" readonly>
+
+                            </div>
+
+                        </div>
 
                     </div>
 

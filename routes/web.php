@@ -6,7 +6,9 @@ use App\Http\Controllers\RegistrosImportController;
 use App\Http\Controllers\DependenciaController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CargoDependenciaController;
-
+use App\Http\Controllers\CircuitoController;
+use App\Http\Controllers\ZonaController;
+use App\Http\Controllers\IglesiaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,13 +70,36 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 Route::delete('/cargosdependencias/{id1}/{id2}', [CargoDependenciaController::class, 'destroy'])->name('cargosdependencias.destroy');
 
 
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/circuitos', CircuitoController::class);
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/zonas', ZonaController::class);
+    Route::post('zonas/storeMultiple', [ZonaController::class, 'storeMultiple'])->name('zonas.storeMultiple');
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/iglesias', IglesiaController::class);
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+
+
 Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');
 
 Route::get('/cargos/{dependencia_id}', [DependenciaController::class, 'getCargos']);
-
-
-
-
 
 
 

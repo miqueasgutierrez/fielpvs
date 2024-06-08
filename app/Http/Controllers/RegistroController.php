@@ -18,6 +18,8 @@ use App\Models\RegistroDependenciaCargo;
 
 use App\Models\ministerio;
 
+use App\Models\Categoria_ungidos;
+
 
 class RegistroController extends Controller
 {
@@ -45,6 +47,8 @@ class RegistroController extends Controller
     {
 
 
+ $dependencias = Dependencia::paginate(1000);
+
        $cargosDependencias = dependencia_cargo::with(['cargo', 'dependencia'])
 
         ->join('dependencias', 'dependencia_cargos.id_dependencia', '=', 'dependencias.id')
@@ -54,7 +58,7 @@ class RegistroController extends Controller
 
       
            
-        return view('registros.crear', compact('cargosDependencias'));
+        return view('registros.crear', compact('cargosDependencias','dependencias'));
        
     }
 
@@ -68,10 +72,10 @@ class RegistroController extends Controller
     {
 
   
- //dd($request);
+  // dd($request);
 
         $request->validate([
-            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable'
+            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable','ministro_ungido' => 'required'
         ]);
 
 
@@ -113,6 +117,17 @@ class RegistroController extends Controller
         }
     }
 
+
+     if ($request->has('categoria_ungidos')) {
+
+             Categoria_ungidos ::create([
+                'id_registro' => $nuevoRegistro->id,
+                 'nombre' => $request->input('categoria_ungidos'),
+            ]);
+      
+    }
+
+
     
            return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
 
@@ -127,7 +142,12 @@ class RegistroController extends Controller
     public function show(Registro $registro)
 
     {
-      return view('registros.show', compact('registro'));
+
+       $ministerios = $registro->ministerios;
+
+   
+
+      return view('registros.show', compact('registro','ministerios'));
     }
 
     /**
@@ -155,7 +175,9 @@ class RegistroController extends Controller
             ->select('dependencia_cargos.*') 
             ->get();
 
-    return view('registros.editar', compact('registro', 'selectedMinisterios','cargosDependencias','registroDependenciaCargos'));
+             $dependencias = Dependencia::paginate(1000);
+
+    return view('registros.editar', compact('registro', 'selectedMinisterios','cargosDependencias','registroDependenciaCargos','dependencias'));
     }
 
 
@@ -169,8 +191,6 @@ class RegistroController extends Controller
      public function update(Request $request, Registro $registro)
 
     {
-
-  
 
            $request->validate([
             'cedula' => 'required|unique:registros,cedula,' . $registro->id ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable'

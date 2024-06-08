@@ -4,15 +4,33 @@
 
 
 @section('content')
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
+  
+
 
   <style>
-        .dependencia-item {
-            padding: 5px;
-            margin-bottom: 5px;
-            border-radius: 5px;
-            color: #fff;
+        .hidden {
+            display: none;
         }
+        fieldset {
+            margin-bottom: 15px;
+        }
+        legend {
+            font-weight: bold;
+        }
+     
+
+
+
+
+
+
     </style>
+
 
    <x-app-layout>
     
@@ -99,193 +117,198 @@
                             <input type="profesion" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogar" value="{{ $registro->profesion}}" required>
                         </div>
 
-                        <div class="grid grid-cols-1">
-
-
-
-                             <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia :</label>
-<button id="openModalBtn" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button>
-
-    </div>
-
-                        </div>
-
-
-
-
-
-    <!-- Modal -->
-    <div id="myModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-            <div class="grid grid-cols-1">
-
-            <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia :</label>
-    <div id="cargos-dependencias-lista">
-        @foreach($cargosDependencias as $cargoDependencia)
-            <div class="dependencia-item" data-dependencia-id="{{ $cargoDependencia->dependencia->id }}">
-                <input type="checkbox" id="cargo_dependencia{{ $cargoDependencia->id }}" name="cargo_dependencia[]" value="{{ $cargoDependencia->id }}" 
-
-                {{ in_array($cargoDependencia->id, $registroDependenciaCargos->pluck('dependencia_cargos_id')->toArray()) ? 'checked' : '' }} >
-                <label for="dependencia_cargo{{ $cargoDependencia->id }}">{{ $cargoDependencia->cargo->nombre }} en {{ $cargoDependencia->dependencia->nombre}}</label>
-            </div>
+<div class="grid grid-cols-1">
+    <label for="dependencia">Cargo Actual o Miembro de Alguna Dependencia:</label>
+    <select id="dependencia" name="dependencia">
+        <option value="" disabled selected>Seleccione</option>
+        @foreach($dependencias as $dependencia)
+            <option value="{{ $dependencia->id }}">{{ $dependencia->nombre }}</option>
         @endforeach
-    </div>
+    </select>
 </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button id="closeModalBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                    Aceptar
-                </button>
-            </div>
-        </div>
-                         
+
+<!-- Modal -->
+<div id="myModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+        <div class="grid grid-cols-1 max-h-96 overflow-y-auto p-4">
+            <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia:</label>
+            <div id="cargos-dependencias-lista">
+                @foreach($cargosDependencias as $cargoDependencia)
+                    <div class="dependencia-item" data-dependencia-id="{{ $cargoDependencia->dependencia->id }}">
+                        <input type="checkbox" id="cargo_dependencia{{ $cargoDependencia->id }}" name="cargo_dependencia[]" value="{{ $cargoDependencia->id }}"
+
+                         {{ in_array($cargoDependencia->id, $registroDependenciaCargos->pluck('dependencia_cargos_id')->toArray()) ? 'checked' : '' }}>
+                        <label for="dependencia_cargo{{ $cargoDependencia->id }}">{{ $cargoDependencia->cargo->nombre }}</label>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-                        <div class="grid grid-cols-1">
-
-<label for="ministro" class="block mb-2">Tipo de ministro:</label>
-
-<button id="openModalBtn2" class="px-1 py-1 bg-blue-500 text-white rounded-md">Seleccionar</button> 
-
-
-    <div id="myModal2" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-            <div class="grid grid-cols-1">
-
-           <label for="">MINISTRO ORDENADO :</label>
-<div id="">
-    <input type="checkbox" id="pastor" name="ministerio[]" value="PASTOR"
-        {{ in_array('PASTOR', $selectedMinisterios) ? 'checked' : '' }}>
-    <label for="pastor"> PASTOR</label><br>
-
-    <input type="checkbox" id="pastor_misionero" name="ministerio[]" value="PASTOR MISIONERO"
-        {{ in_array('PASTOR MISIONERO', $selectedMinisterios) ? 'checked' : '' }}>
-    <label for="pastor_misionero">PASTOR MISIONERO</label><br>
-    
-    <input type="checkbox" id="evangelista" name="ministerio[]" value="EVANGELISTA"
-        {{ in_array('EVANGELISTA', $selectedMinisterios) ? 'checked' : '' }}>
-    <label for="evangelista">EVANGELISTA</label><br>
-    
-    <input type="checkbox" id="maestro" name="ministerio[]" value="MAESTRO"
-        {{ in_array('MAESTRO', $selectedMinisterios) ? 'checked' : '' }}>
-    <label for="maestro">MAESTRO</label><br>
-</div>
-
-<label for="">MINISTRO NO ORDENADO :</label>
-<div id="">
-    <label>
-        <input type="checkbox" id="obrero_pastor" name="ministerio[]" value="Obrero Pastor"
-            {{ in_array('Obrero Pastor', $selectedMinisterios) ? 'checked' : '' }}>
-        Obrero Pastor (el que está encargado de un campo Blanco)
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="predicador_circuito" name="ministerio[]" value="Predicador de circuito"
-            {{ in_array('Predicador de circuito', $selectedMinisterios) ? 'checked' : '' }}>
-        Predicador (a) de circuito
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador nacional"
-            {{ in_array('Predicador nacional', $selectedMinisterios) ? 'checked' : '' }}>
-        Predicador (a) nacional
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="misionera_reconocida" name="ministerio[]" value="Misionera Reconocida"
-            {{ in_array('Misionera Reconocida', $selectedMinisterios) ? 'checked' : '' }}>
-        Misionera Reconocida
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="docente_titular" name="ministerio[]" value="Docente Titular"
-            {{ in_array('Docente Titular', $selectedMinisterios) ? 'checked' : '' }}>
-        Docente Titular
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="docente_prueba" name="ministerio[]" value="Docente a Prueba"
-            {{ in_array('Docente a Prueba', $selectedMinisterios) ? 'checked' : '' }}>
-        Docente a Prueba
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="directivo_jovenes" name="ministerio[]" value="Directivo de Jóvenes"
-            {{ in_array('Directivo de Jóvenes', $selectedMinisterios) ? 'checked' : '' }}>
-        Directivo de Jóvenes
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="directivo_damas" name="ministerio[]" value="Directivo de Damas"
-            {{ in_array('Directivo de Damas', $selectedMinisterios) ? 'checked' : '' }}>
-        Directivo de Damas
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="directivo_evangelismo" name="ministerio[]" value="Directivo de Evangelismo"
-            {{ in_array('Directivo de Evangelismo', $selectedMinisterios) ? 'checked' : '' }}>
-        Directivo de Evangelismo
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="directivo_intercesion" name="ministerio[]" value="Directivo de Intercesión"
-            {{ in_array('Directivo de Intercesión', $selectedMinisterios) ? 'checked' : '' }}>
-        Directivo de Intercesión
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="directivo_escuela_dominical" name="ministerio[]" value="Directivo de Escuela Dominical"
-            {{ in_array('Directivo de Escuela Dominical', $selectedMinisterios) ? 'checked' : '' }}>
-        Directivo de Escuela Dominical
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="besf" name="ministerio[]" value="BESF"
-            {{ in_array('BESF', $selectedMinisterios) ? 'checked' : '' }}>
-        BESF (Jerarquía correspondiente)
-    </label><br>
-
-    <label>
-        <input type="checkbox" id="coordinador_zona" name="ministerio[]" value="Coordinador de Zona"
-            {{ in_array('Coordinador de Zona', $selectedMinisterios) ? 'checked' : '' }}>
-        Coordinador de Zona
-    </label><br>
-
-
-
-    
-    
- 
-    </div>
-</div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button id="closeModalBtn2" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                    Aceptar
-                </button>
+                @endforeach
             </div>
-        </div>
-                 </div>             
-                   
+     </div>
 
-                          </div>
 
-                          
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button id="closeModalBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                Aceptar
+            </button>
+            </div>
+    </div>
+</div>
 
-                            <div class="grid grid-cols-1">
-        <label for="anio_uncion">Año de Unción: si ha sido ungido más de una vez, ingrese el año de su última unción.</label>
-        <div class="flex items-center space-x-4">
-            <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ $registro->fecha_uncion}}">
-        </div>
+
+
+<div id="modal2" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div class="bg-white p-8 rounded">
+    <label for=""> SELECCIONE SU MINISTERIO:</label>
+
+
+                <div class="flex">
+
+<div class="mr-4">
+                    <input type="checkbox" id="" name="ministerio[]" value="PASTOR"
+                     {{ in_array('PASTOR', $selectedMinisterios) ? 'checked' : '' }}>
+                <label for=""> PASTOR</label>
+</div>
+  <div class="mr-4">
+    <input type="checkbox" id="ministerio1" name="ministerio[]" value="PASTOR MISIONERO"
+     {{ in_array('PASTOR MISIONERO', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="ministerio1">PASTOR MISIONERO</label>
+  </div>
+  <div class="mr-4">
+    <input type="checkbox" id="ministerio2" name="ministerio[]" value="EVANGELISTA"
+      {{ in_array('EVANGELISTA', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="ministerio2">EVANGELISTA</label>
+  </div>
+  <div>
+    <input type="checkbox" id="ministerio3" name="ministerio[]" value="MAESTRO"
+    {{ in_array('MAESTRO', $selectedMinisterios) ? 'checked' : '' }}>
+    <label for="ministerio3">MAESTRO</label>
+  </div>
+</div>
+
+
+<label for=""> SELECCIONE SU CATEGORIA:</label>
+
+<select id="categorias" name="categoria_ungidos" class="p-2 border rounded">
+  <option value="">Selecciona una categoría</option>
+  <option value="ANCIANO NACIONAL">ANCIANO NACIONAL</option>
+  <option value="ANCIANO REGIONAL">ANCIANO REGIONAL</option>
+  <option value="DIRECTIVO NACIONAL">DIRECTIVO NACIONAL</option>
+  <option value="DIRECTIVO PRESBITERIO REGIONAL">DIRECTIVO PRESBITERIO REGIONAL</option>
+  <option value="EVANGELISTA NACIONAL O REGIONAL">EVANGELISTA NACIONAL O REGIONAL</option>
+  <option value="INTERCESION NACIONAL">INTERCESION NACIONAL</option>
+</select>
+
+                <br>
+
+    <button id="closeModal2" type="button"  class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Aceptar</button>
+  </div>
+</div>
+
+<div id="modal3" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div class="bg-white p-8 rounded">
+   <label for=""> SELECCIONE SU CATEGORIA:</label><br>
+
+    <label>
+    <input type="checkbox" id="obrero_pastor" name="ministerio[]" value="Obrero Pastor">
+    Obrero Pastor (el que está encargado de un campo Blanco)
+</label><br>
+<label>
+    <input type="checkbox" id="predicador_circuito" name="ministerio[]" value="Predicador de circuito">
+    Predicador (a) de circuito
+</label><br>
+<label>
+    <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador nacional">
+    Predicador (a) nacional
+</label><br>
+<label>
+    <input type="checkbox" id="misionera_reconocida" name="ministerio[]" value="Misionera Reconocida">
+    Misionera Reconocida
+</label><br>
+<label>
+    <input type="checkbox" id="docente_titular" name="ministerio[]" value="Docente Titular">
+    Docente Titular
+</label><br>
+<label>
+    <input type="checkbox" id="docente_prueba" name="ministerio[]" value="Docente a Prueba">
+    Docente a Prueba
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_jovenes" name="ministerio[]" value="Directivo de Jóvenes">
+    Directivo de Jóvenes
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_damas" name="ministerio[]" value="Directivo de Damas">
+    Directivo de Damas
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_evangelismo" name="ministerio[]" value="Directivo de Evangelismo">
+    Directivo de Evangelismo
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_intercesion" name="ministerio[]" value="Directivo de Intercesión">
+    Directivo de Intercesión
+</label><br>
+<label>
+    <input type="checkbox" id="directivo_escuela_dominical" name="ministerio[]" value="Directivo de Escuela Dominical">
+    Directivo de Escuela Dominical
+</label><br>
+<label>
+    <input type="checkbox" id="besf" name="ministerio[]" value="BESF">
+    BESF (Jerarquía correspondiente)
+</label><br>
+<label>
+    <input type="checkbox" id="coordinador_zona" name="ministerio[]" value="Coordinador de Zona">
+    Coordinador de Zona
+</label><br>
+
+
+    <button id="closeModal3" type="button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Cerrar</button>
+  </div>
+</div>
+
+</div>
+
+                    
+
+ <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+                    
+                        <div class="grid grid-cols-1">
+
+                            
+                           <div class="grid grid-cols-1">
+    <label for="modalSelector">¿Es usted un ministro ungido?</label>
+    <select id="modalSelector" name="ministro_ungido" class="p-2 border rounded" required>
+      <option value="">Seleccione</option>
+      <option value="modal2">Sí</option>
+      <option value="modal3">No</option>
+    </select>
+  </div>
+
+                        </div>
+
+<div class="grid grid-cols-1">
+                           
+
+                            <label for="anio_uncion">Año de unción:</label>
+    <div class="flex items-center space-x-4">
+      <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ old('fecha_uncion') }}">
     </div>
 
-
-                
-
-                        <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">IGLESIA:</label>
-                            <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $registro->iglesia}}" required>
                         </div>
-              
- </div>
+                        <div class="grid grid-cols-1">
+                            <label for="iglesia">Iglesia:</label>
+    <input type="text" class="form-control @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}" id="iglesia" name="iglesia" placeholder="ej. Lirio, Sendero, Cristo" required>
+    @error('iglesia')
+      <span class="invalid-feedback" role="alert">
+        <strong>El campo de iglesia no puede estar vacío</strong>
+      </span>
+    @enderror
+
+                        </div>
+
+                    </div>
+
+
+
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
@@ -354,119 +377,149 @@
 
 <!-- Script para ver la imagen antes de CREAR UN NUEVO registro -->
 
-
-
-
-
-
-
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
-<script>   
+
+
+<script>
     $(document).ready(function (e) {   
-        $('#imagen').change(function(){            
-            let reader = new FileReader();
-            reader.onload = (e) => { 
-                $('#imagenSeleccionada').attr('src', e.target.result); 
-            }
-            reader.readAsDataURL(this.files[0]); 
+           $('#imagen').change(function(){            
+              let reader = new FileReader();
+              reader.onload = (e) => { 
+                 $('#imagenSeleccionada').attr('src', e.target.result); 
+              }
+              reader.readAsDataURL(this.files[0]); 
+           });
         });
+
+
+  function toggleSelect() {
+  var ministro = document.getElementById("ministro").value;
+  var selectContainer = document.getElementById("select-container");
+  var otroSelect = document.getElementById("otro-select");
+
+  if (ministro === "si") {
+    selectContainer.classList.remove("hidden");
+    otroSelect.classList.add("hidden");
+  } else {
+    selectContainer.classList.add("hidden");
+    otroSelect.classList.remove("hidden");
+  }
+}
+
+
+
+
+ document.getElementById('select-1').addEventListener('change', function() {
+        document.getElementById('select-2').disabled = this.value !== '';
     });
+
+    document.getElementById('select-2').addEventListener('change', function() {
+        document.getElementById('select-1').disabled = this.value !== '';
+    });
+
+    
 </script>
 
 
-<script>
-        // JavaScript to handle modal open and close
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const myModal = document.getElementById('myModal');
 
-        openModalBtn.addEventListener('click', (e) => {
-            e.preventDefault();  // Prevent default action if it's a link or button with a form
-            myModal.classList.remove('hidden');
-        });
 
-        closeModalBtn.addEventListener('click', (e) => {
-            e.preventDefault();  // Prevent default action if it's a link or button with a form
-            myModal.classList.add('hidden');
-        });
 
-        window.addEventListener('click', (e) => {
-            if (e.target == myModal) {
-                myModal.classList.add('hidden');
+   <script>
+        document.getElementById('anio_uncion').addEventListener('input', function() {
+            const anio = this.value;
+            if (anio.length > 4) {
+                this.value = anio.slice(0, 4);
             }
         });
     </script>
 
 
 
-<script>
-        // JavaScript to handle modal open and close
-        const openModalBtn2 = document.getElementById('openModalBtn2');
-        const closeModalBtn2 = document.getElementById('closeModalBtn2');
-        const myModal2 = document.getElementById('myModal2');
 
-        openModalBtn2.addEventListener('click', (e) => {
-            e.preventDefault();  // Prevent default action if it's a link or button with a form
-            myModal2.classList.remove('hidden');
-        });
+    <script>
+    // Función para mostrar los cargos en el modal según la dependencia seleccionada
+    function mostrarCargos() {
+        var dependenciaSeleccionada = document.getElementById('dependencia').value;
+        var dependenciaItems = document.getElementsByClassName('dependencia-item');
 
-        closeModalBtn2.addEventListener('click', (e) => {
-            e.preventDefault();  // Prevent default action if it's a link or button with a form
-            myModal2.classList.add('hidden');
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target == myModal2) {
-                myModal2.classList.add('hidden');
-            }
-        });
-    </script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const dependenciaCheckboxes = document.querySelectorAll('.dependencia-checkbox');
-    const cargosDivs = document.querySelectorAll('.dependencia-cargos');
-
-    dependenciaCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            const divId = 'dependencia-' + this.value;
-            const div = document.getElementById(divId);
-
-            if (this.checked) {
-                div.style.display = 'block';
+        for (var i = 0; i < dependenciaItems.length; i++) {
+            var item = dependenciaItems[i];
+            if (item.getAttribute('data-dependencia-id') === dependenciaSeleccionada) {
+                item.style.display = 'block';
             } else {
-                div.style.display = 'none';
+                item.style.display = 'none';
             }
-        });
+        }
+
+        // Mostrar el modal
+        document.getElementById('myModal').classList.remove('hidden');
+    }
+
+    // Evento change para el select de dependencia
+    document.getElementById('dependencia').addEventListener('change', mostrarCargos);
+</script>
+
+
+
+<script>
+    // JavaScript to handle modal open and close
+    const dependenciaSelect = document.getElementById('dependencia');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const myModal = document.getElementById('myModal');
+
+    // Function to open the modal and filter the cargos based on the selected dependencia
+    function mostrarCargos() {
+        const dependenciaSeleccionada = dependenciaSelect.value;
+        const dependenciaItems = document.getElementsByClassName('dependencia-item');
+
+        for (let item of dependenciaItems) {
+            if (item.getAttribute('data-dependencia-id') === dependenciaSeleccionada) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        }
+
+        myModal.classList.remove('hidden');
+    }
+
+    // Event listener for the dependencia dropdown
+    dependenciaSelect.addEventListener('change', mostrarCargos);
+
+    // Event listener for the close button
+    closeModalBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        myModal.classList.add('hidden');
     });
+
+    // Event listener to close the modal when clicking outside of it
+    window.addEventListener('click', (e) => {
+        if (e.target == myModal) {
+            myModal.classList.add('hidden');
+        }
+    });
+
+
+    $(document).ready(function(){
+  // Función para mostrar el modal seleccionado
+  $('#modalSelector').change(function(){
+    var selectedModal = $(this).val();
+    $('#' + selectedModal).removeClass('hidden');
+  });
+
+  // Función para cerrar el modal 2
+  $('#closeModal2').click(function(){
+    $('#modal2').addClass('hidden');
+  });
+
+  // Función para cerrar el modal 3
+  $('#closeModal3').click(function(){
+    $('#modal3').addClass('hidden');
+  });
 });
 </script>
 
 
-
- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const colors = [
-                '#FF5733', '#056C0D', '#3357FF', '#FF33A8', '#FFBD33',
-                '#33FFBD', '#A833FF', '#FF5733', '#FF33A8', '#33A8FF'
-            ];
-
-            const usedColors = {};
-
-            document.querySelectorAll('.dependencia-item').forEach(item => {
-                const dependenciaId = item.getAttribute('data-dependencia-id');
-
-                if (!usedColors[dependenciaId]) {
-                    usedColors[dependenciaId] = colors[Object.keys(usedColors).length % colors.length];
-                }
-
-                item.style.backgroundColor = usedColors[dependenciaId];
-            });
-        });
-    </script>
-    
 
 @stop
 
@@ -479,4 +532,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
 @stop
 
+<script>
+
+</script>
 
