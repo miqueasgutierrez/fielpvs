@@ -89,12 +89,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::resource('/iglesias', IglesiaController::class);
+     
+      Route::post('iglesias/storeMultiple', [IglesiaController::class, 'storeMultiple'])->name('iglesias.storeMultiple');
+
     Route::get('/dashboard', function(){
         return view('dashboard');
     })->name('dashboard');
 });
 
 
+Route::get('/apizonas/{circuitoId}', [IglesiaController::class, 'getZonas'])->name('getZonas');
 
 
 Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');

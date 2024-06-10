@@ -19,7 +19,7 @@
                         <div class="grid grid-cols-1">
       <br>
        <br>
-            <a type="button"href="{{ route('zonas.create') }}"class="bg-indigo-500 px-12 py-2 rounded text-gray-200 font-semibold hover:bg-indigo-800 transition duration-200 each-in-out text-center ">Agregar</a>
+            <a type="button"href="{{ route('iglesias.create') }}"class="bg-indigo-500 px-12 py-2 rounded text-gray-200 font-semibold hover:bg-indigo-800 transition duration-200 each-in-out text-center ">Agregar</a>
         </div>
 
       </div>
@@ -77,7 +77,7 @@
           event.preventDefault()
           event.stopPropagation()        
           Swal.fire({
-                title: '¿Confirma la eliminación de la zona?',        
+                title: '¿Confirma la eliminación de la iglesia?',        
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#20c997',

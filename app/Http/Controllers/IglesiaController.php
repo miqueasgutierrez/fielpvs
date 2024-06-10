@@ -32,8 +32,40 @@ class IglesiaController extends Controller
      */
     public function create()
     {
-        //
+        $circuitos = Circuito::all();
+        return view('iglesias.crear', compact('circuitos'));
     }
+
+
+    public function storeMultiple(Request $request)
+   
+
+    {
+  
+  try {
+            $request->validate([
+                'iglesias.*.nombre' => 'required|string|max:255',
+                // No se necesita validación para zona_id si solo hay una zona
+            ]);
+
+            $zona_id = $request->input('zona_id');
+
+            $iglesiasData = $request->input('iglesias');
+
+            foreach ($iglesiasData as $iglesiaData) {
+                Iglesia::create([
+                    'nombre' => $iglesiaData['nombre'],
+                    'zona_id' => $zona_id,
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Iglesias creadas exitosamente.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al crear las iglesias: ' . $e->getMessage());
+        }
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -64,8 +96,11 @@ class IglesiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+
     {
-        //
+
+
+        
     }
 
     /**
@@ -90,4 +125,14 @@ class IglesiaController extends Controller
     {
         //
     }
+
+
+     public function getZonas($circuitoId)    
+    {
+
+        $zonas = Zona::where('circuito_id', $circuitoId)->pluck('nombre', 'id');
+        return response()->json($zonas);
+
+    }
+
 }

@@ -119,4 +119,14 @@ class ZonaController extends Controller
         return redirect()->route('zonas.index')->with('success', 'Zonas creadas exitosamente');
     }
 
+
+
+    public function getZonas($circuitoId)
+    {
+
+
+        $zonas = Zona::where('circuito_id', $circuitoId)->pluck('nombre', 'id');
+        return response()->json($zonas);
+    }
+
 }

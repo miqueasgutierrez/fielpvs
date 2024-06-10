@@ -67,8 +67,6 @@ class CircuitoController extends Controller
      */
     public function edit(Circuito $circuito)
     {
-        
-      
        return view('circuitos.editar', compact('circuito'));
 
 
