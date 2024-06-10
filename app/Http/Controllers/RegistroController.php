@@ -20,6 +20,10 @@ use App\Models\ministerio;
 
 use App\Models\Categoria_ungidos;
 
+use App\Models\Circuito;
+
+
+use App\Models\Iglesia;
 
 class RegistroController extends Controller
 {
@@ -47,6 +51,8 @@ class RegistroController extends Controller
     {
 
 
+ $circuitos = Circuito::all();
+
  $dependencias = Dependencia::paginate(1000);
 
        $cargosDependencias = dependencia_cargo::with(['cargo', 'dependencia'])
@@ -58,7 +64,7 @@ class RegistroController extends Controller
 
       
            
-        return view('registros.crear', compact('cargosDependencias','dependencias'));
+        return view('registros.crear', compact('cargosDependencias','dependencias','circuitos'));
        
     }
 
@@ -264,6 +270,14 @@ if ($request->has('ministerio')) {
         return redirect()->route('registros.index');
     }
 
+
+
+
+public function getIglesias($zonaId)
+    {
+        $iglesias = Iglesia::where('zona_id', $zonaId)->pluck('nombre', 'id');
+        return response()->json($iglesias);
+    }
 
 
     

@@ -100,6 +100,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
 Route::get('/apizonas/{circuitoId}', [IglesiaController::class, 'getZonas'])->name('getZonas');
 
+Route::get('/api-iglesias/{zonaId}', [RegistroController::class, 'getIglesias'])->name('getIglesias');
+
+
 
 Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');
 

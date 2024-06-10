@@ -20,9 +20,11 @@ class IglesiaController extends Controller
      */
     public function index()
     {
-      $iglesias = Iglesia::with(['zona','circuito'])->get();
+    
+    $iglesias = Iglesia::with(['zona','circuito'])->get();
 
     return view('iglesias.index', compact('iglesias'));
+
     }
 
     /**
@@ -98,7 +100,6 @@ class IglesiaController extends Controller
     public function edit($id)
 
     {
-
 
         
     }

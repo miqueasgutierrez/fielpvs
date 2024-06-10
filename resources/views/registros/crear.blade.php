@@ -11,7 +11,6 @@
     display: none;
   }
 </style>
-  
 
 
   <style>
@@ -26,15 +25,9 @@
         }
      
 
-
-
-
-
-
     </style>
 
  
-
 <x-app-layout>
 	<x-slot name="header">
 		<h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -227,11 +220,6 @@
     </div>
 </div>
 
-
-		
-
-
-
 <div id="modal2" class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
   <div class="bg-white p-8 rounded">
     <label for=""> SELECCIONE SU MINISTERIO:</label>
@@ -343,7 +331,7 @@
 
 					
 
- <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                     
                         <div class="grid grid-cols-1">
 
@@ -368,54 +356,24 @@
     </div>
 
                         </div>
-                        <div class="grid grid-cols-1">
-                            <label for="iglesia">Iglesia:</label>
-    <input type="text" class="form-control @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}" id="iglesia" name="iglesia" placeholder="ej. Lirio, Sendero, Cristo" required>
-    @error('iglesia')
-      <span class="invalid-feedback" role="alert">
-        <strong>El campo de iglesia no puede estar vacío</strong>
-      </span>
-    @enderror
 
-                        </div>
+  </div>
 
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                      
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 						
+
                         
-
-						<div class="grid grid-cols-1">
-
-							
-							<label for="exampleInputEmail1">PASTOR:</label>
-							<input type="text" class="form-control   @error('pastor') is-invalid @enderror" value="{{ old('pastor') }}" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias"   required>
-
-							 @error('pastor')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de pastor no puede estar vacio</strong>
-                                </span>
-                            @enderror
-						</div>
-
+                        
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">CIRCUITO:</label>
-							<input type="text" class="form-control   @error('circuito') is-invalid @enderror" value="{{ old('circuito') }}" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur"   required>
+							  <select name="circuito" id="circuito" class="form-control" required>
+                            <option value="">Seleccione un circuito</option>
+                            @foreach($circuitos as $circuito)
+                                <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
+                            @endforeach
+                        </select>
 
 							 @error('circuito')
                                 <span class="invalid-feedback" role="alert">
@@ -425,7 +383,12 @@
 						</div>
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">ZONA:</label>
-							<input type="number" class="form-control   @error('zona') is-invalid @enderror" value="{{ old('zona') }}" id="zona" name="zona" placeholder="ej. 1, 2,3" required>
+							
+                         <select name="zona" id="zona" class="form-control" required>
+                            <option value="">Seleccione una zona</option>
+                            <!-- Las opciones de zona se llenarán dinámicamente -->
+                        </select>
+
 
 							 @error('circuito')
                                 <span class="invalid-feedback" role="alert">
@@ -435,9 +398,41 @@
 
 						</div>
 
+
+                          <div class="grid grid-cols-1">
+                            <label for="iglesia">Iglesia:</label>
+
+
+                            <select id="iglesia" name="iglesia" >
+    <!-- Options for churches -->
+</select>
+
+    @error('iglesia')
+      <span class="invalid-feedback" role="alert">
+        <strong>El campo de iglesia no puede estar vacío</strong>
+      </span>
+    @enderror         
+
+                    </div>
+
 					</div>
 
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+
+
+
+                        <div class="grid grid-cols-1">
+                            
+                            <label for="exampleInputEmail1">PASTOR:</label>
+                            <input type="text" class="form-control   @error('pastor') is-invalid @enderror" value="{{ old('pastor') }}" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias"   required>
+
+                             @error('pastor')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>El campo de pastor no puede estar vacio</strong>
+                                </span>
+                            @enderror
+                        </div>
+
 						<div class="grid grid-cols-1">
 							<label for="exampleInputEmail1">direccion:</label>
 							<input type="text" class="form-control   @error('direccion') is-invalid @enderror" value="{{ old('direccion') }}"  id="direccion" name="direccion" placeholder="" required >
@@ -491,10 +486,6 @@
 </x-app-layout>
 
 
-
-
-
-
 <!-- Script para ver la imagen antes de CREAR UN NUEVO PRODUCTO -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -523,8 +514,6 @@
     otroSelect.classList.remove("hidden");
   }
 }
-
-
 
 
  document.getElementById('select-1').addEventListener('change', function() {
@@ -635,9 +624,46 @@
     $('#modal3').addClass('hidden');
   });
 });
+
+
+ $('#circuito').change(function() {
+            var circuitoId = $(this).val();
+            if (circuitoId) {
+                $.ajax({
+                    url: '/fielpvs/public/apizonas/' + circuitoId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#zona').empty();
+                        $('#zona').append('<option value="">Seleccione una zona</option>');
+                        $.each(data, function(key, value) {
+                            $('#zona').append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al obtener zonas:', error);
+                    }
+                });
+            } else {
+                $('#zona').empty();
+                $('#zona').append('<option value="">Seleccione una zona</option>');
+            }
+        });
+
+$('#zona').change(function() {
+    var zonaId = $(this).val();
+    // Realizar una solicitud AJAX para obtener las iglesias de la zona seleccionada
+    $.get('/fielpvs/public/api-iglesias/' + zonaId, function(iglesias) {
+        $('#iglesia').empty();
+        $('#iglesia').append('<option value="">Seleccione una iglesia</option>');
+        $.each(iglesias, function(id, nombre) {
+            $('#iglesia').append('<option value="' + id + '">' + nombre + '</option>');
+        });
+    });
+
+});
+
 </script>
-
-
 
 @stop
 
