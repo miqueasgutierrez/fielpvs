@@ -22,8 +22,9 @@ use App\Models\Categoria_ungidos;
 
 use App\Models\Circuito;
 
-
 use App\Models\Iglesia;
+
+use App\Models\RegistroIglesia;
 
 class RegistroController extends Controller
 {
@@ -81,7 +82,7 @@ class RegistroController extends Controller
   // dd($request);
 
         $request->validate([
-            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','iglesia' => 'required','pastor' => 'required','circuito' => 'required','zona' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable','ministro_ungido' => 'required'
+            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','pastor' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable','ministro_ungido' => 'required'
         ]);
 
 
@@ -122,6 +123,17 @@ class RegistroController extends Controller
             ]);
         }
     }
+
+
+     if ($request->has('iglesia')) {
+
+             RegistroIglesia ::create([
+                'id_registro' => $nuevoRegistro->id,
+                 'id_iglesia' => $request->input('iglesia'),
+            ]);
+      
+    }
+
 
 
      if ($request->has('categoria_ungidos')) {
@@ -166,7 +178,7 @@ class RegistroController extends Controller
     {
 
       $ministerios = $registro->ministerios; // Asumiendo que tienes una relación 
-
+       
       $selectedMinisterios = $ministerios->pluck('nombre')->toArray();
 
      $registroDependenciaCargos = $registro->registroDependenciaCargos;

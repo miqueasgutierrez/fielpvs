@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('zonas', function (Blueprint $table) {
+        Schema::create('registro_iglesias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->unsignedBigInteger('circuito_id');
-            $table->foreign('circuito_id')->references('id')->on('circuitos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zonas');
+        Schema::dropIfExists('registro_iglesias');
     }
 };

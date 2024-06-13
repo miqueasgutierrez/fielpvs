@@ -9,7 +9,7 @@ class Registro extends Model
 {
     use HasFactory;
   
-protected $fillable= ['cedula', 'nombres', 'apellidos','fecha_nacimiento','telefono','edad','genero','profesion','iglesia','pastor','circuito','zona','imagen','direccion','estado_civil','fecha_uncion','ministro_ungido']; 
+protected $fillable= ['cedula', 'nombres', 'apellidos','fecha_nacimiento','telefono','edad','genero','profesion','pastor','imagen','direccion','estado_civil','fecha_uncion','ministro_ungido']; 
 
 public function cargosActuales()
     {
@@ -19,6 +19,11 @@ public function cargosActuales()
  public function ministerios()
     {
         return $this->hasMany(ministerio::class, 'id_registro');
+    }
+
+    public function registroiglesias()
+    {
+        return $this->hasMany(registroiglesias::class, 'id_registro');
     }
 
     public function categoriaungido()

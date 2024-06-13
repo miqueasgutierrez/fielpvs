@@ -20,4 +20,6 @@ class Iglesia extends Model
     {
         return $this->hasOneThrough(Circuito::class, Zona::class, 'id', 'id', 'zona_id', 'circuito_id');
     }
+
+
 }

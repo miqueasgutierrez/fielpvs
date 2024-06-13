@@ -353,26 +353,20 @@ return [
             ],
         ],
 
-        [
-            'text' => 'Elecciones',
-            'url' => 'elecciones',
-            'icon' => 'fas fa-hands-helping',
+    
+         [
+            'text' => 'Circuitos',
+            'url' => 'circuitos',
+            'icon' => 'fa fa-globe-americas',
+           
             
         ],
+
         
         [
             'text' => 'Zonas',
             'url' => 'zonas',
-            'icon' => 'fas fa-hands-helping',
-            
-        ],
-
-
-
-        [
-            'text' => 'Circuitos',
-            'url' => 'circuitos',
-            'icon' => 'fas fa-hands-helping',
+            'icon' => 'fas fa-network-wired',
             
         ],
 
@@ -380,6 +374,13 @@ return [
          [
             'text' => 'Iglesias',
             'url' => 'iglesias',
+            'icon' => 'fas fa-church',
+            
+        ],
+
+         [
+            'text' => 'Elecciones',
+            'url' => 'elecciones',
             'icon' => 'fas fa-hands-helping',
             
         ],
