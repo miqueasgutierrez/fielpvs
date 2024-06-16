@@ -14,4 +14,13 @@ class RegistroIglesia extends Model
     protected $fillable = [
         'id_registro', 'id_iglesia'
     ];
+
+
+    public function iglesia()
+    {
+          return $this->belongsTo(Iglesia::class, 'id_iglesia');
+    }
+
+
+
 }

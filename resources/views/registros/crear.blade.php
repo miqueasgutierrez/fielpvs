@@ -323,7 +323,7 @@
 </label><br>
 
 
-    <button id="closeModal3" type="button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Cerrar</button>
+    <button id="closeModal3" type="button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Aceptar</button>
   </div>
 </div>
 

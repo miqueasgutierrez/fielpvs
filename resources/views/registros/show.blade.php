@@ -71,21 +71,51 @@
                         </div>
 
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">CARGO ACTUAL:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="cargo" placeholder="ej. Presidente, Vocal, Pastor" value="{{ $registro->cargo}}" readonly>
+                            <label for="exampleInputEmail1">DEPENDENCIAS Y CARGOS:</label>
+                           
+        @foreach ($registroDependenciaCargos as $registroDependenciaCargo)
+            <div>
+                <p><strong>Dependencia:</strong> {{ $registroDependenciaCargo->dependenciaCargo->dependencia->nombre }}</p>
+                <p><strong>Cargo:</strong> {{ $registroDependenciaCargo->dependenciaCargo->cargo->nombre }}</p>
+            </div>
+        @endforeach
                         </div>
                     </div>
 
 
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+                        
+
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">MINISTERIO:</label>
+                            <label for="exampleInputEmail1">Es un ministro ungido ?:</label>  
+                            <select id="modalSelector" name="ministro_ungido" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" readonly>
+      <option value="">Seleccione</option>
+      <option value="modal2" {{ $registro->ministro_ungido === 'modal2' ? 'selected' : '' }}>Sí</option>
+        <option value="modal3" {{ $registro->ministro_ungido === 'modal3' ? 'selected' : '' }}>No</option>
+    </select>
 
-
-                           
-                           
                         </div>
+
+
+
+                        <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">MINISTERIO:</label>  
+                             @foreach($registro->ministerios as $ministerio)
+                <li>{{ $ministerio->nombre }}</li>
+            @endforeach
+
+            
+             @if($categoriaungido)
+               <label for="exampleInputEmail1">Categoria:</label>  
+        <p>{{ $categoriaungido->nombre }}</p>
+    @else
+        
+    @endif
+    
+
+                        </div>
+
 
 
                          <div class="grid grid-cols-1">
@@ -99,10 +129,7 @@
 
                         </div>
 
-                        <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">IGLESIA:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $registro->iglesia}}" readonly >
-                        </div>
+                      
               
 
 
@@ -110,19 +137,22 @@
 
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-                        <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">PASTOR:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias" value="{{ $registro->pastor}}" readonly>
-                        </div>
-
+                       
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">CIRCUITO:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur" value="{{ $registro->circuito}}" autocomplete="off" readonly>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur" value="{{ $circuito->nombre ?? '' }}" autocomplete="off" readonly>
                         </div>
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">ZONA:</label>
-                            <input  class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="zona" name="zona" placeholder="ej. 1, 2,3" value="{{ $registro->zona}}" readonly>
+                            <input  class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="zona" name="zona" placeholder="ej. 1, 2,3" value=" {{ $zona->nombre ?? '' }}" readonly>
                         </div>
+
+
+                         <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">IGLESIA:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $iglesia->nombre ?? '' }}" readonly >
+                        </div>
+                        
 
                     </div>
 
@@ -130,6 +160,17 @@
 
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
+
+                       <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">PASTOR:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias" value="{{ $registro->pastor}}" readonly>
+                        </div>
+
+
+
+                         
+
+
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">direccion:</label>
                             <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"  name="direccion" placeholder="" value="{{ $registro->direccion}}" readonly>

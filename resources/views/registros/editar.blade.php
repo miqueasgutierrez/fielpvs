@@ -24,11 +24,6 @@
         }
      
 
-
-
-
-
-
     </style>
 
 
@@ -188,8 +183,17 @@
 <label for=""> SELECCIONE SU CATEGORIA:</label>
 
 <select id="categorias" name="categoria_ungidos" class="p-2 border rounded">
+
+ @if($categoriaungido)
+      <option value=" {{ $categoriaungido->nombre ? 'selected' : '' }} " > {{ $categoriaungido->nombre }}</option>
+
+        @else
+        
+    @endif
+    
+
   <option value="">Selecciona una categoría</option>
-  <option value="ANCIANO NACIONAL">ANCIANO NACIONAL</option>
+  <option value="ANCIANO NACIONAL" >ANCIANO NACIONAL</option>
   <option value="ANCIANO REGIONAL">ANCIANO REGIONAL</option>
   <option value="DIRECTIVO NACIONAL">DIRECTIVO NACIONAL</option>
   <option value="DIRECTIVO PRESBITERIO REGIONAL">DIRECTIVO PRESBITERIO REGIONAL</option>
@@ -261,7 +265,7 @@
 </label><br>
 
 
-    <button id="closeModal3" type="button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Cerrar</button>
+    <button id="closeModal3" type="button" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Aceptar</button>
   </div>
 </div>
 
@@ -269,7 +273,7 @@
 
                     
 
- <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                     
                         <div class="grid grid-cols-1">
 
@@ -278,8 +282,8 @@
     <label for="modalSelector">¿Es usted un ministro ungido?</label>
     <select id="modalSelector" name="ministro_ungido" class="p-2 border rounded" required>
       <option value="">Seleccione</option>
-      <option value="modal2">Sí</option>
-      <option value="modal3">No</option>
+      <option value="modal2" {{ $registro->ministro_ungido === 'modal2' ? 'selected' : '' }}>Sí</option>
+        <option value="modal3" {{ $registro->ministro_ungido === 'modal3' ? 'selected' : '' }}>No</option>
     </select>
   </div>
 
@@ -290,46 +294,86 @@
 
                             <label for="anio_uncion">Año de unción:</label>
     <div class="flex items-center space-x-4">
-      <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ old('fecha_uncion') }}">
+      <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ $registro->fecha_uncion}}">
     </div>
 
                         </div>
+                        
+                        </div>
+ <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+                        
+
+                        
+                        
                         <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">CIRCUITO:</label>
+                              <select name="circuito" id="circuito" class="form-control" required>
+                            <option value="">Seleccione un circuito</option>
+
+                             <option value="" selected> {{ $circuito->nombre ?? '' }}</option>
+
+                            @foreach($circuitos as $circuito)
+                                <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
+                            @endforeach
+                        </select>
+
+                             @error('circuito')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>El campo de circuito no puede estar vacio</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">ZONA:</label>
+                            
+                         <select name="zona" id="zona" class="form-control" >
+
+                             <option value="" selected> {{ $zona->nombre ?? '' }}</option>
+
+                            <option value="">Seleccione una zona</option>
+                            <!-- Las opciones de zona se llenarán dinámicamente -->
+                        </select>
+
+
+                             @error('circuito')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>El campo de zona no puede estar vacio</strong>
+                                </span>
+                            @enderror
+
+                        </div>
+
+
+                          <div class="grid grid-cols-1">
                             <label for="iglesia">Iglesia:</label>
-    <input type="text" class="form-control @error('iglesia') is-invalid @enderror" value="{{ old('iglesia') }}" id="iglesia" name="iglesia" placeholder="ej. Lirio, Sendero, Cristo" required>
+
+                            <select id="iglesia" name="iglesia" required>
+
+
+                                  <option value="{{ $iglesia->id ?? '' }}" selected> {{ $iglesia->nombre ?? '' }}</option>
+                                  
+    <!-- Options for churches -->
+</select>
+
     @error('iglesia')
       <span class="invalid-feedback" role="alert">
         <strong>El campo de iglesia no puede estar vacío</strong>
       </span>
-    @enderror
+    @enderror         
 
-                        </div>
+                    </div>
 
                     </div>
 
 
 
-
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">PASTOR:</label>
                             <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias" value="{{ $registro->pastor}}" required>
                         </div>
 
-                        <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">CIRCUITO:</label>
-                            <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur" value="{{ $registro->circuito}}" autocomplete="off" required>
-                        </div>
-                        <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">ZONA:</label>
-                            <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="zona" name="zona" placeholder="ej. 1, 2,3" value="{{ $registro->zona}}" >
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mt-5 mx-7">
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">direccion:</label>
                             <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"  name="direccion" placeholder="" value="{{ $registro->direccion}}" required>
@@ -517,6 +561,46 @@
     $('#modal3').addClass('hidden');
   });
 });
+
+
+    $('#circuito').change(function() {
+            var circuitoId = $(this).val();
+            if (circuitoId) {
+                $.ajax({
+                    url: '/fielpvs/public/apizonas/' + circuitoId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#zona').empty();
+                        $('#zona').append('<option value="">Seleccione una zona</option>');
+                        $.each(data, function(key, value) {
+                            $('#zona').append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error al obtener zonas:', error);
+                    }
+                });
+            } else {
+                $('#zona').empty();
+                $('#zona').append('<option value="">Seleccione una zona</option>');
+            }
+        });
+
+$('#zona').change(function() {
+    var zonaId = $(this).val();
+    // Realizar una solicitud AJAX para obtener las iglesias de la zona seleccionada
+    $.get('/fielpvs/public/api-iglesias/' + zonaId, function(iglesias) {
+        $('#iglesia').empty();
+        $('#iglesia').append('<option value="">Seleccione una iglesia</option>');
+        $.each(iglesias, function(id, nombre) {
+            $('#iglesia').append('<option value="' + id + '">' + nombre + '</option>');
+        });
+    });
+
+});
+
+
 </script>
 
 

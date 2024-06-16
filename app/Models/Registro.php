@@ -23,7 +23,7 @@ public function cargosActuales()
 
     public function registroiglesias()
     {
-        return $this->hasMany(registroiglesias::class, 'id_registro');
+        return $this->hasMany(RegistroIglesia::class, 'id_registro');
     }
 
     public function categoriaungido()
