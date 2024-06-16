@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2024 a las 14:34:36
+-- Tiempo de generación: 16-06-2024 a las 07:57:49
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -104,7 +104,16 @@ CREATE TABLE `categoria_ungidos` (
 INSERT INTO `categoria_ungidos` (`id`, `id_registro`, `nombre`, `created_at`, `updated_at`) VALUES
 (1, 121, 'ANCIANO NACIONAL', '2024-05-30 08:56:41', '2024-05-30 08:56:41'),
 (2, 122, 'ANCIANO NACIONAL', '2024-05-31 07:24:41', '2024-05-31 07:24:41'),
-(3, 123, 'ANCIANO NACIONAL', '2024-05-31 07:38:42', '2024-05-31 07:38:42');
+(3, 123, 'ANCIANO NACIONAL', '2024-05-31 07:38:42', '2024-05-31 07:38:42'),
+(5, 125, 'ANCIANO NACIONAL', '2024-06-13 07:16:23', '2024-06-13 07:16:23'),
+(7, 127, 'ANCIANO NACIONAL', '2024-06-14 09:10:59', '2024-06-14 09:10:59'),
+(9, 129, 'ANCIANO NACIONAL', '2024-06-14 09:35:16', '2024-06-14 09:35:16'),
+(16, 128, 'ANCIANO REGIONAL', '2024-06-14 10:12:31', '2024-06-14 10:12:31'),
+(24, 126, 'selected', '2024-06-16 08:16:00', '2024-06-16 08:16:00'),
+(27, 124, 'selected', '2024-06-16 09:21:46', '2024-06-16 09:21:46'),
+(28, 131, 'DIRECTIVO PRESBITERIO REGIONAL', '2024-06-16 09:31:07', '2024-06-16 09:31:07'),
+(29, 99, 'ANCIANO NACIONAL', '2024-06-16 10:12:38', '2024-06-16 10:12:38'),
+(30, 135, 'DIRECTIVO PRESBITERIO REGIONAL', '2024-06-16 10:35:06', '2024-06-16 10:35:06');
 
 -- --------------------------------------------------------
 
@@ -124,8 +133,7 @@ CREATE TABLE `circuitos` (
 --
 
 INSERT INTO `circuitos` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(3, 'Centro 5', '2024-06-07 16:57:06', '2024-06-07 16:57:06'),
-(4, 'Circuito Andes', '2024-06-08 16:06:35', '2024-06-08 16:06:35');
+(3, 'GUARICO SUR', '2024-06-07 16:57:06', '2024-06-12 16:58:36');
 
 -- --------------------------------------------------------
 
@@ -336,7 +344,8 @@ CREATE TABLE `iglesias` (
 --
 
 INSERT INTO `iglesias` (`id`, `nombre`, `zona_id`, `created_at`, `updated_at`) VALUES
-(1, 'Lirio los valles', 1, NULL, NULL);
+(1, 'Lirio los valles', 1, NULL, NULL),
+(3, 'iglesia 1', 1, '2024-06-11 01:23:06', '2024-06-11 01:23:06');
 
 -- --------------------------------------------------------
 
@@ -368,9 +377,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2024_05_01_165211_create_dependencia_cargo_table', 7),
 (14, '2024_05_25_020620_create_ministerio_table', 8),
 (15, '2024_05_30_025927_create_categoria_ungidos_table', 9),
-(16, '2024_06_01_034424_create_circuitos_table', 10),
 (17, '2024_06_01_034528_create_zonas_table', 10),
-(18, '2024_06_01_034710_create_iglesias_table', 10);
+(19, '2024_06_12_052009_create_registro_iglesias_table', 11);
 
 -- --------------------------------------------------------
 
@@ -381,7 +389,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `ministerio` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_registro` bigint(20) UNSIGNED NOT NULL,
-  `nombre` varchar(200) NOT NULL,
+  `nombre` varchar(1500) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -393,8 +401,6 @@ CREATE TABLE `ministerio` (
 INSERT INTO `ministerio` (`id`, `id_registro`, `nombre`, `created_at`, `updated_at`) VALUES
 (1, 114, 'PASTOR', '2024-05-25 07:47:14', '2024-05-25 07:47:14'),
 (2, 114, 'EVANGELISTA', '2024-05-25 07:47:14', '2024-05-25 07:47:14'),
-(3, 115, 'PASTOR', '2024-05-26 08:34:43', '2024-05-26 08:34:43'),
-(4, 115, 'EVANGELISTA', '2024-05-26 08:34:43', '2024-05-26 08:34:43'),
 (5, 116, 'PASTOR', '2024-05-26 09:44:29', '2024-05-26 09:44:29'),
 (6, 116, 'MAESTRO', '2024-05-26 09:44:29', '2024-05-26 09:44:29'),
 (7, 117, 'PASTOR', '2024-05-26 10:10:15', '2024-05-26 10:10:15'),
@@ -403,14 +409,27 @@ INSERT INTO `ministerio` (`id`, `id_registro`, `nombre`, `created_at`, `updated_
 (10, 118, 'MAESTRO', '2024-05-26 10:28:42', '2024-05-26 10:28:42'),
 (11, 118, 'Predicador de circuito', '2024-05-26 10:28:42', '2024-05-26 10:28:42'),
 (20, 69, 'PASTOR', '2024-05-26 23:58:00', '2024-05-26 23:58:00'),
-(21, 110, 'PASTOR', '2024-05-26 23:58:40', '2024-05-26 23:58:40'),
-(22, 110, 'PASTOR MISIONERO', '2024-05-26 23:58:40', '2024-05-26 23:58:40'),
 (28, 120, 'PASTOR', '2024-05-27 16:26:15', '2024-05-27 16:26:15'),
 (29, 120, 'EVANGELISTA', '2024-05-27 16:26:16', '2024-05-27 16:26:16'),
 (30, 121, 'PASTOR', '2024-05-30 08:56:41', '2024-05-30 08:56:41'),
 (31, 122, 'PASTOR', '2024-05-31 07:24:41', '2024-05-31 07:24:41'),
 (32, 123, 'PASTOR', '2024-05-31 07:38:42', '2024-05-31 07:38:42'),
-(33, 123, 'MAESTRO', '2024-05-31 07:38:42', '2024-05-31 07:38:42');
+(33, 123, 'MAESTRO', '2024-05-31 07:38:42', '2024-05-31 07:38:42'),
+(35, 125, 'PASTOR', '2024-06-13 07:16:22', '2024-06-13 07:16:22'),
+(44, 127, 'PASTOR', '2024-06-14 09:10:59', '2024-06-14 09:10:59'),
+(46, 129, 'PASTOR', '2024-06-14 09:35:16', '2024-06-14 09:35:16'),
+(53, 128, 'PASTOR', '2024-06-14 10:12:31', '2024-06-14 10:12:31'),
+(67, 126, 'PASTOR', '2024-06-16 08:15:59', '2024-06-16 08:15:59'),
+(68, 126, 'Docente a Prueba', '2024-06-16 08:16:00', '2024-06-16 08:16:00'),
+(76, 130, 'Docente a Prueba', '2024-06-16 09:24:52', '2024-06-16 09:24:52'),
+(77, 131, 'PASTOR', '2024-06-16 09:31:07', '2024-06-16 09:31:07'),
+(78, 132, 'PASTOR', '2024-06-16 09:36:06', '2024-06-16 09:36:06'),
+(79, 133, 'PASTOR', '2024-06-16 09:57:57', '2024-06-16 09:57:57'),
+(80, 134, 'Misionera Reconocida', '2024-06-16 09:59:26', '2024-06-16 09:59:26'),
+(84, 99, 'PASTOR', '2024-06-16 10:12:38', '2024-06-16 10:12:38'),
+(85, 115, 'PASTOR', '2024-06-16 10:26:09', '2024-06-16 10:26:09'),
+(86, 115, 'EVANGELISTA', '2024-06-16 10:26:10', '2024-06-16 10:26:10'),
+(87, 135, 'PASTOR MISIONERO', '2024-06-16 10:35:06', '2024-06-16 10:35:06');
 
 -- --------------------------------------------------------
 
@@ -473,11 +492,8 @@ CREATE TABLE `registros` (
   `edad` int(11) DEFAULT NULL,
   `genero` enum('masculino','femenino') DEFAULT NULL,
   `profesion` varchar(20) DEFAULT NULL,
-  `iglesia` varchar(255) DEFAULT NULL,
   `pastor` varchar(255) DEFAULT NULL,
   `ministro_ungido` varchar(10) DEFAULT NULL,
-  `circuito` varchar(255) DEFAULT NULL,
-  `zona` int(11) DEFAULT NULL,
   `imagen` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `estado_civil` enum('soltero','casado') DEFAULT NULL,
@@ -490,64 +506,73 @@ CREATE TABLE `registros` (
 -- Volcado de datos para la tabla `registros`
 --
 
-INSERT INTO `registros` (`id`, `cedula`, `nombres`, `apellidos`, `fecha_nacimiento`, `telefono`, `edad`, `genero`, `profesion`, `iglesia`, `pastor`, `ministro_ungido`, `circuito`, `zona`, `imagen`, `direccion`, `estado_civil`, `fecha_uncion`, `created_at`, `updated_at`) VALUES
-(20, '30121121', 'YESICA', 'RODRIGUEZ', '2024-03-21', '2134545', 25, 'femenino', 'DOCENTE', 'LIRIO', 'ELIAS', 'DIRECTORA', 'COJEDES', 2, '20240329203941.jpg', 'CR 20 #211', 'casado', '2024', '2024-03-22 17:08:13', '2024-03-30 01:39:41'),
-(68, '343433', 'Miguel Angel', 'Rodrigues', '1993-01-25', '12313214', 23, 'masculino', 'doctor', NULL, NULL, NULL, 'guarico', 3, 'elias.jpg', NULL, 'casado', '1993', '2024-03-26 17:21:09', '2024-03-26 17:31:04'),
-(69, '123123', 'SDFDSG', 'DSFGDSG', '2024-03-28', '3453245', 34, 'masculino', 'DSFGDG', 'SDFGDSG', 'JOSE', 'SDFGDSFG', 'BARINAS', 2, '20240329193428.png', 'direccion', 'soltero', '2024', '2024-03-30 00:34:28', '2024-03-30 00:34:28'),
-(70, '23432424', 'sddswewwer', 'sdsdf', '2024-03-26', '3224324', 32, 'masculino', 'ingenio', 'lirio', 'sdf', 'presidente', 'sdf', 2, '20240329201937.jpg', 'sdfsf', 'soltero', '2024', '2024-03-30 00:38:46', '2024-03-30 01:19:37'),
-(71, '2134565', 'miqueas neptali', 'armada', '2024-03-22', '3456434', 32, 'masculino', 'ingeniero', 'lirio 2', 'pablo', 'presidente', 'circuito', 2, '20240329202143.jpg', 'car', 'soltero', '2024', '2024-03-30 01:21:43', '2024-03-30 01:21:43'),
-(72, '21345654', 'hgfhf', 'fghfgh', '2024-03-14', '34323423', 31, 'masculino', 'ingeniero', 'sendero', 'elias', 'presidente', 'guarico', 3, '20240329202615.png', 'CR 7 N° 1-30 EL PLACER', 'soltero', '2024', '2024-03-30 01:26:15', '2024-03-30 01:26:15'),
-(73, '3435435', 'fsdfsd', 'sdfsdf', '2024-03-14', '234324324', 32, 'masculino', 'ingeniero', 'sendero', 'elias', 'pastor', 'guarico', 2, '20240329202926.png', 'cr 30 #29-05', 'soltero', '2024', '2024-03-30 01:29:26', '2024-03-30 01:29:26'),
-(74, '3424234', 'josesdasdas', 'veles', '2024-03-27', '324234', 21, 'masculino', 'trabajador', 'lirio', 'jose', 'presidente', 'guarico', 2, '20240329203322.jpg', 'Av.jose olaya 215', 'soltero', '2024', '2024-03-30 01:33:22', '2024-03-30 01:33:22'),
-(75, '2334434', 'juanertet', 'perez', '2024-03-28', '345345', 23, 'masculino', 'ingeniero', 'sendero', 'jose', 'vocal', 'guarico', 3, '20240329203622.jpg', 'Av.jose olaya 215', 'soltero', '2024', '2024-03-30 01:36:22', '2024-03-30 01:36:22'),
-(76, '345345', 'juanasdasdasd', 'asdasd', '2024-03-25', '53534535', 32, 'masculino', 'trabajador', 'cristo', 'elias', 'vocal', 'barinas', 2, '20240329203829.jpg', 'Centro cr 30 #29-05', 'soltero', '2024', '2024-03-30 01:38:29', '2024-03-30 01:38:29'),
-(77, '34534534', 'miqueas4', 'VELEZ CASTILLO', '2024-04-16', '33333333', 2, 'masculino', 'werwer', 'werwer', 'werewr', 'we', 'werwe', 33, '20240410043659.png', 'werer', 'soltero', '2024', '2024-04-10 09:32:23', '2024-04-10 09:36:59'),
-(78, '678678', 'ALVELYIS MARTH', 'armada', '2024-04-23', '34545', 23, 'femenino', '2344', '234324', 'werwr', '234', 'wer', 2, '20240410043841.jpg', 'ssdfsdf', 'soltero', '2024', '2024-04-10 09:38:41', '2024-04-10 09:38:41'),
-(79, '77777', 'pedro', 'armada', '2024-04-16', '234234244', 23, 'masculino', 'trabajador', 'asdasd', 'qeqwqwe', 'presidente', 'qwqweqw', 2, '20240417113409.jpg', 'asdsadas', 'soltero', '2024', '2024-04-17 16:34:09', '2024-04-17 16:34:09'),
-(80, '88888', 'sfsdf', 'sdfsd', '2024-04-18', '34535', 23, 'masculino', 'werwer', 'tyut', 'ty', 'wererw', 'tty', 4, '20240417114119.jpg', 'tyuutu', 'casado', '2024', '2024-04-17 16:41:19', '2024-04-17 16:41:19'),
-(81, '999999999', 'r345433', 'rhrh', '2024-04-18', '4564654646', 23, 'masculino', 'rtyy', 'tryy', 'erty', 'rtyrtyty', 'rety', 2, '20240417115532.jpg', 'erttyreyt', 'soltero', '2024', '2024-04-17 16:55:32', '2024-04-17 16:55:32'),
-(82, '66666666', 'thjty', 'tyu', '2024-04-18', '56757', 23, 'masculino', 'rtty', 'rtyty', 'rtty', 'rtrt', 'rtyry', 3, '20240417115822.jpg', 'ryyr', 'casado', '2024', '2024-04-17 16:58:22', '2024-04-17 16:58:22'),
-(83, '8888888888', '356563', 'rtyu', '2024-05-01', '4566767', 23, 'masculino', 'rtyuu', 'rtyru', 'rtyu', 'tryu', 'rtyu', 2, '20240417120016.jpg', 'ertyty', 'casado', '2024', '2024-04-17 17:00:16', '2024-04-17 17:00:16'),
-(84, '2345435', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', 'werwer', NULL, 'werwer', 3, '20240522104510.jpg', 'werewr', 'soltero', '2024', '2024-05-22 15:45:10', '2024-05-22 15:45:10'),
-(85, '23454356787', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', 'werwer', NULL, 'werwer', 3, NULL, 'werewr', 'soltero', '2024', '2024-05-22 15:57:06', '2024-05-22 15:57:06'),
-(86, '23454356787234', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', 'werwer', NULL, 'werwer', 3, NULL, 'werewr', 'soltero', '2024', '2024-05-22 16:04:41', '2024-05-22 16:04:41'),
-(87, '234544345345', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', 'werwer', NULL, 'werwer', 3, NULL, 'werewr', 'soltero', '2024', '2024-05-22 16:09:44', '2024-05-22 16:09:44'),
-(88, '55555555', 'fdgdfg', 'dfgdfg', '2024-05-01', '345435', 23, 'masculino', 'dedgfg', 'ertert', 'ertt', NULL, 'erter', 4, '20240522111505.png', 'ertert', 'casado', '2024', '2024-05-22 16:15:05', '2024-05-22 16:15:05'),
-(89, '123212', 'ertert', 'ert', '2024-05-07', '435435', 23, 'masculino', 'werwerwer', 'werwer', 'wer', NULL, '3', 3, '20240522111850.jpg', 'werwre', 'soltero', '2024', '2024-05-22 16:18:50', '2024-05-22 16:18:50'),
-(90, '324324', '3werwer', 'dssdf', '2024-05-07', '234234', 23, 'masculino', 'werewr', 'werwr', 'werwe', NULL, 'wer', 32, NULL, 'wer', 'casado', '2024', '2024-05-22 16:22:03', '2024-05-22 16:22:03'),
-(91, '12321334', 'ertet', 'ertert', '2024-05-28', '345345345', 34, 'masculino', 'wrertert', 'ertet', 'ert', NULL, '34', 2, '20240522113955.jpg', 'asdasd', 'soltero', '2024', '2024-05-22 16:39:55', '2024-05-22 16:39:55'),
-(92, '54435345', 'edrgdfg', 'dfgdfg', '2024-05-28', '564656', 23, 'femenino', 'werwer', 'werwerwr', 'werwer', NULL, 'werer', 2, '20240522114211.png', 'wewer', 'soltero', '2024', '2024-05-22 16:42:11', '2024-05-22 16:42:11'),
-(93, '4564565', 'rtyrty', 'rtyrty', '2024-05-20', '345345', 23, 'masculino', 'wewerwer', '234', '234', NULL, '234', 3, NULL, 'werewr', 'soltero', '2024', '2024-05-22 16:52:04', '2024-05-22 16:52:04'),
-(94, '234234', 'wssdfsdf', 'sdfs', '2024-05-02', '234234', 23, 'masculino', 'werwre', 'sdfsf', 'sdfsdf', NULL, 'sdf', 2, '20240522115541.jpg', 'sdfsdf', 'soltero', '2024', '2024-05-22 16:55:41', '2024-05-22 16:55:41'),
-(95, '234234345435', 'wssdfsdf', 'sdfs', '2024-05-02', '234234', 23, 'masculino', 'werwre', 'sdfsf', 'sdfsdf', NULL, 'sdf', 2, NULL, 'sdfsdf', 'soltero', '2024', '2024-05-22 17:02:35', '2024-05-22 17:02:35'),
-(96, '234345', 'wssdfsdf', 'sdfs', '2024-05-02', '234234', 23, 'masculino', 'werwre', 'sdfsf', 'sdfsdf', NULL, 'sdf', 2, NULL, 'sdfsdf', 'soltero', '2024', '2024-05-22 17:06:27', '2024-05-22 17:06:27'),
-(97, '345345345435', 'ertret', 'ertre', '2024-05-10', '345345', 23, 'masculino', 'wwerewr', 'wer', 'wer', NULL, 'wer', 2, NULL, 'werewr', 'soltero', '2024', '2024-05-22 17:09:12', '2024-05-22 17:09:12'),
-(98, '234234345', 'werewr', 'werw', '2024-05-15', '45646456', 43, 'masculino', 'fghfgh', 'rtyty', 'rtyrty', NULL, '3', 3, NULL, 'erret', 'soltero', '2024', '2024-05-22 17:21:43', '2024-05-22 17:21:43'),
-(99, '34535', 'erert', 'ertert', '2024-05-03', '3243545', 34, 'masculino', 'ertert', 'ertert', 'ertrt', NULL, 'ert', 3, '20240522122846.jpg', 'ertert', 'casado', '2024', '2024-05-22 17:28:46', '2024-05-22 17:28:46'),
-(100, '456456', 'fgfhfhgfh', 'rtyrty', '2024-05-07', '345435', 34, 'masculino', 'eergerg', 'dfgfdg', 'dfgwerwer', NULL, 'guarico', 31, NULL, 'dfdg', 'soltero', '2024', '2024-05-22 17:38:01', '2024-05-22 17:38:01'),
-(101, '345354566', 'DGGRTRY', 'DFGDFG', '2024-05-16', '4566', 43, 'masculino', 'RYRYY', 'RTYRTY', 'RTYY', NULL, 'RTY', 4, NULL, 'RTY', 'soltero', NULL, '2024-05-23 11:20:50', '2024-05-23 11:20:50'),
-(102, '34535456656767', 'DGGRTRY', 'DFGDFG', '2024-05-16', '4566', 43, 'masculino', 'RYRYY', 'RTYRTY', 'RTYY', NULL, 'RTY', 4, NULL, 'RTY', 'soltero', NULL, '2024-05-23 11:28:09', '2024-05-23 11:28:09'),
-(103, '3453455677', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfgdg', 'dfdfg', NULL, 'dfgd', 3, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:49:21', '2024-05-23 15:49:21'),
-(104, '345345567778', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfgdg', 'dfdfg', NULL, 'dfgd', 3, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:53:27', '2024-05-23 15:53:27'),
-(105, '46874323', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfgdg', 'dfdfg', NULL, 'dfgd', 3, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:57:44', '2024-05-23 15:57:44'),
-(106, '46874323656', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfgdg', 'dfdfg', NULL, 'dfgd', 3, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:59:07', '2024-05-23 15:59:07'),
-(107, '46845456', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfgdg', 'dfdfg', NULL, 'dfgd', 3, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 16:03:24', '2024-05-23 16:03:24'),
-(108, '46845456788', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfgdg', 'dfdfg', NULL, 'dfgd', 3, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 16:07:27', '2024-05-23 16:07:27'),
-(109, '4444444', 'fghfhgfgh', 'sdfsdf', '2024-05-16', '234324', 23, 'masculino', 'werwere', 'werwer', 'werwer', NULL, 'wer', 2, '20240524113952.jpg', 'werewr', 'soltero', '2024', '2024-05-24 16:39:52', '2024-05-24 16:39:52'),
-(110, '3435', 'miqueas', 'dfgdfg', '2024-05-16', '345345345', 34, 'masculino', 'ertertret', 'ertet', 'ertert', NULL, 'ertert', 2, '20240524114120.png', 'werwerwer', 'soltero', '2024', '2024-05-24 16:41:20', '2024-05-26 23:35:48'),
-(111, '78787778788', 'dfgdf', 'gdfgdg', '2024-05-09', '234234', 23, 'masculino', 'werewr', 'dfgdgdf', 'dfgdfg', NULL, 'dfgdf', 2, '20240525024002.png', 'sdfsdfsdf', 'casado', '2024', '2024-05-25 07:40:02', '2024-05-25 07:40:02'),
-(112, '78787778788456456', 'dfgdf', 'gdfgdg', '2024-05-09', '234234', 23, 'masculino', 'werewr', 'dfgdgdf', 'dfgdfg', NULL, 'dfgdf', 2, NULL, 'sdfsdfsdf', 'casado', NULL, '2024-05-25 07:42:49', '2024-05-25 07:42:49'),
-(113, '567657777', 'dfgdf', 'gdfgdg', '2024-05-09', '234234', 23, 'masculino', 'werewr', 'dfgdgdf', 'dfgdfg', NULL, 'dfgdf', 2, NULL, 'sdfsdfsdf', 'casado', NULL, '2024-05-25 07:45:19', '2024-05-25 07:45:19'),
-(114, '56757577', 'ttyuyu', 'ttu', '2024-05-10', '567557', 34, 'masculino', 'tyuytu', 'tyuuu', 'tyutu', NULL, 'tyt', 3, '20240525024713.jpg', 'tytyutu', 'soltero', '2024', '2024-05-25 07:47:13', '2024-05-25 07:47:13'),
-(115, '333333', 'sdfsdfsdf', 'sdfsfsdf', '2024-05-08', '234324324', 12, 'femenino', 'wewerewr', 'fdfgd', 'dfgg', NULL, 'dfgd', 2, '20240526033443.jpg', 'Centro cr 30 #29-05', 'casado', '2024', '2024-05-26 08:34:43', '2024-05-26 08:34:43'),
-(116, '444444455', 'dfgdgdfgdfg', 'dfgdg', '2024-05-11', '43545435', 23, 'masculino', 'sdfdsfsdfsdf', 'lirio', 'Jose', NULL, 'Barinas', 2, '20240526044428.jpg', 'Centro cr 30 #29-05', 'soltero', '2000', '2024-05-26 09:44:28', '2024-05-26 09:44:28'),
-(117, '234234546', 'sdfsdfsdfsdf', 'sdfsdfsfsd', '2024-05-31', '4345345', 23, 'masculino', 'ertertertt', 'sdfgdsg', 'sdfgdsfg', NULL, 'sdfgsdfg', 2, '20240526051014.jpg', 'Centro cr 30 #29-05', 'soltero', NULL, '2024-05-26 10:10:14', '2024-05-26 10:10:14'),
-(118, '34535334544', 'DFGFDG', 'DGDG', '2024-05-08', '345435', 23, 'masculino', 'SFSFSDFSDF', 'SDSDF', 'SDFSDF', NULL, 'SDFSDF', 2, '20240526052842.jpg', 'SDFSDF', 'soltero', '2000', '2024-05-26 10:28:42', '2024-05-26 10:28:42'),
-(119, '4564666', '4564656', 'dgdfgdggdfg', '2024-05-16', '345345345', 34, 'femenino', 'ertertert', 'dfgdgg', 'dgdg', NULL, 'dgdg', 2, NULL, 'werwerwr', 'soltero', NULL, '2024-05-26 10:41:25', '2024-05-26 10:41:25'),
-(120, '111111', 'SDFDSF', 'SDFSDF', '2024-05-14', '234234', 23, 'masculino', 'SDFDSFSDF', 'ASDASD', 'ASSAD', NULL, 'ASD', 2, '20240527105738.jpg', 'ASDASD', 'soltero', '2000', '2024-05-27 15:57:38', '2024-05-27 16:20:46'),
-(121, '234234345345', 'sdfsdf', 'sdfsdf', '2024-05-01', '2342343243', 23, 'masculino', 'sddsfsdf', 'dfggf', 'dfgdfg', 'modal2', 'dfgfdg', 2, NULL, 'sdfsdf', 'soltero', '1990', '2024-05-30 08:56:41', '2024-05-30 08:56:41'),
-(122, '212121', 'tyuiityui', 'tyuitiu', '2024-05-24', '4534354354', 21, 'masculino', 'yuiyuiuiu', 'tyutyuty', 'tyutuytu', 'modal2', 'fdgfdg', 2, '20240531022441.jpg', 'Centro cr 30 #29-05', 'soltero', '1990', '2024-05-31 07:24:41', '2024-05-31 07:24:41'),
-(123, '7777777777', 'sdfsdfsd', 'sdfsdfsdf', '2024-05-01', '44545455', 21, 'masculino', 'tyuiyuiti', 'sdfgdsgds', 'pedro', 'modal2', 'sdfsf', 2, '20240531023842.jpg', 'Centro cr 30 #29-05', 'soltero', '1990', '2024-05-31 07:38:42', '2024-05-31 07:38:42');
+INSERT INTO `registros` (`id`, `cedula`, `nombres`, `apellidos`, `fecha_nacimiento`, `telefono`, `edad`, `genero`, `profesion`, `pastor`, `ministro_ungido`, `imagen`, `direccion`, `estado_civil`, `fecha_uncion`, `created_at`, `updated_at`) VALUES
+(20, '30121121', 'YESICA', 'RODRIGUEZ', '2024-03-21', '2134545', 25, 'femenino', 'DOCENTE', 'ELIAS', 'DIRECTORA', '20240329203941.jpg', 'CR 20 #211', 'casado', '2024', '2024-03-22 17:08:13', '2024-03-30 01:39:41'),
+(68, '343433', 'Miguel Angel', 'Rodrigues', '1993-01-25', '12313214', 23, 'masculino', 'doctor', NULL, NULL, 'elias.jpg', NULL, 'casado', '1993', '2024-03-26 17:21:09', '2024-03-26 17:31:04'),
+(69, '123123', 'SDFDSG', 'DSFGDSG', '2024-03-28', '3453245', 34, 'masculino', 'DSFGDG', 'JOSE', 'SDFGDSFG', '20240329193428.png', 'direccion', 'soltero', '2024', '2024-03-30 00:34:28', '2024-03-30 00:34:28'),
+(70, '23432424', 'sddswewwer', 'sdsdf', '2024-03-26', '3224324', 32, 'masculino', 'ingenio', 'sdf', 'presidente', '20240329201937.jpg', 'sdfsf', 'soltero', '2024', '2024-03-30 00:38:46', '2024-03-30 01:19:37'),
+(71, '2134565', 'miqueas neptali', 'armada', '2024-03-22', '3456434', 32, 'masculino', 'ingeniero', 'pablo', 'presidente', '20240329202143.jpg', 'car', 'soltero', '2024', '2024-03-30 01:21:43', '2024-03-30 01:21:43'),
+(72, '21345654', 'hgfhf', 'fghfgh', '2024-03-14', '34323423', 31, 'masculino', 'ingeniero', 'elias', 'presidente', '20240329202615.png', 'CR 7 N° 1-30 EL PLACER', 'soltero', '2024', '2024-03-30 01:26:15', '2024-03-30 01:26:15'),
+(73, '3435435', 'fsdfsd', 'sdfsdf', '2024-03-14', '234324324', 32, 'masculino', 'ingeniero', 'elias', 'pastor', '20240329202926.png', 'cr 30 #29-05', 'soltero', '2024', '2024-03-30 01:29:26', '2024-03-30 01:29:26'),
+(74, '3424234', 'josesdasdas', 'veles', '2024-03-27', '324234', 21, 'masculino', 'trabajador', 'jose', 'presidente', '20240329203322.jpg', 'Av.jose olaya 215', 'soltero', '2024', '2024-03-30 01:33:22', '2024-03-30 01:33:22'),
+(75, '2334434', 'juanertet', 'perez', '2024-03-28', '345345', 23, 'masculino', 'ingeniero', 'jose', 'vocal', '20240329203622.jpg', 'Av.jose olaya 215', 'soltero', '2024', '2024-03-30 01:36:22', '2024-03-30 01:36:22'),
+(76, '345345', 'juanasdasdasd', 'asdasd', '2024-03-25', '53534535', 32, 'masculino', 'trabajador', 'elias', 'vocal', '20240329203829.jpg', 'Centro cr 30 #29-05', 'soltero', '2024', '2024-03-30 01:38:29', '2024-03-30 01:38:29'),
+(77, '34534534', 'miqueas4', 'VELEZ CASTILLO', '2024-04-16', '33333333', 2, 'masculino', 'werwer', 'werewr', 'we', '20240410043659.png', 'werer', 'soltero', '2024', '2024-04-10 09:32:23', '2024-04-10 09:36:59'),
+(78, '678678', 'ALVELYIS MARTH', 'armada', '2024-04-23', '34545', 23, 'femenino', '2344', 'werwr', '234', '20240410043841.jpg', 'ssdfsdf', 'soltero', '2024', '2024-04-10 09:38:41', '2024-04-10 09:38:41'),
+(81, '999999999', 'r345433', 'rhrh', '2024-04-18', '4564654646', 23, 'masculino', 'rtyy', 'erty', 'rtyrtyty', '20240417115532.jpg', 'erttyreyt', 'soltero', '2024', '2024-04-17 16:55:32', '2024-04-17 16:55:32'),
+(82, '66666666', 'thjty', 'tyu', '2024-04-18', '56757', 23, 'masculino', 'rtty', 'rtty', 'rtrt', '20240417115822.jpg', 'ryyr', 'casado', '2024', '2024-04-17 16:58:22', '2024-04-17 16:58:22'),
+(83, '8888888888', '356563', 'rtyu', '2024-05-01', '4566767', 23, 'masculino', 'rtyuu', 'rtyu', 'tryu', '20240417120016.jpg', 'ertyty', 'casado', '2024', '2024-04-17 17:00:16', '2024-04-17 17:00:16'),
+(84, '2345435', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', NULL, '20240522104510.jpg', 'werewr', 'soltero', '2024', '2024-05-22 15:45:10', '2024-05-22 15:45:10'),
+(85, '23454356787', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', NULL, NULL, 'werewr', 'soltero', '2024', '2024-05-22 15:57:06', '2024-05-22 15:57:06'),
+(86, '23454356787234', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', NULL, NULL, 'werewr', 'soltero', '2024', '2024-05-22 16:04:41', '2024-05-22 16:04:41'),
+(87, '234544345345', 'dfgdg', 'dfgdfg', '2024-05-23', '4564565', 34, 'masculino', 'werwer', 'werwer', NULL, NULL, 'werewr', 'soltero', '2024', '2024-05-22 16:09:44', '2024-05-22 16:09:44'),
+(88, '55555555', 'fdgdfg', 'dfgdfg', '2024-05-01', '345435', 23, 'masculino', 'dedgfg', 'ertt', NULL, '20240522111505.png', 'ertert', 'casado', '2024', '2024-05-22 16:15:05', '2024-05-22 16:15:05'),
+(89, '123212', 'ertert', 'ert', '2024-05-07', '435435', 23, 'masculino', 'werwerwer', 'wer', NULL, '20240522111850.jpg', 'werwre', 'soltero', '2024', '2024-05-22 16:18:50', '2024-05-22 16:18:50'),
+(90, '324324', '3werwer', 'dssdf', '2024-05-07', '234234', 23, 'masculino', 'werewr', 'werwe', NULL, NULL, 'wer', 'casado', '2024', '2024-05-22 16:22:03', '2024-05-22 16:22:03'),
+(91, '12321334', 'ertet', 'ertert', '2024-05-28', '345345345', 34, 'masculino', 'wrertert', 'ert', NULL, '20240522113955.jpg', 'asdasd', 'soltero', '2024', '2024-05-22 16:39:55', '2024-05-22 16:39:55'),
+(92, '54435345', 'edrgdfg', 'dfgdfg', '2024-05-28', '564656', 23, 'femenino', 'werwer', 'werwer', NULL, '20240522114211.png', 'wewer', 'soltero', '2024', '2024-05-22 16:42:11', '2024-05-22 16:42:11'),
+(93, '4564565', 'rtyrty', 'rtyrty', '2024-05-20', '345345', 23, 'masculino', 'wewerwer', '234', NULL, NULL, 'werewr', 'soltero', '2024', '2024-05-22 16:52:04', '2024-05-22 16:52:04'),
+(94, '234234', 'wssdfsdf', 'sdfs', '2024-05-02', '234234', 23, 'masculino', 'werwre', 'sdfsdf', NULL, '20240522115541.jpg', 'sdfsdf', 'soltero', '2024', '2024-05-22 16:55:41', '2024-05-22 16:55:41'),
+(95, '234234345435', 'wssdfsdf', 'sdfs', '2024-05-02', '234234', 23, 'masculino', 'werwre', 'sdfsdf', NULL, NULL, 'sdfsdf', 'soltero', '2024', '2024-05-22 17:02:35', '2024-05-22 17:02:35'),
+(96, '234345', 'wssdfsdf', 'sdfs', '2024-05-02', '234234', 23, 'masculino', 'werwre', 'sdfsdf', NULL, NULL, 'sdfsdf', 'soltero', '2024', '2024-05-22 17:06:27', '2024-05-22 17:06:27'),
+(97, '345345345435', 'ertret', 'ertre', '2024-05-10', '345345', 23, 'masculino', 'wwerewr', 'wer', NULL, NULL, 'werewr', 'soltero', '2024', '2024-05-22 17:09:12', '2024-05-22 17:09:12'),
+(98, '234234345', 'werewr', 'werw', '2024-05-15', '45646456', 43, 'masculino', 'fghfgh', 'rtyrty', NULL, NULL, 'erret', 'soltero', '2024', '2024-05-22 17:21:43', '2024-05-22 17:21:43'),
+(99, '34535', 'erert', 'ertert', '2024-05-03', '3243545', 34, 'masculino', 'ertert', 'ertrt', 'modal2', '20240522122846.jpg', 'ertert', 'casado', '2024', '2024-05-22 17:28:46', '2024-06-16 10:11:48'),
+(100, '456456', 'fgfhfhgfh', 'rtyrty', '2024-05-07', '345435', 34, 'masculino', 'eergerg', 'dfgwerwer', NULL, NULL, 'dfdg', 'soltero', '2024', '2024-05-22 17:38:01', '2024-05-22 17:38:01'),
+(101, '345354566', 'DGGRTRY', 'DFGDFG', '2024-05-16', '4566', 43, 'masculino', 'RYRYY', 'RTYY', NULL, NULL, 'RTY', 'soltero', NULL, '2024-05-23 11:20:50', '2024-05-23 11:20:50'),
+(102, '34535456656767', 'DGGRTRY', 'DFGDFG', '2024-05-16', '4566', 43, 'masculino', 'RYRYY', 'RTYY', NULL, NULL, 'RTY', 'soltero', NULL, '2024-05-23 11:28:09', '2024-05-23 11:28:09'),
+(103, '3453455677', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfdfg', NULL, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:49:21', '2024-05-23 15:49:21'),
+(104, '345345567778', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfdfg', NULL, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:53:27', '2024-05-23 15:53:27'),
+(105, '46874323', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfdfg', NULL, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:57:44', '2024-05-23 15:57:44'),
+(106, '46874323656', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfdfg', NULL, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 15:59:07', '2024-05-23 15:59:07'),
+(107, '46845456', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfdfg', NULL, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 16:03:24', '2024-05-23 16:03:24'),
+(108, '46845456788', 'dfgdfg', 'dfgdfg', '2024-05-31', '456546', 34, 'masculino', 'dfgdfg', 'dfdfg', NULL, NULL, 'dfgdfg', 'soltero', '2024', '2024-05-23 16:07:27', '2024-05-23 16:07:27'),
+(109, '4444444', 'fghfhgfgh', 'sdfsdf', '2024-05-16', '234324', 23, 'masculino', 'werwere', 'werwer', 'modal3', '20240524113952.jpg', 'werewr', 'soltero', '2024', '2024-05-24 16:39:52', '2024-06-16 10:05:27'),
+(111, '78787778788', 'dfgdf', 'gdfgdg', '2024-05-09', '234234', 23, 'masculino', 'werewr', 'dfgdfg', NULL, '20240525024002.png', 'sdfsdfsdf', 'casado', '2024', '2024-05-25 07:40:02', '2024-05-25 07:40:02'),
+(112, '78787778788456456', 'dfgdf', 'gdfgdg', '2024-05-09', '234234', 23, 'masculino', 'werewr', 'dfgdfg', NULL, NULL, 'sdfsdfsdf', 'casado', NULL, '2024-05-25 07:42:49', '2024-05-25 07:42:49'),
+(113, '567657777', 'dfgdf', 'gdfgdg', '2024-05-09', '234234', 23, 'masculino', 'werewr', 'dfgdfg', NULL, NULL, 'sdfsdfsdf', 'casado', NULL, '2024-05-25 07:45:19', '2024-05-25 07:45:19'),
+(114, '56757577', 'ttyuyu', 'ttu', '2024-05-10', '567557', 34, 'masculino', 'tyuytu', 'tyutu', NULL, '20240525024713.jpg', 'tytyutu', 'soltero', '2024', '2024-05-25 07:47:13', '2024-05-25 07:47:13'),
+(115, '333333', 'sdfsdfsdf', 'sdfsfsdf', '2024-05-08', '234324324', 12, 'femenino', 'wewerewr', 'dfgg', 'modal2', '20240526033443.jpg', 'Centro cr 30 #29-05', 'casado', '2024', '2024-05-26 08:34:43', '2024-06-16 10:26:09'),
+(116, '444444455', 'dfgdgdfgdfg', 'dfgdg', '2024-05-11', '43545435', 23, 'masculino', 'sdfdsfsdfsdf', 'Jose', NULL, '20240526044428.jpg', 'Centro cr 30 #29-05', 'soltero', '2000', '2024-05-26 09:44:28', '2024-05-26 09:44:28'),
+(117, '234234546', 'sdfsdfsdfsdf', 'sdfsdfsfsd', '2024-05-31', '4345345', 23, 'masculino', 'ertertertt', 'sdfgdsfg', NULL, '20240526051014.jpg', 'Centro cr 30 #29-05', 'soltero', NULL, '2024-05-26 10:10:14', '2024-05-26 10:10:14'),
+(118, '34535334544', 'DFGFDG', 'DGDG', '2024-05-08', '345435', 23, 'masculino', 'SFSFSDFSDF', 'SDFSDF', NULL, '20240526052842.jpg', 'SDFSDF', 'soltero', '2000', '2024-05-26 10:28:42', '2024-05-26 10:28:42'),
+(119, '4564666', '4564656', 'dgdfgdggdfg', '2024-05-16', '345345345', 34, 'femenino', 'ertertert', 'dgdg', NULL, NULL, 'werwerwr', 'soltero', NULL, '2024-05-26 10:41:25', '2024-05-26 10:41:25'),
+(120, '111111', 'SDFDSF', 'SDFSDF', '2024-05-14', '234234', 23, 'masculino', 'SDFDSFSDF', 'ASSAD', NULL, '20240527105738.jpg', 'ASDASD', 'soltero', '2000', '2024-05-27 15:57:38', '2024-05-27 16:20:46'),
+(121, '234234345345', 'sdfsdf', 'sdfsdf', '2024-05-01', '2342343243', 23, 'masculino', 'sddsfsdf', 'dfgdfg', 'modal2', NULL, 'sdfsdf', 'soltero', '1990', '2024-05-30 08:56:41', '2024-05-30 08:56:41'),
+(122, '212121', 'tyuiityui', 'tyuitiu', '2024-05-24', '4534354354', 21, 'masculino', 'yuiyuiuiu', 'tyutuytu', 'modal2', '20240531022441.jpg', 'Centro cr 30 #29-05', 'soltero', '1990', '2024-05-31 07:24:41', '2024-05-31 07:24:41'),
+(123, '7777777777', 'sdfsdfsd', 'sdfsdfsdf', '2024-05-01', '44545455', 21, 'masculino', 'tyuiyuiti', 'pedro', 'modal2', '20240531023842.jpg', 'Centro cr 30 #29-05', 'soltero', '1990', '2024-05-31 07:38:42', '2024-05-31 07:38:42'),
+(124, '555555', 'sdfgfgdfg', 'dfgdfg', '2024-06-13', '455454554', 25, 'masculino', 'dfgdgdfg', 'sdfsdf', 'modal2', '20240613021217.jpg', 'sdfsdfdsf', 'soltero', NULL, '2024-06-13 07:12:17', '2024-06-16 08:40:30'),
+(125, '788787777', 'ddfghd', 'sdfsdfsdf', '2024-06-13', '45545454', 25, 'masculino', 'dfggfdg', 'dfgdfg', 'modal2', '20240613021622.jpg', 'dfgdfgdfg', 'soltero', '1990', '2024-06-13 07:16:22', '2024-06-13 07:16:22'),
+(126, '22222222', 'sdfdsf', 'sdfsdf', '2024-06-05', '234234', 23, 'masculino', 'sdfsdf', 'asdasd', 'modal3', '20240614021404.jpg', 'asdasd', 'soltero', '1990', '2024-06-14 07:14:04', '2024-06-16 08:15:59'),
+(127, '11111122', 'rdgdfg', 'dfgdfg', '2024-06-26', '234234234', 23, 'masculino', 'sdfsff', 'qweqwe', 'modal2', '20240614041059.jpg', 'qweqwe', 'soltero', '1990', '2024-06-14 09:10:59', '2024-06-14 09:10:59'),
+(128, '34444444', 'sdfsdf', 'sdfsdf', '2024-06-12', '23423423', 23, 'masculino', 'asdasdasd', 'aasdasd', 'modal2', '20240614041535.jpg', 'asdasdsad', 'soltero', '1990', '2024-06-14 09:15:35', '2024-06-14 09:49:22'),
+(129, '3453454543345', 'dfgdfg', 'dfgdfg', '2024-06-11', '345435443', 23, 'masculino', 'dfgdfg', 'sdfsdf', 'modal2', '20240614043515.jpg', 'sdfsf', 'soltero', '1990', '2024-06-14 09:35:15', '2024-06-14 09:35:15'),
+(130, '11111111', 'fghfgh', 'fghfgh', '2024-06-25', '34535', 34, 'masculino', 'sdfsdfsdf', 'dfgdgf', 'modal3', '20240616042452.jpg', 'dfgdfgf', 'soltero', '1990', '2024-06-16 09:24:52', '2024-06-16 09:24:52'),
+(131, '1111111555', 'fghfgh', 'fghfgh', '2024-06-25', '34535', 34, 'masculino', 'sdfsdfsdf', 'dfgdgf', 'modal2', NULL, 'dfgdfgf', 'soltero', '1990', '2024-06-16 09:31:07', '2024-06-16 09:31:07'),
+(132, '34534534535', 'dfgdfg', 'dfgdgdfg', '2024-06-13', '324234', 23, 'masculino', 'sdfsdfsf', 'ddggdf', 'modal2', '20240616043606.png', 'dfgdfg', 'soltero', '1990', '2024-06-16 09:36:06', '2024-06-16 09:36:06'),
+(133, '78787877', 'dfgdfg', 'dfgdgdfg', '2024-06-13', '324234', 23, 'masculino', 'sdfsdfsf', 'ddggdf', 'modal2', '20240616045757.jpg', 'dfgdfg', 'soltero', '1990', '2024-06-16 09:57:57', '2024-06-16 09:57:57'),
+(134, '44444444', 'fghfgh', 'fghfgh', '2024-06-19', '23342424', 23, 'masculino', 'sdfsdfsf', 'sdfsf', 'modal3', '20240616045926.jpg', 'sdfsfd', 'soltero', NULL, '2024-06-16 09:59:26', '2024-06-16 09:59:26'),
+(135, '456456464556', 'dfgdfgdfg', 'dfgdfg', '2024-06-13', '345435355', 23, 'masculino', 'sdfsdf', 'werwerwer', 'modal2', '20240616053506.jpg', 'werwer', 'soltero', '1990', '2024-06-16 10:35:06', '2024-06-16 10:35:06');
 
 -- --------------------------------------------------------
 
@@ -573,7 +598,54 @@ INSERT INTO `registro_dependencia_cargo` (`id`, `registro_id`, `dependencia_carg
 (44, 122, 8, '2024-05-31 07:24:41', '2024-05-31 07:24:41'),
 (45, 122, 33, '2024-05-31 07:24:41', '2024-05-31 07:24:41'),
 (46, 123, 8, '2024-05-31 07:38:42', '2024-05-31 07:38:42'),
-(47, 123, 33, '2024-05-31 07:38:42', '2024-05-31 07:38:42');
+(47, 123, 33, '2024-05-31 07:38:42', '2024-05-31 07:38:42'),
+(49, 125, 15, '2024-06-13 07:16:22', '2024-06-13 07:16:22'),
+(61, 129, 8, '2024-06-14 09:35:16', '2024-06-14 09:35:16'),
+(74, 128, 8, '2024-06-14 10:12:31', '2024-06-14 10:12:31'),
+(75, 128, 33, '2024-06-14 10:12:31', '2024-06-14 10:12:31'),
+(94, 126, 8, '2024-06-16 08:15:59', '2024-06-16 08:15:59'),
+(95, 126, 33, '2024-06-16 08:15:59', '2024-06-16 08:15:59'),
+(102, 124, 8, '2024-06-16 09:21:45', '2024-06-16 09:21:45'),
+(103, 130, 8, '2024-06-16 09:24:52', '2024-06-16 09:24:52'),
+(104, 132, 8, '2024-06-16 09:36:06', '2024-06-16 09:36:06'),
+(105, 133, 8, '2024-06-16 09:57:57', '2024-06-16 09:57:57'),
+(106, 134, 8, '2024-06-16 09:59:26', '2024-06-16 09:59:26'),
+(107, 135, 9, '2024-06-16 10:35:06', '2024-06-16 10:35:06');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registro_iglesias`
+--
+
+CREATE TABLE `registro_iglesias` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_registro` bigint(20) UNSIGNED NOT NULL,
+  `id_iglesia` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `registro_iglesias`
+--
+
+INSERT INTO `registro_iglesias` (`id`, `id_registro`, `id_iglesia`, `created_at`, `updated_at`) VALUES
+(2, 125, 1, '2024-06-13 07:16:23', '2024-06-13 07:16:23'),
+(9, 127, 1, '2024-06-14 09:10:59', '2024-06-14 09:10:59'),
+(11, 129, 1, '2024-06-14 09:35:16', '2024-06-14 09:35:16'),
+(18, 128, 1, '2024-06-14 10:12:31', '2024-06-14 10:12:31'),
+(28, 126, 1, '2024-06-16 08:16:00', '2024-06-16 08:16:00'),
+(35, 124, 3, '2024-06-16 09:21:45', '2024-06-16 09:21:45'),
+(36, 130, 1, '2024-06-16 09:24:52', '2024-06-16 09:24:52'),
+(37, 131, 1, '2024-06-16 09:31:07', '2024-06-16 09:31:07'),
+(38, 132, 1, '2024-06-16 09:36:06', '2024-06-16 09:36:06'),
+(39, 133, 1, '2024-06-16 09:57:58', '2024-06-16 09:57:58'),
+(40, 134, 1, '2024-06-16 09:59:26', '2024-06-16 09:59:26'),
+(42, 109, 1, '2024-06-16 10:09:47', '2024-06-16 10:09:47'),
+(45, 99, 1, '2024-06-16 10:12:38', '2024-06-16 10:12:38'),
+(46, 115, 3, '2024-06-16 10:26:10', '2024-06-16 10:26:10'),
+(47, 135, 1, '2024-06-16 10:35:06', '2024-06-16 10:35:06');
 
 -- --------------------------------------------------------
 
@@ -645,11 +717,7 @@ CREATE TABLE `zonas` (
 --
 
 INSERT INTO `zonas` (`id`, `nombre`, `circuito_id`, `created_at`, `updated_at`) VALUES
-(1, 'Zona 1', 3, NULL, NULL),
-(3, 'zona1', 3, '2024-06-08 07:54:39', '2024-06-08 07:54:39'),
-(4, 'zona 2', 3, '2024-06-08 07:54:39', '2024-06-08 07:54:39'),
-(5, 'zona 1', 4, '2024-06-08 16:07:14', '2024-06-08 16:07:14'),
-(6, 'zona 2', 4, '2024-06-08 16:07:15', '2024-06-08 16:07:15');
+(1, 'Zona 1', 3, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -723,7 +791,7 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `ministerio`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_registro` (`id_registro`);
+  ADD KEY `ministerio_ibfk_1` (`id_registro`);
 
 --
 -- Indices de la tabla `password_resets`
@@ -761,6 +829,14 @@ ALTER TABLE `registro_dependencia_cargo`
   ADD KEY `dependencia_cargos_id` (`dependencia_cargos_id`);
 
 --
+-- Indices de la tabla `registro_iglesias`
+--
+ALTER TABLE `registro_iglesias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_registro` (`id_registro`),
+  ADD KEY `id_iglesia` (`id_iglesia`);
+
+--
 -- Indices de la tabla `sessions`
 --
 ALTER TABLE `sessions`
@@ -796,7 +872,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `categoria_ungidos`
 --
 ALTER TABLE `categoria_ungidos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `circuitos`
@@ -826,19 +902,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `iglesias`
 --
 ALTER TABLE `iglesias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `ministerio`
 --
 ALTER TABLE `ministerio`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
@@ -856,12 +932,18 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_dependencia_cargo`
 --
 ALTER TABLE `registro_dependencia_cargo`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+
+--
+-- AUTO_INCREMENT de la tabla `registro_iglesias`
+--
+ALTER TABLE `registro_iglesias`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
@@ -911,7 +993,7 @@ ALTER TABLE `iglesias`
 -- Filtros para la tabla `ministerio`
 --
 ALTER TABLE `ministerio`
-  ADD CONSTRAINT `ministerio_ibfk_1` FOREIGN KEY (`id_registro`) REFERENCES `registros` (`id`);
+  ADD CONSTRAINT `ministerio_ibfk_1` FOREIGN KEY (`id_registro`) REFERENCES `registros` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `registro_dependencia_cargo`
@@ -919,6 +1001,13 @@ ALTER TABLE `ministerio`
 ALTER TABLE `registro_dependencia_cargo`
   ADD CONSTRAINT `registro_dependencia_cargo_ibfk_1` FOREIGN KEY (`dependencia_cargos_id`) REFERENCES `dependencia_cargos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `registro_dependencia_cargo_registro_id_foreign` FOREIGN KEY (`registro_id`) REFERENCES `registros` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `registro_iglesias`
+--
+ALTER TABLE `registro_iglesias`
+  ADD CONSTRAINT `registro_iglesias_ibfk_1` FOREIGN KEY (`id_registro`) REFERENCES `registros` (`id`),
+  ADD CONSTRAINT `registro_iglesias_ibfk_2` FOREIGN KEY (`id_iglesia`) REFERENCES `iglesias` (`id`);
 
 --
 -- Filtros para la tabla `zonas`
