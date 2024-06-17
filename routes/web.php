@@ -9,6 +9,7 @@ use App\Http\Controllers\CargoDependenciaController;
 use App\Http\Controllers\CircuitoController;
 use App\Http\Controllers\ZonaController;
 use App\Http\Controllers\IglesiaController;
+use App\Http\Controllers\CandidatosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +89,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::resource('/candidatos', CandidatosController::class);
+    Route::post('candidatos/storeMultiple', [CandidatosController::class, 'storeMultiple'])->name('candidatos.storeMultiple');
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::resource('/iglesias', IglesiaController::class);
      
       Route::post('iglesias/storeMultiple', [IglesiaController::class, 'storeMultiple'])->name('iglesias.storeMultiple');
@@ -101,6 +112,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 Route::get('/apizonas/{circuitoId}', [IglesiaController::class, 'getZonas'])->name('getZonas');
 
 Route::get('/api-iglesias/{zonaId}', [RegistroController::class, 'getIglesias'])->name('getIglesias');
+
+
+Route::get('/api-cargos/{dependenciaId}', [CandidatosController::class, 'getCargos'])->name('getCargos');
 
 
 

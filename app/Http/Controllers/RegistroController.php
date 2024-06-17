@@ -62,8 +62,6 @@ class RegistroController extends Controller
             ->orderBy('dependencias.nombre')
             ->select('dependencia_cargos.*') 
             ->get();
-
-      
            
         return view('registros.crear', compact('cargosDependencias','dependencias','circuitos'));
        

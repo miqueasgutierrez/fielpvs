@@ -378,6 +378,16 @@ return [
             
         ],
 
+
+            [
+            'text' => 'Candidatos',
+            'url' => 'candidatos/create',
+            'icon' => 'fas fa-user-tie',
+            
+        ],
+
+
+
          [
             'text' => 'Elecciones',
             'url' => 'elecciones',

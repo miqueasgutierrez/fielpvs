@@ -71,88 +71,47 @@
                         </div>
 
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">DEPENDENCIAS Y CARGOS:</label>
-                           
-        @foreach ($registroDependenciaCargos as $registroDependenciaCargo)
-            <div>
-                <p><strong>Dependencia:</strong> {{ $registroDependenciaCargo->dependenciaCargo->dependencia->nombre }}</p>
-                <p><strong>Cargo:</strong> {{ $registroDependenciaCargo->dependenciaCargo->cargo->nombre }}</p>
-            </div>
-        @endforeach
+                            <label for="exampleInputEmail1">CARGO ACTUAL:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="cargo" placeholder="ej. Presidente, Vocal, Pastor" value="{{ $registro->cargo}}" readonly>
                         </div>
                     </div>
 
 
 
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
-                        
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+                        <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">MINISTERIO:</label>
+                           <input  required class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="cedula" name="cedula"  value="{{ $registro->ministerio }}"  readonly>
+                        </div>
 
                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1"> ¿ Es un ministro ungido ?:</label>  
-                            <select id="modalSelector" name="ministro_ungido" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" readonly>
-      <option value="">Seleccione</option>
-      <option value="modal2" {{ $registro->ministro_ungido === 'modal2' ? 'selected' : '' }}>Sí</option>
-        <option value="modal3" {{ $registro->ministro_ungido === 'modal3' ? 'selected' : '' }}>No</option>
-    </select>
-
+                            <label for="exampleInputEmail1">IGLESIA:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $registro->iglesia}}" readonly >
                         </div>
-
-
-
-                        <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">MINISTERIO:</label>  
-                             @foreach($registro->ministerios as $ministerio)
-                <li>{{ $ministerio->nombre }}</li>
-            @endforeach
-
-            
-             @if($categoriaungido)
-               <label for="exampleInputEmail1">Categoria:</label>  
-        <p>{{ $categoriaungido->nombre }}</p>
-    @else
-        
-    @endif
-    
-
-                        </div>
-
-
-
-                         <div class="grid grid-cols-1">
-
-
-                            <label for="exampleInputEmail1">Año de Uncion:</label>
-                            <div class="flex items-center space-x-4">
-                                <input  class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_nacimiento" placeholder="ej. 20/10/1980" value="{{ $registro->fecha_uncion}}" readonly>
-
-                            </div>
-
-                        </div>
-
-                      
               
 
 
+                    <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">DEPENDENCIA:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $registro->dependencia}}" readonly >
+                        </div>
       </div>
 
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-                       
+                        <div class="grid grid-cols-1">
+                            <label for="exampleInputEmail1">PASTOR:</label>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias" value="{{ $registro->pastor}}" readonly>
+                        </div>
+
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">CIRCUITO:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur" value="{{ $circuito->nombre ?? '' }}" autocomplete="off" readonly>
+                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="circuito" name="circuito" placeholder="ej. Barinas, Guarico sur" value="{{ $registro->circuito}}" autocomplete="off" readonly>
                         </div>
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">ZONA:</label>
-                            <input  class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="zona" name="zona" placeholder="ej. 1, 2,3" value=" {{ $zona->nombre ?? '' }}" readonly>
+                            <input  class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="zona" name="zona" placeholder="ej. 1, 2,3" value="{{ $registro->zona}}" readonly>
                         </div>
-
-
-                         <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">IGLESIA:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="iglesia" name="iglesia" placeholder="ej. Lirio,Sendero,Cristo" value="{{ $iglesia->nombre ?? '' }}" readonly >
-                        </div>
-                        
 
                     </div>
 
@@ -160,17 +119,6 @@
 
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-8 mt-5 mx-7">
-
-                       <div class="grid grid-cols-1">
-                            <label for="exampleInputEmail1">PASTOR:</label>
-                            <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="pastor" name="pastor" placeholder="ej. Pedro,Jose,Elias" value="{{ $registro->pastor}}" readonly>
-                        </div>
-
-
-
-                         
-
-
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">direccion:</label>
                             <input type="text" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"  name="direccion" placeholder="" value="{{ $registro->direccion}}" readonly>
@@ -190,7 +138,27 @@
                         </div>
 
 
-                   
+                        <div class="grid grid-cols-1">
+
+
+                            <label for="exampleInputEmail1">¿Es un Ministro Ordenado?:</label>
+                            <div class="flex items-center space-x-4">
+                                <input  required class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="cedula" name="cedula"  value="{{ $registro->ministro_ordenado }}"  readonly>
+                            </div>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-1">
+
+
+                            <label for="exampleInputEmail1">Fecha de Uncion:</label>
+                            <div class="flex items-center space-x-4">
+                                <input type="date" class="block w-full py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="fecha_nacimiento" placeholder="ej. 20/10/1980" value="{{ $registro->fecha_uncion}}" readonly>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
