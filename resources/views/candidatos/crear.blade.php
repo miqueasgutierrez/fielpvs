@@ -32,7 +32,7 @@
             </div>
 			<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-				<form method="POST" action="{{ route('cargosdependencias.store') }}">
+				<form method="POST" action="{{ route('candidatos.store') }}">
     @csrf
 
     <div class="form-group">
@@ -204,7 +204,7 @@ var detalles = 0; //
      
         var fila='<tr class="filas" id="fila'+cont+'">'+
         '<td><button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button></td>'+
-        '<td><input type="hidden" name="id[]" value="'+id+'">'+cedula+'</td>'+
+        '<td><input type="hidden" name="idcandidato[]" value="'+id+'">'+cedula+'</td>'+
         '<td>'+nombres+'</td>">'+
         '<td>'+apellidos+'</td>">'+
         '<td class="px-4 py-2 text-center">' +

@@ -6,9 +6,12 @@ namespace App\Http\Controllers;
 use App\Models\dependencia_cargo;
 use App\Models\Dependencia;
 use App\Models\Registro;
+use App\Models\Candidatos;
 
 
 use Illuminate\Http\Request;
+
+use Carbon\Carbon;
 
 class CandidatosController extends Controller
 {
@@ -19,8 +22,14 @@ class CandidatosController extends Controller
      */
     public function index()
     {
-          $dependenciasCargos = dependencia_cargo::with(['dependencia', 'cargo'])->get();
-        return view('candidatos.crear', compact('dependenciasCargos'));
+
+         $currentYear = Carbon::now()->year;
+
+          $candidatos = Candidatos::with(['registro', 'dependenciaCargo'])
+                            ->whereYear('created_at', $currentYear)
+                            ->get();
+
+    return view('candidatos.index', compact('candidatos'));
     }
 
     /**
@@ -30,7 +39,7 @@ class CandidatosController extends Controller
      */
     public function create()
     {
-        $dependencias = Dependencia::all();
+         $dependencias = Dependencia::all();
 
          $registros = Registro::paginate(1000);
 
@@ -44,9 +53,26 @@ class CandidatosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+     {
+        
+
+        $validatedData = $request->validate([
+            'idcandidato' => 'required',
+            'id_cargo' => 'required'
+        ]);
+
+        $idcargo = $request->id_cargo;
+
+        foreach ($request->idcandidato as $idcandidato) {
+            Candidatos::create([
+                'id_candidato' => $idcandidato,
+                'id_dependencia_cargos' => $idcargo
+            ]);
+        }
+
+         return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
     }
+
 
     /**
      * Display the specified resource.
@@ -88,9 +114,10 @@ class CandidatosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Candidatos $candidato)
     {
-        //
+         $candidato->delete();
+        return redirect()->route('candidatos.index');
     }
 
 

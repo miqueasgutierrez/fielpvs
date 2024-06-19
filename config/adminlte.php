@@ -381,7 +381,7 @@ return [
 
             [
             'text' => 'Candidatos',
-            'url' => 'candidatos/create',
+            'url' => 'candidatos',
             'icon' => 'fas fa-user-tie',
             
         ],
