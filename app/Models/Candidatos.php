@@ -10,12 +10,11 @@ class Candidatos extends Model
     use HasFactory;
 
 
-    protected $fillable = [
-        'id_dependencia_cargos',
-        'id_candidato'
-    ];
+    protected $table = 'candidatos';
 
+    protected $fillable = ['id_dependencia_cargos', 'id_candidato'];
 
+    
    
     public function dependenciacargo()
     {

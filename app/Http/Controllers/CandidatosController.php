@@ -29,6 +29,8 @@ class CandidatosController extends Controller
                             ->whereYear('created_at', $currentYear)
                             ->get();
 
+                        
+
     return view('candidatos.index', compact('candidatos'));
     }
 

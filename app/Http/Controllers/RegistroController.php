@@ -152,6 +152,8 @@ class RegistroController extends Controller
 
     {
 
+
+
        $ministerios = $registro->ministerios;
 
        

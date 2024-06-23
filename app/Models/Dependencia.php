@@ -9,14 +9,18 @@ class Dependencia extends Model
 {
     use HasFactory;
 
+
+     protected $table = 'dependencias';
+
     protected $fillable= ['nombre'];
+
+
 
 
      public function cargos()
     {
         return $this->belongsToMany(Cargo::class, 'dependencia_cargos', 'id_dependencia', 'id_cargo');
     }
-
 
     
 }
