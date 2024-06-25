@@ -23,9 +23,15 @@
 
 
 
-.thead-dark td {
-    color: white; /* Asegura que el texto dentro de los <td> también sea blanco */
-}
+ .centrar-imagen {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .centrar-imagen img {
+        display: inline-block;
+    }
+
 
 
 .red-text {
@@ -69,27 +75,25 @@
 
      <thead class="thead-dark ">
     <tr>
-      <td  colspan="4" scope="col">Contadores iniciales del proceso electoral</td>
+      <td  colspan="5" scope="col">Lista de postulados para las elecciones </td>
      
     </tr>
   </thead>
-
-  
       <thead class="thead-morado">
         <tr>
-      <td colspan="3"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
+      <td colspan="5"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
       
     </tr>
   @foreach($dependencia->cargos as $cargo)
     </thead >
       <tr>
-      <td class="bg-info text-white centrar-texto"  colspan="3"><h5>Cargo: {{ $cargo->nombre }}</h5></td>
+      <td class="bg-info text-white centrar-texto"  colspan="4"><h5>Cargo: {{ $cargo->nombre }}</h5></td>
       
     </tr>
 
     <thead class="thead-dark ">
     <tr>
-      <td  colspan="4" scope="col">Candidatos</td>
+      <td  colspan="5" scope="col">Candidatos</td>
      
     </tr>
   </thead>
@@ -97,14 +101,15 @@
 
     @if($cargo->candidatos->isEmpty())
          <tr>
-      <td colspan="3"><p>No hay candidatos para este cargo.</p></td>
+      <td colspan="4"><p>No hay candidatos para este cargo.</p></td>
       
     </tr>  
         @else
          <tr>
-      <th scope="col" class="centrar-texto"  ><p>Cedula</p></th>
-      <th scope="col" class="centrar-texto"><p>Nombres y Apellidos</p></th>
-      <th scope="col" class="centrar-texto" ><p>Votos recibidos</p></th>
+      <th scope="col" class="centrar-texto"><p>Cedula</p></th>
+      <th scope="col" class="centrar-texto"><p>Nombres </p></th>
+      <th scope="col" class="centrar-texto" ><p>Apellidos</p></th>
+      <th scope="col" class="centrar-texto"><p>Perfil</p></th>
     </tr>
 
      
@@ -114,9 +119,14 @@
 @foreach($cargo->candidatos as $candidato)
    
 <tr>
-      <th scope="col" class="centrar-texto">{{ $candidato->registro->cedula }}</th>
-      <th scope="col" class="centrar-texto" >{{ $candidato->registro->nombres}} {{ $candidato->registro->apellidos }}</th>
-      <th scope="col" class="centrar-texto">0</th>
+      <th scope="col" class="centrar-texto" >{{ $candidato->registro->cedula }}</th>
+      <th scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }}</th>
+        <th scope="col" class="centrar-texto">{{ $candidato->registro->apellidos }}</th>
+      <th scope="col" class="centrar-imagen">  
+
+ <img src="../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
+
+       </th>
     </tr>
  @endforeach
 

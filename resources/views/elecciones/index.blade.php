@@ -1,6 +1,18 @@
 
 @extends('adminlte::page')
 @section('content')
+
+
+
+<style>
+
+ .fixed-width {
+        width: 150px; /* Ajusta este valor según tus necesidades */
+    }
+
+
+</style>
+
     <x-app-layout>
     
 <div class="col-lg-6 col-12 mx-auto">
@@ -16,11 +28,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 
 
-                        <div class="grid grid-cols-1">
-      <br>
-       <br>
-            <a type="button"href="{{ route('zonas.create') }}"class="bg-indigo-500 px-12 py-2 rounded text-gray-200 font-semibold hover:bg-indigo-800 transition duration-200 each-in-out text-center ">Agregar</a>
-        </div>
+                       
 
       </div>
       
@@ -29,14 +37,16 @@
    <br>
 
 <div class="col-sm-12">
-  <table id="zonas" class="table table-bordered table-striped dataTable dtr-inline">
+
+      <div class="card-body table-responsive p-0" style="height: 600px;">  
+  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
       <tr class="bg-gray-800 text-white">
-        <th class="sorting sorting_asc text-center">DEPENDENCIA</th>
-        <th class="sorting sorting_asc text-center">TIPO</th>
+        <th class="sorting sorting_asc text-center fixed-width">DEPENDENCIA</th>
+        <th class="sorting sorting_asc text-center fixed-width">TIPO</th>
         <th class="sorting sorting_asc text-center ">CARGOS</th>
         <th class="sorting sorting_asc text-center ">POSTULADOS</th>
-         <th class="sorting sorting_asc text-center ">VOTAR</th>
+         <th class="sorting sorting_asc text-center ">FECHAS</th>
          <th class="sorting sorting_asc text-center ">ACCIONES</th>
       </tr>
     </thead>
@@ -52,7 +62,7 @@
          <td class="px-4 py-2 text-center ">
 
 
-<div class="inner small-box bg-info">
+<div class="inner small-box bg-info fixed-width">
 
 <br>
 <br>
@@ -60,6 +70,8 @@
 <br>
 <br>
 <p>{{$dependencia->nombre}}</p>
+
+<p></p>
 <br>
 <br>
 <br>
@@ -69,9 +81,9 @@
 </div>
 
            </td>
-        <td class="px-4 py-2 text-center">
-
-        <div  onclick="document.getElementById('formEliminar').submit();"  class="inner small-box bg-success">
+        <td class="px-4 py-2 text-center fixed-width">
+<a href="{{ route('elecciones.show', $dependencia->id) }}">
+        <div  class="inner small-box bg-success">
 <br>
 <br>
 <br>
@@ -87,13 +99,10 @@
 <br>
 
     </div>
-    <form id="formEliminar" action="{{ route('elecciones.show', $dependencia->id) }}" method="POST" style="display: none;">
-    @csrf
-    <!-- Incluye cualquier otro campo oculto necesario -->
-</form>
+    <a/>
 </td>
           <td class="px-4 py-2 text-center"> 
-
+  <div  class="inner small-box bg-danger">
 
 
   @foreach($dependencia->cargos as $cargo)
@@ -104,24 +113,69 @@
 
 
           </td>
-        <td class="px-4 py-2">
-          <div class="flex justify-center space-x-2">
-            <!-- botón editar -->
+          </div>
+        <td class="px-4 py-2 text-center ">
+        <div  class="inner small-box bg-warning ">
+        <br>
+<br>
+<br>
+
         
-        
-            <!-- botón borrar -->
-            <form action="" method="POST" class="formEliminar">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="rounded bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4">Borrar</button>
-            </form>
-      
+      <a href="{{ route('elecciones.candidatos', $dependencia->id) }}" class="list-group-item">
+        <i class="fa fa-users fa-5x" aria-hidden="true"></i>
+    </a>
+
+    <br>
+<br>
+<br>
+
+
+       </div>
         </td>
-      </tr>
+
+        <td class="px-4 py-2 text-center ">
+        <div  class="inner small-box bg-warning ">
+        <br>
+<br>
+<br>
+
+        
+      <a href="{{ route('elecciones.candidatos', $dependencia->id) }}" class="list-group-item">
+        <i class="fa fa-vote-yea fa-5x" aria-hidden="true"></i>
+    </a>
+
+    <br>
+<br>
+<br>
+
+
+       </div>
+        </td>
+
+        <td class="px-4 py-2 text-center ">
+        <div  class="inner small-box bg-warning ">
+        <br>
+<br>
+<br>
+
+        
+      <a href="{{ route('elecciones.candidatos', $dependencia->id) }}" class="list-group-item">
+        <i class="fa fa-lock fa-5x" aria-hidden="true"></i>
+    </a>
+
+    <br>
+<br>
+<br>
+
+
+       </div>
+        </td>
+    
       @endforeach
     </tbody>
   </table>
-
+</div>
+</div>
 </x-app-layout>
 
 <script>

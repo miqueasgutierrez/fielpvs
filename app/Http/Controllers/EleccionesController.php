@@ -24,11 +24,13 @@ class EleccionesController extends Controller
 
 
         
-    public function electiva()
+    public function candidatos($id)
     {
-        //  $dependencia = Dependencia::with(['cargo', 'candidatos'])
+              $dependencia = Dependencia::with(['cargos.candidatos'])->findOrFail($id);
 
-       // return view('elecciones.electiva',compact('dependencia'));
+                     
+
+        return view('elecciones.candidatos', compact('dependencia'));
     }
 
 
