@@ -14,6 +14,8 @@
 </style>
 
     <x-app-layout>
+
+       
     
 <div class="col-lg-6 col-12 mx-auto">
                 <!-- Si todos los campos están validados, mostramos un mensaje de EXITO -->
@@ -37,6 +39,10 @@
    <br>
 
 <div class="col-sm-12">
+
+  <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+          {{ __('Registro de elecciones') }}
+       </h3>
 
       <div class="card-body table-responsive p-0" style="height: 600px;">  
   <table id="" class="table table-bordered table-striped dataTable dtr-inline">

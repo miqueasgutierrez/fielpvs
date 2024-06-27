@@ -20,7 +20,31 @@ class Dependencia extends Model
      public function cargos()
     {
         return $this->belongsToMany(Cargo::class, 'dependencia_cargos', 'id_dependencia', 'id_cargo');
+    } 
+
+
+    public function candidatos()
+    {
+        return $this->hasManyThrough(
+             Candidatos::class,
+              dependencia_cargo::class,
+            'id_dependencia', // Foreign key on Candidato table...
+              'id_dependencia_cargos', // Foreign key on DependenciaCargo table...
+            'id', // Local key on Cargo table...
+            'id' // Local key on DependenciaCargo table...
+        );
+    }
+    
+
+
+public function cargosConCandidatos()
+    {
+        return $this->cargos()->with(['candidatos' => function ($query) {
+            $query->where('id_dependencia', $this->id); // Filtra por la dependencia actual
+        }]);
     }
 
     
+ 
+
 }

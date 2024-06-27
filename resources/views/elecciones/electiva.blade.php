@@ -80,7 +80,7 @@
       <td colspan="3"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
       
     </tr>
-  @foreach($dependencia->cargos as $cargo)
+ @foreach($dependencia->cargosConCandidatos as $cargo)
     </thead >
       <tr>
       <td class="bg-info text-white centrar-texto"  colspan="3"><h5>Cargo: {{ $cargo->nombre }}</h5></td>
@@ -99,6 +99,7 @@
          <tr>
       <td colspan="3"><p>No hay candidatos para este cargo.</p></td>
       
+
     </tr>  
         @else
          <tr>

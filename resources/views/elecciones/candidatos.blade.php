@@ -84,7 +84,7 @@
       <td colspan="5"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
       
     </tr>
-  @foreach($dependencia->cargos as $cargo)
+ @foreach($dependencia->cargosConCandidatos as $cargo)
     </thead >
       <tr>
       <td class="bg-info text-white centrar-texto"  colspan="4"><h5>Cargo: {{ $cargo->nombre }}</h5></td>

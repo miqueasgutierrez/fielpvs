@@ -12,13 +12,12 @@ class Cargo extends Model
      protected $fillable= ['nombre'];
 
 
-     public function dependencias()
+    public function dependencias()
     {
-         return $this->belongsToMany(Dependencia::class, 'dependencia_cargos', 'id_cargo', 'id_dependencia');
+        return $this->belongsToMany(Dependencia::class, 'dependencia_cargos', 'id_cargo', 'id_dependencia');
     }
 
 
-   
    public function candidatos()
     {
         return $this->hasManyThrough(
@@ -31,6 +30,10 @@ class Cargo extends Model
         );
 
 }
+
+
+    
+
 
 
      

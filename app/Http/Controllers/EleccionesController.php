@@ -26,9 +26,8 @@ class EleccionesController extends Controller
         
     public function candidatos($id)
     {
-              $dependencia = Dependencia::with(['cargos.candidatos'])->findOrFail($id);
-
-                     
+         
+                           $dependencia = Dependencia::with(['cargos'])->findOrFail($id);
 
         return view('elecciones.candidatos', compact('dependencia'));
     }
@@ -65,10 +64,12 @@ class EleccionesController extends Controller
     {
        
 
-                           $dependencia = Dependencia::with(['cargos.candidatos'])->findOrFail($id);
+                           $dependencia = Dependencia::with(['cargos'])->findOrFail($id);
+                            
 
-                     
+                             
 
+                    /* dd($candidatos); */
         return view('elecciones.electiva', compact('dependencia'));
     }
 
