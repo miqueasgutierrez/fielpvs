@@ -127,9 +127,15 @@ class CandidatosController extends Controller
     {
 
 $cargos = dependencia_cargo::where('id_dependencia', $dependeciaId)
-            ->with('cargo')
-            ->get()
-            ->pluck('cargo.nombre', 'id');
+            ->with(['cargo', 'ambito'])
+        ->get()
+        ->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre_completo' => $item->cargo->nombre . '-' . $item->ambito->nombre ,
+            ];
+        })
+        ->pluck('nombre_completo', 'id');
         
         return response()->json($cargos);
 

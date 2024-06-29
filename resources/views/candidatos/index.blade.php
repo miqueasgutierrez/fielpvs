@@ -33,6 +33,7 @@
     <thead>
       <tr class="bg-gray-800 text-white">
         <th class="sorting sorting_asc text-center">DEPENDECIA</th>
+        <th class="sorting sorting_asc text-center">AMBITO</th>
         <th class="sorting sorting_asc text-center">CARGO</th>
          <th class="sorting sorting_asc text-center">CEDULA</th>
         <th class="sorting sorting_asc text-center ">NOMBRES</th>
@@ -47,6 +48,8 @@
         
 
         <td class="px-4 py-2 text-center">{{$candidato->dependenciacargo->dependencia->nombre }}</td>
+
+        <td class="px-4 py-2 text-center">{{$candidato->dependenciacargo->ambito->nombre }}</td>
 
         <td class="px-4 py-2 text-center">{{$candidato->dependenciacargo->cargo->nombre }}</td>
 

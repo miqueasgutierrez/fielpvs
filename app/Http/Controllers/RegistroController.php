@@ -26,6 +26,8 @@ use App\Models\Iglesia;
 
 use App\Models\RegistroIglesia;
 
+use App\Models\Ambitodependencias;
+
 class RegistroController extends Controller
 {
     /**
@@ -56,7 +58,7 @@ class RegistroController extends Controller
 
  $dependencias = Dependencia::paginate(1000);
 
-       $cargosDependencias = dependencia_cargo::with(['cargo', 'dependencia'])
+       $cargosDependencias = dependencia_cargo::with(['cargo', 'dependencia','ambito'])
 
         ->join('dependencias', 'dependencia_cargos.id_dependencia', '=', 'dependencias.id')
             ->orderBy('dependencias.nombre')

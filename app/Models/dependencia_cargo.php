@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,7 @@ class dependencia_cargo extends Model
     protected $fillable = [
         'id_dependencia',
         'id_cargo',
+        'id_ambito'
         // Otros campos si los hay
     ];
 
@@ -28,6 +30,14 @@ class dependencia_cargo extends Model
     public function cargo()
     {
         return $this->belongsTo(Cargo::class, 'id_cargo');
+    } 
+
+
+      public function ambito()
+    {
+        return $this->belongsTo(Ambitodependencias::class, 'id_ambito');
     }   
+
+
 
 }

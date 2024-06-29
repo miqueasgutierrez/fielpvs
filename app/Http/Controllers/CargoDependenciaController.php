@@ -10,6 +10,8 @@ use App\Models\Dependencia;
 
 use App\Models\Cargo;
 
+use App\Models\Ambitodependencias;
+
 class CargoDependenciaController extends Controller
 {
     /**
@@ -20,7 +22,7 @@ class CargoDependenciaController extends Controller
     public function index()
     {      
           
-           $cargosdependencias = dependencia_cargo::with('dependencia', 'cargo')->paginate(1000);
+           $cargosdependencias = dependencia_cargo::with('dependencia', 'cargo','ambito')->paginate(1000);
          return view('cargosdependencias.index', compact('cargosdependencias'));
     }
 
@@ -33,7 +35,9 @@ class CargoDependenciaController extends Controller
     {
          $dependencias = Dependencia::paginate(1000);
            $cargos = Cargo::paginate(1000);
-        return view('cargosdependencias.crear', compact('dependencias'),compact('cargos'));
+           $ambitosdependencias =Ambitodependencias::paginate(1000);
+
+         return view('cargosdependencias.crear', compact('dependencias', 'cargos', 'ambitosdependencias'));
     }
 
     /**
@@ -49,10 +53,11 @@ class CargoDependenciaController extends Controller
        $request->validate([
         'id_dependencia' => 'required|exists:dependencias,id',
         'id_cargo' => 'required|exists:cargos,id', 
+        'id_ambito' => 'required|exists:ambitos_dependencias,id', 
     ]);
 
     // Obtener los datos del formulario
-    $data = $request->only(['id_dependencia', 'id_cargo']);
+    $data = $request->only(['id_dependencia', 'id_cargo', 'id_ambito']);
     
     // Usar firstOrCreate para evitar duplicados
     dependencia_cargo::firstOrCreate($data);

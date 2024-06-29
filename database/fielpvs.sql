@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-06-2024 a las 00:03:28
+-- Tiempo de generación: 29-06-2024 a las 05:42:53
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `ambitos_dependencias`
+--
+
+CREATE TABLE `ambitos_dependencias` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `ambitos_dependencias`
+--
+
+INSERT INTO `ambitos_dependencias` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
+(1, 'Nacional', NULL, NULL),
+(2, 'Regional', NULL, NULL),
+(3, 'Zonal', NULL, NULL),
+(4, 'Local', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `candidatos`
 --
 
@@ -40,11 +63,7 @@ CREATE TABLE `candidatos` (
 --
 
 INSERT INTO `candidatos` (`id`, `id_dependencia_cargos`, `id_candidato`, `created_at`, `updated_at`) VALUES
-(22, 84, 136, '2024-06-19 10:08:33', '2024-06-19 10:08:33'),
-(23, 84, 139, '2024-06-19 10:08:33', '2024-06-19 10:08:33'),
-(24, 36, 138, '2024-06-19 10:09:13', '2024-06-19 10:09:13'),
-(26, 8, 137, '2024-06-25 07:14:24', '2024-06-25 07:14:24'),
-(29, 20, 137, '2024-06-27 09:32:22', '2024-06-27 09:32:22');
+(30, 128, 136, '2024-06-29 08:15:01', '2024-06-29 08:15:01');
 
 -- --------------------------------------------------------
 
@@ -127,7 +146,7 @@ CREATE TABLE `categoria_ungidos` (
 --
 
 INSERT INTO `categoria_ungidos` (`id`, `id_registro`, `nombre`, `created_at`, `updated_at`) VALUES
-(31, 136, 'ANCIANO REGIONAL', '2024-06-17 02:59:54', '2024-06-17 02:59:54');
+(32, 136, 'selected', '2024-06-29 07:43:05', '2024-06-29 07:43:05');
 
 -- --------------------------------------------------------
 
@@ -167,19 +186,13 @@ CREATE TABLE `dependencias` (
 --
 
 INSERT INTO `dependencias` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(8, 'SONADAM (NACIONAL)', '2024-05-27 00:32:02', '2024-05-27 00:32:02'),
-(9, 'SONADAM (REGIONAL)', '2024-05-27 00:32:30', '2024-05-27 00:32:30'),
-(10, 'SONAJOV (NACIONAL)', '2024-05-27 00:33:00', '2024-05-27 00:34:21'),
-(11, 'SONAJOV (REGIONAL)', '2024-05-27 00:34:55', '2024-05-27 00:34:55'),
-(12, 'INTERCESIÓN (NACIONAL)', '2024-05-27 00:36:09', '2024-05-27 00:36:09'),
-(13, 'INTERCESIÓN (REGIONAL)', '2024-05-27 00:36:22', '2024-05-27 00:36:22'),
-(14, 'EVANGELISMO Y MISIONES (NACIONAL)', '2024-05-27 00:37:07', '2024-05-27 00:37:07'),
-(15, 'EVANGELISMO Y MISIONES (REGIONAL)', '2024-05-27 00:37:37', '2024-05-27 00:37:37'),
-(16, 'BESF (Cargos Nacionales)', '2024-05-27 00:41:10', '2024-05-27 00:42:48'),
-(17, 'BESF (Cargos circuitales )', '2024-05-27 00:43:18', '2024-05-27 00:43:18'),
+(8, 'SONADAM', '2024-05-27 00:32:02', '2024-06-28 09:38:14'),
+(10, 'SONAJOV', '2024-05-27 00:33:00', '2024-06-28 08:47:34'),
+(12, 'INTERCESIÓN', '2024-05-27 00:36:09', '2024-06-28 09:38:00'),
+(14, 'EVANGELISMO Y MISIONES', '2024-05-27 00:37:07', '2024-06-28 09:37:45'),
+(16, 'BESF', '2024-05-27 00:41:10', '2024-06-28 09:35:00'),
 (18, 'IBFS', '2024-05-27 00:43:42', '2024-05-27 00:43:42'),
-(19, 'ESCUELA DOMINICAL(NACIONAL)', '2024-05-27 15:30:06', '2024-05-27 15:30:06'),
-(20, 'ESCUELA DOMINICAL (REGIONAL)', '2024-05-27 15:42:28', '2024-05-27 15:42:28'),
+(19, 'ESCUELA DOMINICAL', '2024-05-27 15:30:06', '2024-06-28 09:37:24'),
 (21, 'DIRECTIVA NACIONAL DE LA FIELPVS', '2024-05-27 15:46:07', '2024-05-27 15:46:07'),
 (22, 'DIRECTIVA DE PRESBITERIO', '2024-05-27 15:48:13', '2024-05-27 15:48:13'),
 (23, 'DIRECTIVA DE ZONA NACIONAL', '2024-05-27 15:52:15', '2024-05-27 15:52:15');
@@ -193,6 +206,7 @@ INSERT INTO `dependencias` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `dependencia_cargos` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_dependencia` bigint(20) UNSIGNED NOT NULL,
+  `id_ambito` bigint(20) UNSIGNED NOT NULL,
   `id_cargo` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -202,126 +216,10 @@ CREATE TABLE `dependencia_cargos` (
 -- Volcado de datos para la tabla `dependencia_cargos`
 --
 
-INSERT INTO `dependencia_cargos` (`id`, `id_dependencia`, `id_cargo`, `created_at`, `updated_at`) VALUES
-(8, 8, 12, NULL, NULL),
-(9, 8, 13, NULL, NULL),
-(10, 8, 14, NULL, NULL),
-(11, 8, 15, NULL, NULL),
-(12, 8, 16, NULL, NULL),
-(13, 8, 17, NULL, NULL),
-(14, 8, 18, NULL, NULL),
-(32, 8, 33, NULL, NULL),
-(15, 9, 12, NULL, NULL),
-(16, 9, 13, NULL, NULL),
-(17, 9, 14, NULL, NULL),
-(18, 9, 16, NULL, NULL),
-(19, 9, 18, NULL, NULL),
-(33, 9, 33, NULL, NULL),
-(20, 10, 12, NULL, NULL),
-(21, 10, 13, NULL, NULL),
-(22, 10, 14, NULL, NULL),
-(23, 10, 15, NULL, NULL),
-(24, 10, 16, NULL, NULL),
-(25, 10, 17, NULL, NULL),
-(26, 10, 18, NULL, NULL),
-(34, 10, 33, NULL, NULL),
-(27, 11, 12, NULL, NULL),
-(28, 11, 13, NULL, NULL),
-(29, 11, 14, NULL, NULL),
-(30, 11, 16, NULL, NULL),
-(31, 11, 18, NULL, NULL),
-(35, 11, 33, NULL, NULL),
-(36, 12, 12, NULL, NULL),
-(37, 12, 13, NULL, NULL),
-(38, 12, 14, NULL, NULL),
-(39, 12, 15, NULL, NULL),
-(40, 12, 16, NULL, NULL),
-(41, 12, 17, NULL, NULL),
-(42, 12, 18, NULL, NULL),
-(48, 12, 33, NULL, NULL),
-(43, 13, 12, NULL, NULL),
-(44, 13, 13, NULL, NULL),
-(45, 13, 14, NULL, NULL),
-(46, 13, 16, NULL, NULL),
-(47, 13, 33, NULL, NULL),
-(49, 14, 12, NULL, NULL),
-(50, 14, 13, NULL, NULL),
-(51, 14, 14, NULL, NULL),
-(52, 14, 15, NULL, NULL),
-(53, 14, 16, NULL, NULL),
-(54, 14, 17, NULL, NULL),
-(55, 14, 18, NULL, NULL),
-(56, 14, 33, NULL, NULL),
-(57, 15, 12, NULL, NULL),
-(58, 15, 13, NULL, NULL),
-(59, 15, 14, NULL, NULL),
-(60, 15, 16, NULL, NULL),
-(61, 15, 18, NULL, NULL),
-(62, 16, 19, NULL, NULL),
-(63, 16, 20, NULL, NULL),
-(64, 16, 21, NULL, NULL),
-(65, 16, 22, NULL, NULL),
-(66, 16, 24, NULL, NULL),
-(67, 16, 25, NULL, NULL),
-(68, 16, 26, NULL, NULL),
-(69, 16, 27, NULL, NULL),
-(70, 16, 28, NULL, NULL),
-(72, 16, 29, NULL, NULL),
-(73, 17, 19, NULL, NULL),
-(74, 17, 20, NULL, NULL),
-(75, 17, 21, NULL, NULL),
-(76, 17, 22, NULL, NULL),
-(77, 17, 23, NULL, NULL),
-(78, 17, 24, NULL, NULL),
-(79, 17, 25, NULL, NULL),
-(80, 17, 26, NULL, NULL),
-(81, 17, 27, NULL, NULL),
-(82, 17, 28, NULL, NULL),
-(83, 17, 29, NULL, NULL),
-(87, 18, 14, NULL, NULL),
-(88, 18, 15, NULL, NULL),
-(89, 18, 16, NULL, NULL),
-(90, 18, 17, NULL, NULL),
-(91, 18, 18, NULL, NULL),
-(84, 18, 30, NULL, NULL),
-(85, 18, 31, NULL, NULL),
-(86, 18, 32, NULL, NULL),
-(92, 18, 33, NULL, NULL),
-(95, 19, 14, NULL, NULL),
-(96, 19, 15, NULL, NULL),
-(97, 19, 16, NULL, NULL),
-(98, 19, 17, NULL, NULL),
-(99, 19, 18, NULL, NULL),
-(100, 19, 33, NULL, NULL),
-(93, 19, 34, NULL, NULL),
-(94, 19, 35, NULL, NULL),
-(103, 20, 14, NULL, NULL),
-(104, 20, 16, NULL, NULL),
-(105, 20, 18, NULL, NULL),
-(106, 20, 33, NULL, NULL),
-(101, 20, 34, NULL, NULL),
-(102, 20, 35, NULL, NULL),
-(107, 21, 12, NULL, NULL),
-(108, 21, 13, NULL, NULL),
-(109, 21, 14, NULL, NULL),
-(110, 21, 16, NULL, NULL),
-(112, 21, 18, NULL, NULL),
-(127, 21, 33, NULL, NULL),
-(111, 21, 36, NULL, NULL),
-(116, 22, 14, NULL, NULL),
-(115, 22, 16, NULL, NULL),
-(118, 22, 18, NULL, NULL),
-(119, 22, 33, NULL, NULL),
-(117, 22, 36, NULL, NULL),
-(113, 22, 37, NULL, NULL),
-(114, 22, 38, NULL, NULL),
-(122, 23, 14, NULL, NULL),
-(123, 23, 16, NULL, NULL),
-(125, 23, 18, NULL, NULL),
-(126, 23, 33, NULL, NULL),
-(124, 23, 36, NULL, NULL),
-(120, 23, 39, NULL, NULL),
-(121, 23, 40, NULL, NULL);
+INSERT INTO `dependencia_cargos` (`id`, `id_dependencia`, `id_ambito`, `id_cargo`, `created_at`, `updated_at`) VALUES
+(128, 10, 1, 12, NULL, NULL),
+(130, 10, 2, 12, NULL, NULL),
+(129, 10, 2, 13, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -408,7 +306,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2024_06_01_034528_create_zonas_table', 10),
 (19, '2024_06_12_052009_create_registro_iglesias_table', 11),
 (20, '2024_06_16_064108_create_candidatos_table', 12),
-(21, '2024_06_21_113246_create_elecciones_table', 13);
+(21, '2024_06_21_113246_create_elecciones_table', 13),
+(22, '2024_06_27_221601_create_ambitos_dependencias_table', 14);
 
 -- --------------------------------------------------------
 
@@ -429,10 +328,10 @@ CREATE TABLE `ministerio` (
 --
 
 INSERT INTO `ministerio` (`id`, `id_registro`, `nombre`, `created_at`, `updated_at`) VALUES
-(88, 136, 'PASTOR', '2024-06-17 02:59:53', '2024-06-17 02:59:53'),
 (89, 137, 'Directivo de Damas', '2024-06-17 03:02:08', '2024-06-17 03:02:08'),
 (90, 138, 'EVANGELISTA', '2024-06-17 03:03:59', '2024-06-17 03:03:59'),
-(91, 139, 'MAESTRO', '2024-06-17 03:06:00', '2024-06-17 03:06:00');
+(91, 139, 'MAESTRO', '2024-06-17 03:06:00', '2024-06-17 03:06:00'),
+(92, 136, 'PASTOR', '2024-06-29 07:43:05', '2024-06-29 07:43:05');
 
 -- --------------------------------------------------------
 
@@ -534,10 +433,7 @@ CREATE TABLE `registro_dependencia_cargo` (
 --
 
 INSERT INTO `registro_dependencia_cargo` (`id`, `registro_id`, `dependencia_cargos_id`, `created_at`, `updated_at`) VALUES
-(108, 136, 8, '2024-06-17 02:59:53', '2024-06-17 02:59:53'),
-(109, 137, 68, '2024-06-17 03:02:07', '2024-06-17 03:02:07'),
-(110, 138, 49, '2024-06-17 03:03:58', '2024-06-17 03:03:58'),
-(111, 139, 95, '2024-06-17 03:06:00', '2024-06-17 03:06:00');
+(112, 136, 130, '2024-06-29 07:43:04', '2024-06-29 07:43:04');
 
 -- --------------------------------------------------------
 
@@ -558,10 +454,10 @@ CREATE TABLE `registro_iglesias` (
 --
 
 INSERT INTO `registro_iglesias` (`id`, `id_registro`, `id_iglesia`, `created_at`, `updated_at`) VALUES
-(48, 136, 1, '2024-06-17 02:59:54', '2024-06-17 02:59:54'),
 (49, 137, 1, '2024-06-17 03:02:08', '2024-06-17 03:02:08'),
 (50, 138, 3, '2024-06-17 03:03:59', '2024-06-17 03:03:59'),
-(51, 139, 3, '2024-06-17 03:06:00', '2024-06-17 03:06:00');
+(51, 139, 3, '2024-06-17 03:06:00', '2024-06-17 03:06:00'),
+(52, 136, 1, '2024-06-29 07:43:05', '2024-06-29 07:43:05');
 
 -- --------------------------------------------------------
 
@@ -640,6 +536,12 @@ INSERT INTO `zonas` (`id`, `nombre`, `circuito_id`, `created_at`, `updated_at`) 
 --
 
 --
+-- Indices de la tabla `ambitos_dependencias`
+--
+ALTER TABLE `ambitos_dependencias`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `candidatos`
 --
 ALTER TABLE `candidatos`
@@ -688,7 +590,8 @@ ALTER TABLE `dependencias`
 ALTER TABLE `dependencia_cargos`
   ADD PRIMARY KEY (`id_dependencia`,`id_cargo`,`id`) USING BTREE,
   ADD UNIQUE KEY `id` (`id`),
-  ADD KEY `dependencia_cargo_id_cargo_foreign` (`id_cargo`);
+  ADD KEY `dependencia_cargo_id_cargo_foreign` (`id_cargo`),
+  ADD KEY `id_ambito` (`id_ambito`);
 
 --
 -- Indices de la tabla `elecciones`
@@ -795,10 +698,16 @@ ALTER TABLE `zonas`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `ambitos_dependencias`
+--
+ALTER TABLE `ambitos_dependencias`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `candidatos`
 --
 ALTER TABLE `candidatos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `cargos`
@@ -810,7 +719,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `categoria_ungidos`
 --
 ALTER TABLE `categoria_ungidos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `circuitos`
@@ -828,7 +737,7 @@ ALTER TABLE `dependencias`
 -- AUTO_INCREMENT de la tabla `dependencia_cargos`
 --
 ALTER TABLE `dependencia_cargos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
@@ -852,13 +761,13 @@ ALTER TABLE `iglesias`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `ministerio`
 --
 ALTER TABLE `ministerio`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
@@ -882,13 +791,13 @@ ALTER TABLE `registros`
 -- AUTO_INCREMENT de la tabla `registro_dependencia_cargo`
 --
 ALTER TABLE `registro_dependencia_cargo`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_iglesias`
 --
 ALTER TABLE `registro_iglesias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -932,7 +841,8 @@ ALTER TABLE `categoria_ungidos`
 --
 ALTER TABLE `dependencia_cargos`
   ADD CONSTRAINT `dependencia_cargo_id_cargo_foreign` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id`),
-  ADD CONSTRAINT `dependencia_cargo_id_dependencia_foreign` FOREIGN KEY (`id_dependencia`) REFERENCES `dependencias` (`id`);
+  ADD CONSTRAINT `dependencia_cargo_id_dependencia_foreign` FOREIGN KEY (`id_dependencia`) REFERENCES `dependencias` (`id`),
+  ADD CONSTRAINT `dependencia_cargos_ibfk_1` FOREIGN KEY (`id_ambito`) REFERENCES `ambitos_dependencias` (`id`);
 
 --
 -- Filtros para la tabla `elecciones`

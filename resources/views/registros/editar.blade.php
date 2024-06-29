@@ -126,7 +126,6 @@
 <div id="myModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
         <div class="grid grid-cols-1 max-h-96 overflow-y-auto p-4">
-            <label for="cargo_dependencia">Cargo Actual o Miembro de Alguna Dependencia:</label>
             <div id="cargos-dependencias-lista">
                 @foreach($cargosDependencias as $cargoDependencia)
                     <div class="dependencia-item" data-dependencia-id="{{ $cargoDependencia->dependencia->id }}">
@@ -134,6 +133,9 @@
 
                          {{ in_array($cargoDependencia->id, $registroDependenciaCargos->pluck('dependencia_cargos_id')->toArray()) ? 'checked' : '' }}>
                         <label for="dependencia_cargo{{ $cargoDependencia->id }}">{{ $cargoDependencia->cargo->nombre }}</label>
+
+                          <label>( {{ $cargoDependencia->ambito-> 
+                        nombre }} )</label>
                     </div>
                 @endforeach
             </div>

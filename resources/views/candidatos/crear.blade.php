@@ -173,7 +173,7 @@
                     success: function(data) {
                         $('#cargo').empty();
                         $('#cargo').append('<option value="">Seleccione un cargo</option>');
-                        $.each(data, function(key, value) {
+                        $.each(data, function(key, value,value2) {
                             $('#cargo').append('<option value="' + key + '">' + value + '</option>');
                         });
                     },

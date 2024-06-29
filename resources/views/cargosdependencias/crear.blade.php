@@ -45,6 +45,16 @@
     </div>
 
     <div class="form-group">
+        <label for="dependencia">Ambitos:</label>
+        <select name="id_ambito" id="ambito" class="form-control">
+            @foreach($ambitosdependencias as $ambitos)
+                <option value="{{ $ambitos->id }}">{{ $ambitos->nombre }}</option>
+            @endforeach
+        </select>
+    </div>
+
+
+    <div class="form-group">
         <label for="cargo">Cargo:</label>
         <select name="id_cargo" id="cargo" class="form-control">
             @foreach($cargos as $cargo)

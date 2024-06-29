@@ -33,6 +33,7 @@
     <thead>
       <tr class="bg-gray-800 text-white">
         <th class="sorting sorting_asc text-center">DEPENDENCIA</th>
+        <th class="sorting sorting_asc text-center">AMBITO</th>
          <th class="sorting sorting_asc text-center">CARGO</th>
         <th class="sorting sorting_asc text-center ">ACCIONES</th>
       </tr>
@@ -42,7 +43,12 @@
       <tr>
             <td class="px-4 py-2 text-center">{{ $cargosdependencia->dependencia->nombre}}</td>
 
+
+              <td class="px-4 py-2 text-center">{{ $cargosdependencia->ambito->nombre   }}</td>
+
              <td class="px-4 py-2 text-center">{{ $cargosdependencia->cargo->nombre   }}</td>
+
+           
        
         <td class="px-4 py-2">
           <div class="flex justify-center space-x-2">
