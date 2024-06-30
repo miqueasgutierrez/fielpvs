@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dependencia;
 
 use App\Models\dependencia_cargo;
+use App\Models\Ambitodependencias;
 
 use Illuminate\Http\Request;
 
@@ -17,19 +18,24 @@ class EleccionesController extends Controller
      */
     public function index()
     {
-          $dependencias = Dependencia::with(['cargos'])->get();
+           $elecciones = Ambitodependencias::with(['dependencias.dependencia.cargos' => function($query) {
+        $query->orderBy('nombre', 'asc');
+    }])->get();
 
-        return view('elecciones.index',compact('dependencias'));
+        return view('elecciones.index',compact('elecciones'));
     }
 
-
         
-    public function candidatos($id)
+    public function candidatos($iddependencia, $idambito)
     {
-         
-                           $dependencia = Dependencia::with(['cargos'])->findOrFail($id);
 
-        return view('elecciones.candidatos', compact('dependencia'));
+ $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
+        $query->where('id_ambito', $idambito);
+    }])
+    ->findOrFail($iddependencia);
+
+    return view('elecciones.candidatos', compact('dependencia'));
+
     }
 
 

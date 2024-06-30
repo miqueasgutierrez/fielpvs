@@ -14,13 +14,25 @@ class Dependencia extends Model
 
     protected $fillable= ['nombre'];
 
-
-
+   
+  public function ambitos()
+    {
+        return $this->belongsToMany(Ambitodependencias::class,'dependencia_cargos', 'id_dependencia', 'id_ambito');
+    } 
+ 
 
      public function cargos()
     {
         return $this->belongsToMany(Cargo::class, 'dependencia_cargos', 'id_dependencia', 'id_cargo');
+        
     } 
+     
+
+     public function dependenciacargo()
+    {
+        return $this->belongsTo(dependencia_cargo::class, 'id_dependencia');
+    }
+
 
 
     public function candidatos()

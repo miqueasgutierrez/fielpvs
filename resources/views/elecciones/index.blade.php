@@ -48,6 +48,7 @@
   <table id="" class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
       <tr class="bg-gray-800 text-white">
+          <th class="sorting sorting_asc text-center fixed-width">AMBITO</th>
         <th class="sorting sorting_asc text-center fixed-width">DEPENDENCIA</th>
         <th class="sorting sorting_asc text-center fixed-width">TIPO</th>
         <th class="sorting sorting_asc text-center ">CARGOS</th>
@@ -56,10 +57,31 @@
          <th class="sorting sorting_asc text-center ">ACCIONES</th>
       </tr>
     </thead>
+
+
+
     <tbody>
 
 
-      @foreach ($dependencias as $dependencia)
+
+    
+     @foreach ($elecciones as $eleccion)
+   
+    @php
+         $nombreambito = $eleccion->nombre;
+         $idambito = $eleccion->id;
+        $ultimadependencia = "";
+    @endphp
+
+    @foreach ($eleccion->dependencias as $dependencia)
+
+     @php
+            $idDependencia = $dependencia->dependencia->id;
+            $nombreDependencia = $dependencia->dependencia->nombre;
+        @endphp
+
+
+  @if ($nombreDependencia != $ultimadependencia)
       <tr>
 
 
@@ -75,7 +97,7 @@
 <br>
 <br>
 <br>
-<p>{{$dependencia->nombre}}</p>
+<p>{{ $nombreambito }}</p>
 
 <p></p>
 <br>
@@ -87,8 +109,36 @@
 </div>
 
            </td>
+
+
+          
+
+           <td class="px-4 py-2 text-center ">
+
+
+<div class="inner small-box bg-info fixed-width">
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<p></p>
+
+<p>{{ $nombreDependencia }}</p>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</div>
+
+           </td>
         <td class="px-4 py-2 text-center fixed-width">
-<a href="{{ route('elecciones.show', $dependencia->id) }}">
+<a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+    <!-- Your link text here -->
+</a>
         <div  class="inner small-box bg-success">
 <br>
 <br>
@@ -110,13 +160,8 @@
           <td class="px-4 py-2 text-center"> 
   <div  class="inner small-box bg-danger">
 
-
-  @foreach($dependencia->cargos as $cargo)
-                                <label>{{ $cargo->nombre }}<label>
-
-                                    
-                            @endforeach
-
+<a href="{{ route('elecciones.show', $dependencia->id) }}">
+  
 
           </td>
           </div>
@@ -127,7 +172,7 @@
 <br>
 
         
-      <a href="{{ route('elecciones.candidatos', $dependencia->id) }}" class="list-group-item">
+     
         <i class="fa fa-users fa-5x" aria-hidden="true"></i>
     </a>
 
@@ -146,9 +191,9 @@
 <br>
 
         
-      <a href="{{ route('elecciones.candidatos', $dependencia->id) }}" class="list-group-item">
-        <i class="fa fa-vote-yea fa-5x" aria-hidden="true"></i>
-    </a>
+      <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+    <!-- Your link text here -->
+</a>
 
     <br>
 <br>
@@ -165,9 +210,9 @@
 <br>
 
         
-      <a href="{{ route('elecciones.candidatos', $dependencia->id) }}" class="list-group-item">
-        <i class="fa fa-lock fa-5x" aria-hidden="true"></i>
-    </a>
+    <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+    <!-- Your link text here -->
+</a>
 
     <br>
 <br>
@@ -177,7 +222,13 @@
        </div>
         </td>
     
-      @endforeach
+     
+            @php
+                $ultimadependencia = $nombreDependencia;
+            @endphp
+        @endif
+    @endforeach
+@endforeach
     </tbody>
   </table>
 </div>

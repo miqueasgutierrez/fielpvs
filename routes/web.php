@@ -73,7 +73,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     Route::resource('/elecciones', EleccionesController::class);
 
-    Route::get('elecciones/candidatos/{id}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
+ Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
 
     Route::get('/dashboard', function(){
         return view('dashboard');

@@ -22,6 +22,13 @@ class dependencia_cargo extends Model
     public $timestamps = false;
 
     // Definir relaciones si es necesario
+
+
+    public function candidatos()
+    {
+        return $this->hasMany(Candidatos::class, 'id_dependencia_cargos');
+    }
+
     public function dependencia()
     {
         return $this->belongsTo(Dependencia::class, 'id_dependencia');

@@ -12,4 +12,12 @@ class Ambitodependencias extends Model
      protected $table = 'ambitos_dependencias';
 
     protected $fillable= ['nombre'];
+
+
+    public function dependencias()
+    {
+        return $this->hasMany(dependencia_cargo::class, 'id_ambito');
+    }
+
+
 }
