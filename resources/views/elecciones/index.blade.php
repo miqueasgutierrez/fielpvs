@@ -53,7 +53,7 @@
         <th class="sorting sorting_asc text-center fixed-width">TIPO</th>
         <th class="sorting sorting_asc text-center ">CARGOS</th>
         <th class="sorting sorting_asc text-center ">POSTULADOS</th>
-         <th class="sorting sorting_asc text-center ">FECHAS</th>
+         <th class="sorting sorting_asc text-center ">VOTAR</th>
          <th class="sorting sorting_asc text-center ">ACCIONES</th>
       </tr>
     </thead>
@@ -62,9 +62,6 @@
 
     <tbody>
 
-
-
-    
      @foreach ($elecciones as $eleccion)
    
     @php
@@ -157,15 +154,26 @@
     </div>
     <a/>
 </td>
-          <td class="px-4 py-2 text-center"> 
+          <td class="px-4 py-2 text-center ">
 
-            <a href="{{ route('elecciones.show', $dependencia->id) }}">
-  
-  <div  class="inner small-box bg-danger">
+              <a href="{{ route('elecciones.cargos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+        <div  class="inner small-box  ">
+        <br>
+<br>
+<br>
+
+        
+     
+        <i class="fa fa-address-card fa-5x" aria-hidden="true"></i>
+    </a>
+
+    <br>
+<br>
+<br>
 
 
-
-          </td>
+       </div>
+        </td>
           </div>
         <td class="px-4 py-2 text-center ">
 
@@ -190,34 +198,40 @@
 
         <td class="px-4 py-2 text-center ">
 
-        <div  class="inner small-box bg-warning ">
+              <a href="{{ route('elecciones.elector', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+        <div  class="inner small-box  ">
         <br>
 <br>
 <br>
 
         
+     
+        <i class="fa fa-hands-helping fa-5x" aria-hidden="true"></i>
     
-    <!-- Your link text here -->
-
 
     <br>
 <br>
 <br>
 
-</a>
+
        </div>
+
+       </a>
         </td>
 
         <td class="px-4 py-2 text-center ">
+
+              <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box bg-warning ">
         <br>
 <br>
+
 <br>
 
         
-    <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
-    <!-- Your link text here -->
-</a>
+     
+        <i class="fa fa-unlock-alt fa-5x" aria-hidden="true"></i>
+    </a>
 
     <br>
 <br>
@@ -236,6 +250,8 @@
 @endforeach
     </tbody>
   </table>
+
+
 </div>
 </div>
 </x-app-layout>
@@ -276,6 +292,9 @@
 
 
 </script>
+
+
+
 @stop
 
 @section('css')
