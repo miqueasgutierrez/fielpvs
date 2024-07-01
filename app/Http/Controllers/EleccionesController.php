@@ -34,9 +34,28 @@ class EleccionesController extends Controller
     }])
     ->findOrFail($iddependencia);
 
-    return view('elecciones.candidatos', compact('dependencia'));
+      $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+
+    return view('elecciones.candidatos', compact('dependencia','ambito'));
 
     }
+
+
+     public function electiva($iddependencia, $idambito)
+    {
+
+ $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
+        $query->where('id_ambito', $idambito);
+    }])
+    ->findOrFail($iddependencia);
+
+
+     $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+
+    return view('elecciones.electiva', compact('dependencia','ambito'));
+
+    }
+
 
 
     /**

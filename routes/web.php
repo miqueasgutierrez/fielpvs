@@ -75,6 +75,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
  Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
 
+ Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
+
     Route::get('/dashboard', function(){
         return view('dashboard');
     })->name('dashboard');

@@ -73,17 +73,24 @@
 <table class="table table-head-fixed text-nowrap table-bordered table-hover">
 
 
-     <thead class="thead-dark ">
+     <thead class=" ">
     <tr>
-      <td  colspan="5" scope="col">Lista de postulados para las elecciones </td>
+      <td  colspan="5" scope="col" class="centrar-texto" ><h5>Lista de postulados para las elecciones </h5></td>
      
     </tr>
   </thead>
-      <thead class="thead-morado">
+      <thead class="">
         <tr>
-      <td colspan="5"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
+      <td colspan="4" class="centrar-texto" ><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
+      <tr>
+      <td  class="centrar-texto" colspan="4" ><h5>Ambito {{ $ambito->nombre }}</h5></td>
       
     </tr>
+      
+    </tr>
+
+    
+
  @foreach($dependencia->cargos as $cargo)
     </thead >
       <tr>
@@ -124,7 +131,7 @@
         <th scope="col" class="centrar-texto">{{ $candidato->registro->apellidos }}</th>
       <th scope="col" class="centrar-imagen">  
 
- <img src="../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
+ <img src="../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
 
        </th>
     </tr>

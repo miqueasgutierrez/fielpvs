@@ -67,20 +67,32 @@
 <table class="table table-head-fixed text-nowrap table-bordered table-hover">
 
 
-     <thead class="thead-dark ">
+     <thead class=" ">
     <tr>
-      <td  colspan="4" scope="col">Contadores iniciales del proceso electoral</td>
+      <td  class="centrar-texto" colspan="4" scope="col"><h5>Contadores iniciales del proceso electoral</h5></td>
      
     </tr>
   </thead>
 
   
-      <thead class="thead-morado">
+      <thead class="">
         <tr>
-      <td colspan="3"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
+      <td  class="centrar-texto" colspan="3"><h5>Elecciones: Dependencia {{ $dependencia->nombre }}</h5></td>
       
     </tr>
- @foreach($dependencia->cargosConCandidatos as $cargo)
+    <tr>
+
+
+        <tr>
+      <td  class="centrar-texto" colspan="3"><h5>Ambito {{ $ambito->nombre }}</h5></td>
+      
+    </tr>
+  
+
+
+      <td  class="centrar-texto" colspan="3">
+
+@foreach($dependencia->cargos as $cargo)
     </thead >
       <tr>
       <td class="bg-info text-white centrar-texto"  colspan="3"><h5>Cargo: {{ $cargo->nombre }}</h5></td>

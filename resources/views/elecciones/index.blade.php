@@ -48,8 +48,8 @@
   <table id="" class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
       <tr class="bg-gray-800 text-white">
-          <th class="sorting sorting_asc text-center fixed-width">AMBITO</th>
         <th class="sorting sorting_asc text-center fixed-width">DEPENDENCIA</th>
+        <th class="sorting sorting_asc text-center fixed-width">AMBITO</th>
         <th class="sorting sorting_asc text-center fixed-width">TIPO</th>
         <th class="sorting sorting_asc text-center ">CARGOS</th>
         <th class="sorting sorting_asc text-center ">POSTULADOS</th>
@@ -97,8 +97,8 @@
 <br>
 <br>
 <br>
-<p>{{ $nombreambito }}</p>
 
+<p>{{ $nombreDependencia }}</p>
 <p></p>
 <br>
 <br>
@@ -124,8 +124,8 @@
 <br>
 <br>
 <p></p>
+<p>{{ $nombreambito }}</p>
 
-<p>{{ $nombreDependencia }}</p>
 <br>
 <br>
 <br>
@@ -136,9 +136,9 @@
 
            </td>
         <td class="px-4 py-2 text-center fixed-width">
-<a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+  <a href="{{ route('elecciones.electiva', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
     <!-- Your link text here -->
-</a>
+
         <div  class="inner small-box bg-success">
 <br>
 <br>
@@ -158,14 +158,18 @@
     <a/>
 </td>
           <td class="px-4 py-2 text-center"> 
+
+            <a href="{{ route('elecciones.show', $dependencia->id) }}">
+  
   <div  class="inner small-box bg-danger">
 
-<a href="{{ route('elecciones.show', $dependencia->id) }}">
-  
+
 
           </td>
           </div>
         <td class="px-4 py-2 text-center ">
+
+              <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box bg-warning ">
         <br>
 <br>
@@ -185,21 +189,22 @@
         </td>
 
         <td class="px-4 py-2 text-center ">
+
         <div  class="inner small-box bg-warning ">
         <br>
 <br>
 <br>
 
         
-      <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+    
     <!-- Your link text here -->
-</a>
+
 
     <br>
 <br>
 <br>
 
-
+</a>
        </div>
         </td>
 
