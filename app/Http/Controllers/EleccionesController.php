@@ -130,6 +130,21 @@ $elecciones4 = Ambitodependencias::where('id', $idambito4)
 
     }
 
+    public function votacion($iddependencia, $idambito)
+    
+    {
+
+   $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
+        $query->where('id_ambito', $idambito);
+    }])
+    ->findOrFail($iddependencia);
+
+      $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+
+    return view('elecciones.votacion', compact('dependencia','ambito'));
+
+    }
+
 
 
 

@@ -15,7 +15,6 @@
 
     <x-app-layout>
 
-       
 
 <div class="col-sm-12">
 
@@ -56,13 +55,17 @@
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Ambito Nacional') }}
        </h5>
-
 <tr>
-
      @php   
         $ultimadependencia = "";
+
     @endphp
  @foreach ($elecciones1 as $eleccion)
+
+ @php
+         $idambito = $eleccion->id;
+ @endphp
+
     @foreach ($eleccion->dependencias as $dependencia)
 
      @php
@@ -75,8 +78,11 @@
    
 
   <td class="px-4 py-2 text-center ">
+ <a href="{{ route('elecciones.votacion', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
 
 <div class="inner small-box bg-info fixed-width">
+
+   
 
 <br>
 <br>
@@ -92,6 +98,7 @@
 <br>
 
 </div>
+</a>
 
            </td>
  @php

@@ -71,13 +71,7 @@
         <th>Perfil</th>
     
        </thead>
-       <tfoot>
-         <th></th>
-         <th></th>
-          <th></th>
-         <th></th>
-          <th></th>
-       </tfoot>
+       
        <tbody>
          
        </tbody>
