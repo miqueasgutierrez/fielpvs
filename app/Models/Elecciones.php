@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Elecciones extends Model
 {
     use HasFactory;
+
+
+       protected $table = 'elecciones';
+
+    protected $fillable = [
+        'id_votante',
+        'id_candidato'
+    ];
+
+
+
 }

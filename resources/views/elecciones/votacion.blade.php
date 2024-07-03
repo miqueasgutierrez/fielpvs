@@ -49,7 +49,7 @@
             height: 1.5em;
         }
 
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 </style>
 
     <x-app-layout>
@@ -69,7 +69,10 @@
     </div>
   </div>
 </div>
-
+<form id="myForm" action="{{ route('elecciones.votacionfinal') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+ <input type="hidden" name="idvotante" value="{{ $idvotante }}">
+ <input type="hidden" name="cedula" value="{{ $cedula }}">
 <table id="detalles" class="table table-bordered table-striped dataTable dtr-inline" style="">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Opciones a Votar') }}
@@ -106,12 +109,14 @@
 
         @endforeach
 
+
+
         <td class="px-4 py-2 text-center ">
- <a href="" class="">
+ <a type="submit" id="submitButton" class="">
 
 <div class="inner small-box bg-success fixed-width">
 
-    <i class="fa fa-thumbs-up fa-5x" aria-hidden="true"></i> 
+    <i  class="fa fa-thumbs-up fa-5x" aria-hidden="true"></i> 
 
 
 <br>
@@ -171,7 +176,7 @@
      
 
        <tbody>
- <form>
+ 
 @foreach($cargo->candidatos as $candidato)
    
 <tr>
@@ -187,7 +192,9 @@
 
             <div class="form-check form-check-inline">
                 <input  onclick="agregarDetalle('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
-            '{{ $candidato->registro->imagen }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+                    '{{ $candidato->registro->apellidos }}',
+            '{{ $candidato->registro->imagen }}',
+            '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
                
             </div>
 
@@ -211,17 +218,17 @@
 
 var cont = 0; // Definir cont fuera de la función para que mantenga el valor entre llamadas a 
 
-    function agregarDetalle(idcandidato,nombres,imagen){
+    function agregarDetalle(idcandidato,nombres,apellidos,imagen,cargo){
    
- console.log(idcandidato,imagen);
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
 
 
     if (idcandidato!="") {
 
      
         var fila='<td class="filas centrar-imagen centrar-texto" id="fila'+cont+'">'+
-    '<img onclick="eliminarDetalle('+cont+')" src="../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
-    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button>';
+    '<img onclick="eliminarDetalle('+cont+')" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button>';
         cont++;
         detalles++;
         $('#detalles').append(fila);
@@ -238,6 +245,49 @@ $("#fila"+indice).remove();
 
 }
 
+
+
+
+   $(document).ready(function() {
+            $('#submitButton').click(function() {
+                // Recoger los valores del formulario
+                var cargo = $('input[name="cargo[]"]').map(function() {
+                    return $(this).val();
+                }).get();
+                
+                var nombres = $('input[name="nombres[]"]').map(function() {
+                    return $(this).val();
+                }).get();
+                
+                var apellidos = $('input[name="apellidos[]"]').map(function() {
+                    return $(this).val();
+                }).get();
+
+                // Construir el mensaje HTML
+                var message = '<ul>';
+                for (var i = 0; i < nombres.length; i++) {
+                    message += `<li><strong>Cargo:</strong> ${cargo[i]}<br>
+                                <strong>Nombres:</strong> ${nombres[i]}<br>
+                                <strong>Apellidos:</strong> ${apellidos[i]}</li><br>`;
+                }
+                message += '</ul>';
+
+                // Mostrar SweetAlert2
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    html: message,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Aquí puedes realizar la acción de guardar
+                        $('#myForm').submit();
+                    }
+                });
+            });
+        });
 
 
 </script>

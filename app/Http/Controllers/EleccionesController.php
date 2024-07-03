@@ -8,7 +8,7 @@ use App\Models\Registro;
 
 use App\Models\dependencia_cargo;
 use App\Models\Ambitodependencias;
-
+use App\Models\Elecciones;
 use Illuminate\Http\Request;
 
 class EleccionesController extends Controller
@@ -106,6 +106,12 @@ $idambito2='2';
 $idambito3='3';
 $idambito4='4';
 
+if (!$elector) {
+
+     return back()->with('success', 'La cédula no existe en los registros.')->with('success', 'La cédula no existe en los registros.');
+
+    }
+
  $elecciones1 = Ambitodependencias::where('id', $idambito1)
             ->with(['dependencias.dependencia.cargos' => function($query) {
                 $query->orderBy('nombre', 'asc');
@@ -130,9 +136,11 @@ $elecciones4 = Ambitodependencias::where('id', $idambito4)
 
     }
 
-    public function votacion($iddependencia, $idambito)
+    public function votacion($idvotante,$iddependencia, $idambito)
     
     {
+
+     $cedula = Registro::where('id', $idvotante)->value('cedula');
 
    $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
         $query->where('id_ambito', $idambito);
@@ -141,11 +149,70 @@ $elecciones4 = Ambitodependencias::where('id', $idambito4)
 
       $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
 
-    return view('elecciones.votacion', compact('dependencia','ambito'));
+    return view('elecciones.votacion', compact('dependencia','ambito','idvotante','cedula'));
 
     }
 
 
+     public function votacionfinal(Request $request)
+    {
+
+
+    // Asignación de variables
+    $idVotante = $request->idvotante;
+    $idCandidatos = $request->idcandidato;
+
+    // Iteración sobre los candidatos
+    foreach ($idCandidatos as $idCandidato) {
+        Elecciones::create([
+            'id_votante' => $idVotante,
+            'id_candidato' => $idCandidato
+        ]);
+    }
+
+    // Redireccionamiento con mensaje de éxito
+
+
+$idcedula = $request->input('cedula');
+ 
+  $elector = Registro::where('cedula', $idcedula)->first();
+
+$idambito1='1';
+$idambito2='2';
+$idambito3='3';
+$idambito4='4';
+
+if (!$elector) {
+
+     return back()->with('success', 'La cédula no existe en los registros.')->with('success', 'La cédula no existe en los registros.');
+
+    }
+
+ $elecciones1 = Ambitodependencias::where('id', $idambito1)
+            ->with(['dependencias.dependencia.cargos' => function($query) {
+                $query->orderBy('nombre', 'asc');
+            }])->get();
+
+$elecciones2 = Ambitodependencias::where('id', $idambito2)
+            ->with(['dependencias.dependencia.cargos' => function($query) {
+                $query->orderBy('nombre', 'asc');
+            }])->get();
+
+$elecciones3 = Ambitodependencias::where('id', $idambito3)
+            ->with(['dependencias.dependencia.cargos' => function($query) {
+                $query->orderBy('nombre', 'asc');
+            }])->get();
+
+$elecciones4 = Ambitodependencias::where('id', $idambito4)
+            ->with(['dependencias.dependencia.cargos' => function($query) {
+                $query->orderBy('nombre', 'asc');
+            }])->get();
+
+return view('elecciones.datos', compact('elector', 'elecciones1', 'elecciones2', 'elecciones3', 'elecciones4'))
+    ->with('success', 'Votacion Exitosa.');
+
+  
+    }
 
 
     /**

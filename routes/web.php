@@ -79,9 +79,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
 Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
 
-Route::get('elecciones/votacion/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
+Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
 
 Route::post('elecciones/datos', [EleccionesController::class, 'datos'])->name('elecciones.datos');
+
+Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
+
 
  Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
 

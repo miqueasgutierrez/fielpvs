@@ -46,6 +46,17 @@
 }
 
 
+ .brand-image {
+            opacity: .8;
+            font-size: 100px; /* Ajusta el tamaño según necesites */
+        }
+        .img-circle {
+            border-radius: 50%;
+        }
+        .elevation-3 {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
 
 </style>
 
@@ -67,7 +78,7 @@
     </div>
   </div>
 </div>
-
+ 
 
     <div class="card-body table-responsive p-0" style="height: 600px;">    
 <div class="table-responsive">
@@ -105,45 +116,37 @@
         </table>
 
          <form action="{{ route('elecciones.datos') }}" method="POST">
- @csrf
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
-                        <div class="grid grid-cols-1">
-                          
-                            <h5>Cedula del elector</h5>
+    @csrf
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
+         <div class="grid grid-cols-1">
+           
+</div>
+        <div class="grid grid-cols-1 text-center">
+           <div>
+        <!-- Icono de Font Awesome con las clases y estilos especificados -->
+        <i class="fas fa-user brand-image img-circle elevation-3"></i>
+    </div>
+        <h5> Cédula del elector
+        </h5>
+            
+            <input type="number" class="form-control @error('cedula') is-invalid @enderror" id="cedula" name="cedula" minlength="5" placeholder="Cédula" required>
 
-                                @error('cedula')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de Cedula No puede estar vacio ni duplicado</strong>
-                                </span>
-                                 @enderror
-
-                        </div>
-
-                        <div class="grid grid-cols-1">
-                        
-                            <input type="text"  class="form-control   @error('nombres') is-invalid @enderror" id="cedula" name="cedula" minlength="5" placeholder="Cedula"   min="5" max="20"  required>
-
-                            @error('nombres')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de nombres No puede estar vacio</strong>
-                                </span>
-                            @enderror
-
-                        </div>
-                        <div class="grid grid-cols-1">
-                           
-                           <button type="submit" class="btn btn-primary mb-4">Buscar</button>
-
-                            @error('apellidos')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>El campo de apellidos No puede estar vacio</strong>
-                                </span>
-                            @enderror
-
-                        </div>
-                    </div>
-
-  
+             <button type="submit" class="btn btn-primary mt-6">Buscar</button>
+            @error('cedula')
+                <span class="invalid-feedback text-red-500 text-sm" role="alert">
+                    <strong>El campo de Cédula no puede estar vacío ni duplicado</strong>
+                </span>
+            @enderror
+        </div>
+        <div class="grid grid-cols-1">
+           
+        </div>
+    </div>
+    @if(Session::has('success'))
+        <div class="alert alert-danger text-center mt-5">
+            {{ Session::get('success') }}
+        </div>
+    @endif
 </form>
 </div>
 

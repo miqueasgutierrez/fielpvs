@@ -14,7 +14,11 @@
 </style>
 
     <x-app-layout>
-
+ @if(Session::has('success'))
+                    <div class="alert alert-success text-center">
+                        {{Session::get('success')}}
+                    </div>
+                @endif   
 
 <div class="col-sm-12">
 
@@ -59,6 +63,8 @@
      @php   
         $ultimadependencia = "";
 
+         $id_votante = $elector->id;
+
     @endphp
  @foreach ($elecciones1 as $eleccion)
 
@@ -78,7 +84,7 @@
    
 
   <td class="px-4 py-2 text-center ">
- <a href="{{ route('elecciones.votacion', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+ <a href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
 
 <div class="inner small-box bg-info fixed-width">
 
