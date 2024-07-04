@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2024 a las 05:42:53
+-- Tiempo de generación: 04-07-2024 a las 13:39:22
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -63,7 +63,14 @@ CREATE TABLE `candidatos` (
 --
 
 INSERT INTO `candidatos` (`id`, `id_dependencia_cargos`, `id_candidato`, `created_at`, `updated_at`) VALUES
-(30, 128, 136, '2024-06-29 08:15:01', '2024-06-29 08:15:01');
+(30, 128, 136, '2024-06-29 08:15:01', '2024-06-29 08:15:01'),
+(31, 135, 137, '2024-07-01 03:36:54', '2024-07-01 03:36:54'),
+(32, 136, 138, '2024-07-01 08:18:34', '2024-07-01 08:18:34'),
+(33, 135, 136, '2024-07-01 08:35:54', '2024-07-01 08:35:54'),
+(34, 128, 137, '2024-07-02 03:10:43', '2024-07-02 03:10:43'),
+(35, 128, 138, '2024-07-02 03:10:43', '2024-07-02 03:10:43'),
+(36, 136, 137, '2024-07-02 11:34:18', '2024-07-02 11:34:18'),
+(37, 132, 136, '2024-07-04 08:26:16', '2024-07-04 08:26:16');
 
 -- --------------------------------------------------------
 
@@ -111,7 +118,8 @@ INSERT INTO `cargos` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
 (37, 'Presbítero', '2024-05-27 15:34:14', '2024-05-27 15:34:14'),
 (38, 'Vice-presbítero', '2024-05-27 15:34:34', '2024-05-27 15:34:34'),
 (39, 'Supervisor de Zona', '2024-05-27 15:35:11', '2024-05-27 15:35:11'),
-(40, 'Vice-supervisor', '2024-05-27 15:35:29', '2024-05-27 15:35:29');
+(40, 'Vice-supervisor', '2024-05-27 15:35:29', '2024-05-27 15:35:29'),
+(41, 'Vocal 1', '2024-07-02 11:12:00', '2024-07-02 11:12:00');
 
 -- --------------------------------------------------------
 
@@ -219,7 +227,20 @@ CREATE TABLE `dependencia_cargos` (
 INSERT INTO `dependencia_cargos` (`id`, `id_dependencia`, `id_ambito`, `id_cargo`, `created_at`, `updated_at`) VALUES
 (128, 10, 1, 12, NULL, NULL),
 (130, 10, 2, 12, NULL, NULL),
-(129, 10, 2, 13, NULL, NULL);
+(129, 10, 2, 13, NULL, NULL),
+(135, 10, 1, 13, NULL, NULL),
+(136, 10, 1, 14, NULL, NULL),
+(141, 10, 1, 15, NULL, NULL),
+(142, 10, 1, 16, NULL, NULL),
+(143, 10, 1, 17, NULL, NULL),
+(144, 10, 1, 41, NULL, NULL),
+(132, 12, 1, 12, NULL, NULL),
+(133, 12, 1, 14, NULL, NULL),
+(137, 14, 1, 12, NULL, NULL),
+(139, 18, 1, 12, NULL, NULL),
+(140, 19, 1, 12, NULL, NULL),
+(131, 21, 1, 12, NULL, NULL),
+(138, 22, 1, 12, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,6 +255,16 @@ CREATE TABLE `elecciones` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `elecciones`
+--
+
+INSERT INTO `elecciones` (`id`, `id_votante`, `id_candidato`, `created_at`, `updated_at`) VALUES
+(29, 136, 37, '2024-07-04 16:10:34', '2024-07-04 16:10:34'),
+(30, 136, 30, '2024-07-04 16:13:32', '2024-07-04 16:13:32'),
+(31, 136, 31, '2024-07-04 16:13:32', '2024-07-04 16:13:32'),
+(32, 136, 32, '2024-07-04 16:13:33', '2024-07-04 16:13:33');
 
 -- --------------------------------------------------------
 
@@ -409,7 +440,7 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`id`, `cedula`, `nombres`, `apellidos`, `fecha_nacimiento`, `telefono`, `edad`, `genero`, `profesion`, `pastor`, `ministro_ungido`, `imagen`, `direccion`, `estado_civil`, `fecha_uncion`, `created_at`, `updated_at`) VALUES
-(136, '21289756', 'Miqueas Neptali', 'Gutierrez Salazar', '1992-01-25', '21212122', 31, 'masculino', 'Ingeniero en Sistemas', 'Jose Quintana', 'modal2', '20240616215953.jpg', 'Centro cr 30 #29-05', 'soltero', '2000', '2024-06-17 02:59:53', '2024-06-17 02:59:53'),
+(136, '21280756', 'Miqueas Neptali', 'Gutierrez Salazar', '1992-01-25', '21212122', 31, 'masculino', 'Ingeniero en Sistemas', 'Jose Quintana', 'modal2', '20240616215953.jpg', 'Centro cr 30 #29-05', 'soltero', '2000', '2024-06-17 02:59:53', '2024-06-17 02:59:53'),
 (137, '31456587', 'Maria Sofia', 'Landaeta Paez', '2024-06-27', '123213213', 31, 'femenino', 'Administradora', 'Jose Mendoza', 'modal3', '20240616220207.jpg', 'Centro cr 30 #29-05', 'casado', '2013', '2024-06-17 03:02:07', '2024-06-17 03:02:07'),
 (138, '22345654', 'Jose Felipe', 'Quintana Ruiz', '2024-06-26', '2134545', 34, 'masculino', 'Contador', 'Miguel Gutierrez', 'modal2', '20240616220358.jpg', 'Centro cr 30 #29-05', 'casado', '2012', '2024-06-17 03:03:58', '2024-06-17 03:03:58'),
 (139, '32678432', 'Jose Andres', 'Perez Mendosa', '2024-06-21', '212321323', 23, 'masculino', 'Administrador', 'Miguel Sanchez', 'modal2', '20240616220600.jpg', 'Centro cr 30 #29-05', 'casado', '2012', '2024-06-17 03:06:00', '2024-06-17 03:06:00');
@@ -707,13 +738,13 @@ ALTER TABLE `ambitos_dependencias`
 -- AUTO_INCREMENT de la tabla `candidatos`
 --
 ALTER TABLE `candidatos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria_ungidos`
@@ -737,13 +768,13 @@ ALTER TABLE `dependencias`
 -- AUTO_INCREMENT de la tabla `dependencia_cargos`
 --
 ALTER TABLE `dependencia_cargos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
 ALTER TABLE `elecciones`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`

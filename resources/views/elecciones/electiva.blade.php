@@ -129,7 +129,7 @@
 <tr>
       <th scope="col" class="centrar-texto">{{ $candidato->registro->cedula }}</th>
       <th scope="col" class="centrar-texto" >{{ $candidato->registro->nombres}} {{ $candidato->registro->apellidos }}</th>
-      <th scope="col" class="centrar-texto">0</th>
+      <th scope="col" class="centrar-texto">{{ $candidato->elecciones_count }}</th>
     </tr>
  @endforeach
 

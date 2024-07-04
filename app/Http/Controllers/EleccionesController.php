@@ -31,10 +31,15 @@ class EleccionesController extends Controller
     public function candidatos($iddependencia, $idambito)
     {
 
- $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
-        $query->where('id_ambito', $idambito);
-    }])
-    ->findOrFail($iddependencia);
+    $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia) {
+        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito) {
+            $query->whereHas('cargo', function ($query) use ($iddependencia) {
+                $query->where('id_dependencia', $iddependencia);
+            })->withCount(['elecciones' => function ($query) use ($idambito) {
+                $query->where('id_ambito', $idambito);
+            }]);
+        }]);
+    }])->findOrFail($iddependencia);
 
       $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
 
@@ -46,13 +51,18 @@ class EleccionesController extends Controller
      public function electiva($iddependencia, $idambito)
     {
 
- $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
-        $query->where('id_ambito', $idambito);
-    }])
-    ->findOrFail($iddependencia);
 
+   $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia) {
+        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito) {
+            $query->whereHas('cargo', function ($query) use ($iddependencia) {
+                $query->where('id_dependencia', $iddependencia);
+            })->withCount(['elecciones' => function ($query) use ($idambito) {
+                $query->where('id_ambito', $idambito);
+            }]);
+        }]);
+    }])->findOrFail($iddependencia);
 
-     $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+    $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
 
     return view('elecciones.electiva', compact('dependencia','ambito'));
 
@@ -142,10 +152,15 @@ $elecciones4 = Ambitodependencias::where('id', $idambito4)
 
      $cedula = Registro::where('id', $idvotante)->value('cedula');
 
-   $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito) {
-        $query->where('id_ambito', $idambito);
-    }])
-    ->findOrFail($iddependencia);
+   $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia) {
+        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito) {
+            $query->whereHas('cargo', function ($query) use ($iddependencia) {
+                $query->where('id_dependencia', $iddependencia);
+            })->withCount(['elecciones' => function ($query) use ($idambito) {
+                $query->where('id_ambito', $idambito);
+            }]);
+        }]);
+    }])->findOrFail($iddependencia);
 
       $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
 

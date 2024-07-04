@@ -17,6 +17,10 @@ class Elecciones extends Model
         'id_candidato'
     ];
 
+ public function candidato()
+    {
+        return $this->belongsTo(Candidatos::class, 'id');
+    }
 
 
 }

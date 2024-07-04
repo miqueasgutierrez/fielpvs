@@ -182,7 +182,7 @@
 <tr>
       <th scope="col" class="centrar-imagen">  
 
- <img src="../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
+ <img src="../../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
 
        </th>
       <th scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }}</th>

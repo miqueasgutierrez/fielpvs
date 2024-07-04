@@ -35,6 +35,15 @@ class Candidatos extends Model
 
 
 
+    public function elecciones()
+    {
+         return $this->hasMany(Elecciones::class, 'id_candidato');
+
+    }
+
+
+
+
 
     public function registro()
     {
