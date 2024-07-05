@@ -117,6 +117,9 @@
 
          <form action="{{ route('elecciones.datos') }}" method="POST">
     @csrf
+
+    <input type="hidden" name="iddependencia" value="{{ $dependencia->id }}" >
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
          <div class="grid grid-cols-1">
            
@@ -129,31 +132,47 @@
         <h5> Cédula del elector
         </h5>
             
+
+             
+            
             <input type="number" class="form-control @error('cedula') is-invalid @enderror" id="cedula" name="cedula" minlength="5" placeholder="Cédula" required>
 
              <button type="submit" class="btn btn-primary mt-6">Buscar</button>
-            @error('cedula')
-                <span class="invalid-feedback text-red-500 text-sm" role="alert">
-                    <strong>El campo de Cédula no puede estar vacío ni duplicado</strong>
-                </span>
-            @enderror
+            
         </div>
         <div class="grid grid-cols-1">
            
         </div>
     </div>
-    @if(Session::has('success'))
-        <div class="alert alert-danger text-center mt-5">
-            {{ Session::get('success') }}
-        </div>
-    @endif
+   
+
+   @if(Session::has('error'))
+                    <script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '{{ session('error') }}',
+                            footer: '<a href="{{ route('registros.index') }}">Regístrese aquí</a>'
+                        });
+                    </script>
+                @endif
+
 </form>
 </div>
+
+
+
 
 
 </x-app-layout>
 
 <script>
+
+
+
+
+
+    
     (function () {
   'use strict'
   //debemos crear la clase formEliminar dentro del form del boton borrar

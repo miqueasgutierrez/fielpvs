@@ -31,32 +31,16 @@ class EleccionesController extends Controller
     public function candidatos($iddependencia, $idambito)
     {
 
-    $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia) {
-        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito) {
+   
+    $currentYear = date('Y');
+
+    $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia, $currentYear) {
+        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito, $currentYear) {
             $query->whereHas('cargo', function ($query) use ($iddependencia) {
                 $query->where('id_dependencia', $iddependencia);
-            })->withCount(['elecciones' => function ($query) use ($idambito) {
-                $query->where('id_ambito', $idambito);
-            }]);
-        }]);
-    }])->findOrFail($iddependencia);
-
-      $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
-
-    return view('elecciones.candidatos', compact('dependencia','ambito'));
-
-    }
-
-
-     public function electiva($iddependencia, $idambito)
-    {
-
-
-   $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia) {
-        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito) {
-            $query->whereHas('cargo', function ($query) use ($iddependencia) {
-                $query->where('id_dependencia', $iddependencia);
-            })->withCount(['elecciones' => function ($query) use ($idambito) {
+            })
+            ->whereYear('candidatos.created_at', $currentYear)
+            ->withCount(['elecciones' => function ($query) use ($idambito) {
                 $query->where('id_ambito', $idambito);
             }]);
         }]);
@@ -64,6 +48,31 @@ class EleccionesController extends Controller
 
     $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
 
+    return view('elecciones.candidatos', compact('dependencia', 'ambito'));
+
+    }
+
+
+     public function electiva($iddependencia, $idambito)
+    {
+
+  $currentYear = date('Y');
+
+    $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia, $currentYear) {
+        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito, $currentYear) {
+            $query->whereHas('cargo', function ($query) use ($iddependencia) {
+                $query->where('id_dependencia', $iddependencia);
+            })
+            ->whereYear('candidatos.created_at', $currentYear)
+            ->withCount(['elecciones' => function ($query) use ($idambito) {
+                $query->where('id_ambito', $idambito);
+            }]);
+        }]);
+    }])->findOrFail($iddependencia);
+
+    $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+
+   
     return view('elecciones.electiva', compact('dependencia','ambito'));
 
     }
@@ -108,19 +117,40 @@ class EleccionesController extends Controller
 
 // Asegúrate de que el campo 'cedula' está presente en la solicitud
     $idcedula = $request->input('cedula');
+
+    $iddependencia = $request->input('iddependencia');
  
-  $elector = Registro::where('cedula', $idcedula)->first();
+ 
+
+ $elector = Registro::where('cedula', $idcedula)->first();
 
 $idambito1='1';
 $idambito2='2';
 $idambito3='3';
 $idambito4='4';
 
-if (!$elector) {
+ 
+        if (!$elector) {
+            return redirect()->back()->with('error', 'La cédula no existe en los registros.Verifique o registre sus datos.');
+        }
 
-     return back()->with('success', 'La cédula no existe en los registros.')->with('success', 'La cédula no existe en los registros.');
 
+
+
+$currentYear = date('Y');
+
+    // Verificar si la cédula ya ha votado en el año actual en la tabla elecciones
+    $hasVotedInDependencia = Elecciones::whereHas('candidato.cargo.dependencias', function ($query) use ($iddependencia) {
+                                            $query->where('id_dependencia', $iddependencia);
+                                        })
+                                      ->where('id_votante', $elector->id)
+                                      ->whereYear('created_at', $currentYear)
+                                      ->exists();
+
+    if ($hasVotedInDependencia) {
+        return redirect()->back()->with('error', 'La cédula ya ha votado en esta dependencia en el año actual.');
     }
+
 
  $elecciones1 = Ambitodependencias::where('id', $idambito1)
             ->with(['dependencias.dependencia.cargos' => function($query) {
@@ -142,7 +172,7 @@ $elecciones4 = Ambitodependencias::where('id', $idambito4)
                 $query->orderBy('nombre', 'asc');
             }])->get();
 
-   return view('elecciones.datos', compact('elector','elecciones1','elecciones2','elecciones3','elecciones4'));
+   return view('elecciones.datos', compact('elector','elecciones1','elecciones2','elecciones3','elecciones4','iddependencia'));
 
     }
 
@@ -152,11 +182,15 @@ $elecciones4 = Ambitodependencias::where('id', $idambito4)
 
      $cedula = Registro::where('id', $idvotante)->value('cedula');
 
-   $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia) {
-        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito) {
+  $currentYear = date('Y');
+
+    $dependencia = Dependencia::with(['cargos' => function ($query) use ($idambito, $iddependencia, $currentYear) {
+        $query->where('id_ambito', $idambito)->with(['candidatos' => function ($query) use ($iddependencia, $idambito, $currentYear) {
             $query->whereHas('cargo', function ($query) use ($iddependencia) {
                 $query->where('id_dependencia', $iddependencia);
-            })->withCount(['elecciones' => function ($query) use ($idambito) {
+            })
+            ->whereYear('candidatos.created_at', $currentYear)
+            ->withCount(['elecciones' => function ($query) use ($idambito) {
                 $query->where('id_ambito', $idambito);
             }]);
         }]);

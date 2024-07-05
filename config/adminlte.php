@@ -316,8 +316,8 @@ return [
         ],
 
          [
-            'text' => 'federacion',
-            'url' => 'federacion',
+            'text' => 'Federacion',
+            'url' => 'dashboard',
             'icon' => 'fa fa-globe',
             
         ],

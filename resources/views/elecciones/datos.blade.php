@@ -14,17 +14,15 @@
 </style>
 
     <x-app-layout>
- @if(Session::has('success'))
-                    <div class="alert alert-success text-center">
-                        {{Session::get('success')}}
-                    </div>
-                @endif   
+  
 
 <div class="col-sm-12">
 
   <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('DATOS DEL ELECTOR') }}
        </h3>
+
+       <h5>{{ $iddependencia }}</h5>
 
       <div class="card-body table-responsive p-0" style="height: 600px;">  
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
@@ -83,10 +81,10 @@
   @if ($nombreDependencia != $ultimadependencia)
    
 
-  <td class="px-4 py-2 text-center ">
+  <td id="{{$idDependencia}}"  class="px-4 py-2 text-center ">
  <a href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
 
-<div class="inner small-box bg-info fixed-width">
+<div   class="inner small-box bg-info fixed-width">
 
    
 
@@ -308,6 +306,18 @@
       }, false)
     })
 })()
+
+
+
+
+ $(document).ready(function() {
+            var iddependencia = @json($iddependencia);
+            $('#' + iddependencia).css('background-color', 'green');
+        });
+
+
+
+
 </script>
 
 <script >
