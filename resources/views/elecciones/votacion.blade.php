@@ -71,6 +71,7 @@
 </div>
 <form id="myForm" action="{{ route('elecciones.votacionfinal') }}" method="POST" enctype="multipart/form-data">
     @csrf
+ <input type="hidden" name="iddependencia" value="{{ $dependencia->id }}">
  <input type="hidden" name="idvotante" value="{{ $idvotante }}">
  <input type="hidden" name="cedula" value="{{ $cedula }}">
 <table id="detalles" class="table table-bordered table-striped dataTable dtr-inline" style="">

@@ -14,6 +14,22 @@
 </style>
 
     <x-app-layout>
+
+         <div class="container text-center">
+  <div class="row">
+    <div class="col">
+     
+    </div>
+    <div class="col">
+     
+    </div>
+    <div class="col">
+    <button onclick="window.location.href='{{ route('elecciones.index') }}'" class="btn btn-primary">
+        <i class="fa fa-reply"></i> Volver
+    </button>
+    </div>
+  </div>
+</div>
   
 
 <div class="col-sm-12">
@@ -21,8 +37,6 @@
   <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('DATOS DEL ELECTOR') }}
        </h3>
-
-       <h5>{{ $iddependencia }}</h5>
 
       <div class="card-body table-responsive p-0" style="height: 600px;">  
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
@@ -46,100 +60,34 @@
     </tbody>
 </table>
 
+
 <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Opciones a Votar') }}
        </h3>
 
-   
+   @php   
+$id_votante = $elector->id;
 
+ $idambito = 1;
+   @endphp
 
+ 
 <table class="table table-bordered table-striped dataTable dtr-inline" style="">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Ambito Nacional') }}
        </h5>
-<tr>
-     @php   
-        $ultimadependencia = "";
-
-         $id_votante = $elector->id;
-
-    @endphp
- @foreach ($elecciones1 as $eleccion)
-
- @php
-         $idambito = $eleccion->id;
- @endphp
-
-    @foreach ($eleccion->dependencias as $dependencia)
-
-     @php
-            $idDependencia = $dependencia->dependencia->id;
-            $nombreDependencia = $dependencia->dependencia->nombre;
-        @endphp
-
-
-  @if ($nombreDependencia != $ultimadependencia)
-   
-
-  <td id="{{$idDependencia}}"  class="px-4 py-2 text-center ">
- <a href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
-
-<div   class="inner small-box bg-info fixed-width">
-
-   
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<p> {{ $nombreDependencia }}   </p>
-<p></p>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-</div>
-</a>
-
-           </td>
- @php
-                $ultimadependencia = $nombreDependencia;
-            @endphp
-        @endif
-    @endforeach
-
-        @endforeach
-</tr>
-</table>
-
-
-
-<table class="table table-bordered table-striped dataTable dtr-inline" style="">
-  <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('Ambito Regional') }}
-       </h5>
 
 <tr>
 
-     @php   
-        $ultimadependencia = "";
-    @endphp
- @foreach ($elecciones2 as $eleccion)
-    @foreach ($eleccion->dependencias as $dependencia)
+     @foreach ($eleccionesnacionales as $dependencia)
+  
+@php   
+$idDependencia = $dependencia['id'];
+   @endphp
 
-     @php
-            $idDependencia = $dependencia->dependencia->id;
-            $nombreDependencia = $dependencia->dependencia->nombre;
-        @endphp
+  <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
 
-
-  @if ($nombreDependencia != $ultimadependencia)
-   
-
-  <td class="px-4 py-2 text-center ">
 
 <div class="inner small-box bg-info fixed-width">
 
@@ -148,7 +96,7 @@
 <br>
 <br>
 <br>
-<p> {{ $nombreDependencia }}   </p>
+  <p>{{ $dependencia['nombre'] }}</p>
 <p></p>
 <br>
 <br>
@@ -159,120 +107,12 @@
 </div>
 
            </td>
- @php
-                $ultimadependencia = $nombreDependencia;
-            @endphp
-        @endif
-    @endforeach
-
-        @endforeach
+ @endforeach
 </tr>
 </table>
 
 
-<table class="table table-bordered table-striped dataTable dtr-inline" style="">
-  <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('Ambito Zonal') }}
-       </h5>
 
-<tr>
-
-     @php   
-        $ultimadependencia = "";
-    @endphp
- @foreach ($elecciones3 as $eleccion)
-    @foreach ($eleccion->dependencias as $dependencia)
-
-     @php
-            $idDependencia = $dependencia->dependencia->id;
-            $nombreDependencia = $dependencia->dependencia->nombre;
-        @endphp
-
-
-  @if ($nombreDependencia != $ultimadependencia)
-   
-
-  <td class="px-4 py-2 text-center ">
-
-<div class="inner small-box bg-info fixed-width">
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<p> {{ $nombreDependencia }}   </p>
-<p></p>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-</div>
-
-           </td>
- @php
-                $ultimadependencia = $nombreDependencia;
-            @endphp
-        @endif
-    @endforeach
-
-        @endforeach
-</tr>
-</table>
-
-
-<table class="table table-bordered table-striped dataTable dtr-inline" style="">
-  <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('Ambito Local') }}
-       </h5>
-<tr>
-
-     @php   
-        $ultimadependencia = "";
-    @endphp
- @foreach ($elecciones4 as $eleccion)
-    @foreach ($eleccion->dependencias as $dependencia)
-
-     @php
-            $idDependencia = $dependencia->dependencia->id;
-            $nombreDependencia = $dependencia->dependencia->nombre;
-        @endphp
-
-
-  @if ($nombreDependencia != $ultimadependencia)
-   
-
-  <td class="px-4 py-2 text-center ">
-
-<div class="inner small-box bg-info fixed-width">
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<p> {{ $nombreDependencia }}   </p>
-<p></p>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-</div>
-
-           </td>
- @php
-                $ultimadependencia = $nombreDependencia;
-            @endphp
-        @endif
-    @endforeach
-
-        @endforeach
-</tr>
-</table>
 
 
 </div>
@@ -311,8 +151,15 @@
 
 
  $(document).ready(function() {
-            var iddependencia = @json($iddependencia);
-            $('#' + iddependencia).css('background-color', 'green');
+          var iddependencia = @json($iddependencia);
+
+            // Verificar si iddependencia no es nulo
+            if (iddependencia !== null) {
+                // Asegúrate de que existe un elemento con el id correspondiente
+                if ($('#' + iddependencia).length) {
+                    $('#' + iddependencia).css('background-color', 'green');
+                }
+            }
         });
 
 
