@@ -341,6 +341,70 @@ return view('elecciones.datos', compact('elector', 'eleccionesnacionales','iddep
   
     }
 
+     public function opciones($iddependencia, $idambito)
+    {
+
+
+
+      return view('elecciones.opciones', compact('iddependencia','idambito'));
+
+    }
+
+public function vistaresultados(Request $request)
+    {
+
+ $iddependencia = $request->input('iddependencia');
+ $idambito = $request->input('idambito');
+
+ $nombredependencia=Dependencia::where('id', $iddependencia)->value('nombre');
+ $nombreambito=Ambitodependencias::where('id', $idambito)->value('nombre');
+
+
+$currentYear = date('Y'); // Año actual
+
+$sql = "
+   SELECT 
+    d.id, 
+    c.id AS idcargo, 
+    r.nombres,r.apellidos, r.cedula as cedula, r.imagen as imagen ,
+    c.nombre AS nombrecargo, 
+    COUNT(e.id) AS candidatos_count,
+    CASE WHEN COUNT(e.id) > 0 THEN 'Con Votos' ELSE 'Sin Votos' END AS estado_votos
+FROM 
+    dependencias d
+INNER JOIN 
+    dependencia_cargos dc ON d.id = dc.id_dependencia
+INNER JOIN 
+    cargos c ON c.id = dc.id_cargo
+INNER JOIN 
+    candidatos ca ON dc.id = ca.id_dependencia_cargos
+INNER JOIN 
+    ambitos_dependencias ad ON ad.id = dc.id_ambito
+INNER JOIN 
+    registros r ON r.id = ca.id_candidato
+LEFT JOIN 
+    elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) =?
+WHERE 
+    d.id = ?
+    AND ad.id = ? 
+GROUP BY 
+    d.id, 
+    c.id, 
+    r.nombres, 
+     r.apellidos, 
+      r.cedula,
+      r.imagen,
+    c.nombre
+LIMIT 0, 25;
+";
+
+$dependencia = DB::select($sql, [$currentYear, $iddependencia, $idambito]);
+
+
+     return view('elecciones.vistaresultados', compact('dependencia','idambito','nombredependencia','nombreambito'));
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

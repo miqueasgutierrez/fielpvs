@@ -104,12 +104,7 @@
 <br>
 
 </div>
-
            </td>
-
-
-          
-
            <td class="px-4 py-2 text-center ">
 
 
@@ -221,15 +216,12 @@
 
         <td class="px-4 py-2 text-center ">
 
-              <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+              <a href="{{ route('elecciones.opciones', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box bg-warning ">
         <br>
 <br>
 
 <br>
-
-        
-     
         <i class="fa fa-unlock-alt fa-5x" aria-hidden="true"></i>
     </a>
 

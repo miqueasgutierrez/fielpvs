@@ -72,13 +72,23 @@ $id_votante = $elector->id;
    @endphp
 
  
-<table class="table table-bordered table-striped dataTable dtr-inline" style="">
+  <div class="table-responsive">
+    @php
+    $eleccionesnacionales = collect($eleccionesnacionales);
+@endphp
+
+ <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Ambito Nacional') }}
        </h5>
 
-<tr>
-
+ 
+@if($eleccionesnacionales->isEmpty())
+        <tr>
+            <td colspan="4"><p>No hay dependencias para votar en este ambito.</p></td>
+        </tr>
+    @else
+   
      @foreach ($eleccionesnacionales as $dependencia)
   
 @php   
@@ -103,14 +113,15 @@ $idDependencia = $dependencia['id'];
 <br>
 <br>
 <br>
-
 </div>
 
            </td>
  @endforeach
+
+  @endif
 </tr>
 </table>
-
+</div>
 
 
 

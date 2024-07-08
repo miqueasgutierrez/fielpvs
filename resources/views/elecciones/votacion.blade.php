@@ -167,40 +167,30 @@
       
     </tr>  
         @else
-         <tr>
-      <th scope="col" class="centrar-texto"><p>Perfil</p></th>
-      <th scope="col" class="centrar-texto"><p>Nombres </p></th>
-      <th scope="col" class="centrar-texto" ><p>Apellidos</p></th>
-      <th scope="col" class="centrar-texto"><p></p></th>
-    </tr>
+         
 
-     
-
+    
        <tbody>
  
 @foreach($cargo->candidatos as $candidato)
+  
+<td scope="col" class="centrar-imagen">
    
-<tr>
-      <th scope="col" class="centrar-imagen">  
 
  <img src="../../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
 
-       </th>
-      <th scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }}</th>
-        <th scope="col" class="centrar-texto">{{ $candidato->registro->apellidos }}</th>
-      <th scope="col" class="text-center">  
+      <p scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }} {{ $candidato->registro->apellidos }}</p>
 
-
-            <div class="form-check form-check-inline">
+       <div class="form-check form-check-inline">
                 <input  onclick="agregarDetalle('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
                     '{{ $candidato->registro->apellidos }}',
             '{{ $candidato->registro->imagen }}',
             '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
                
             </div>
+    
+    </td>
 
-       </th>
-    </tr>
  @endforeach
 </form>
 

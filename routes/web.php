@@ -81,12 +81,17 @@ Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesControlle
 
 Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
 
+Route::get('elecciones/opciones/{iddependencia}/{idambito}', [EleccionesController::class, 'opciones'])->name('elecciones.opciones');
+
 Route::post('elecciones/datos', [EleccionesController::class, 'datos'])->name('elecciones.datos');
 
 Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
 
 
  Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
+
+ Route::post('elecciones/vistaresultados', [EleccionesController::class, 'vistaresultados'])->name('elecciones.vistaresultados');
+
 
     Route::get('/dashboard', function(){
         return view('dashboard');
