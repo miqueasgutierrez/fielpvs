@@ -92,7 +92,16 @@
 
     <div class="col">
           <i class="fa fa-download fa-5x" aria-hidden="true"></i>
-          <p class="centrar-texto">Descargar resultados</p>
+          <br>
+          <form action="{{ route('resultadofinalpdf') }}" method="POST" id="hidden-fields-form">
+            @csrf
+    
+            <input type="hidden" name="iddependencia" id="hiddenField1" value="{{ $iddependencia }}">
+            <input type="hidden" name="idambito" id="hiddenField2" value="{{ $idambito }}">
+
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Descargar resultados</button>
+        </form>
+ 
     </div>
     <div class="col">
    

@@ -31,6 +31,8 @@
         </div>
     </div>
 
+    
+
     <div class="container text-center">
         <h2>Vista de Resultados</h2>
         <h5>Dependencia: {{ $nombredependencia }} | Ámbito: {{ $nombreambito }}</h5>
