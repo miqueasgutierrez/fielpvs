@@ -36,6 +36,13 @@ class PDFController extends Controller
            $pdf->SetFont('Arial', 'B', 12);
 
 
+
+           $totalvotos=0;
+            $totalvotoscargos=0;
+
+
+            $numResultadovista = 0;
+
            $iddependencia = $request->input('iddependencia');
            $idambito = $request->input('idambito');
 
@@ -46,13 +53,20 @@ class PDFController extends Controller
 $currentYear = date('Y'); // Año actual
 
 $sql = "
-   SELECT 
+ SELECT 
     d.id, 
     c.id AS idcargo, 
-    r.nombres,r.apellidos, r.cedula as cedula, r.imagen as imagen ,
+    r.nombres, 
+    r.apellidos, 
+    r.cedula AS cedula, 
+    r.imagen AS imagen,
     c.nombre AS nombrecargo, 
     COUNT(e.id) AS candidatos_count,
-    CASE WHEN COUNT(e.id) > 0 THEN 'Con Votos' ELSE 'Sin Votos' END AS estado_votos
+    CASE 
+        WHEN COUNT(e.id) > 0 THEN 'Con Votos' 
+        ELSE 'Sin Votos' 
+    END AS estado_votos,
+    COUNT(e.id) / COUNT(ca.id) * 100 AS porcentaje_votos -- Calcula el porcentaje de votos
 FROM 
     dependencias d
 INNER JOIN 
@@ -66,7 +80,7 @@ INNER JOIN
 INNER JOIN 
     registros r ON r.id = ca.id_candidato
 LEFT JOIN 
-    elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) =?
+    elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
 WHERE 
     d.id = ?
     AND ad.id = ? 
@@ -74,14 +88,14 @@ GROUP BY
     d.id, 
     c.id, 
     r.nombres, 
-     r.apellidos, 
-      r.cedula,
-      r.imagen,
+    r.apellidos, 
+    r.cedula,
+    r.imagen,
     c.nombre
 LIMIT 0, 25;
 ";
 
-$dependencia = DB::select($sql, [$currentYear, $iddependencia, $idambito]);
+           $dependencia = DB::select($sql, [$currentYear, $iddependencia, $idambito]);
 
 
            $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1",strtoupper("RESULTADO DE ELECIONES")),0,'C',false);
@@ -102,14 +116,32 @@ $dependencia = DB::select($sql, [$currentYear, $iddependencia, $idambito]);
  $pdf->Ln(3);
 
   $pdf->SetLeftMargin(16);
+     $pdf->Cell(7,5, utf8_decode("N°"), 1);
      $pdf->Cell(25,5, utf8_decode("CEDULA"), 1, 0, 'C');
     $pdf->Cell(90,5, "NOMBRES Y APELLIDOS", 1, 0, 'C');
-    $pdf->Cell(20,5,"VOTOS ", 1, 0, 'C');
-    $pdf->Cell(20,5,"%",1, 0, 'C');
-     $pdf->Cell(25,5,"CONDICION",1);
+    $pdf->Cell(18,5,"VOTOS ", 1, 0, 'C');
+    $pdf->Cell(18,5,"%",1, 0, 'C');
+     $pdf->Cell(25,5,"CONDICION",1, 0, 'C');
 $pdf->Ln(4);
 
 $ultimocargo = '';
+
+$contarcargo =0;
+
+$sumaResultado = 0;
+
+  $contador = 0;
+
+
+
+  $totalVotosPorCargo = [];
+        foreach ($dependencia as $item) {
+            if (!isset($totalVotosPorCargo[$item->idcargo])) {
+                $totalVotosPorCargo[$item->idcargo] = 0;
+            }
+            $totalVotosPorCargo[$item->idcargo] += $item->candidatos_count;
+        }
+
 
 
 foreach ($dependencia as $item) {
@@ -117,30 +149,94 @@ foreach ($dependencia as $item) {
 
     $cargo =  $item->nombrecargo ;
 
-    if ($cargo != $ultimocargo) {
-    
-    $pdf->Cell(175, 10, strtoupper($item->nombrecargo), 0, 1, 'C');
+    $pdf->SetFont('Arial', '', 11);
+        
 
+    if ($cargo != $ultimocargo) {
+
+
+        if ($numResultadovista > 0) {
+
+        $pdf->Ln(3);
+           
+  $pdf->SetLeftMargin(95);
+ $pdf->Cell(43,5, "Total Votos", 1, 0, 'C');
+ $pdf->Cell(18,5,"$sumaResultado",1, 1, 'C');
+
+
+
+        }
+
+        $pdf->SetLeftMargin(95);
+
+$pdf->SetLeftMargin(16);
+$pdf->SetFont('Arial', 'B', 11);
+$pdf->Cell(35, 10, utf8_decode(strtoupper($item->nombrecargo)), 0, 1, 'C');
+$pdf->SetFont('Arial', '', 11);
               $ultimocargo = $item->nombrecargo;
 
+              $contar=$contarcargo+$item->candidatos_count;
+
+              $numResultados = 0;
+              $sumaResultado = 0;
+              
+              $numResultadovista = 0; 
+              
             }
 
-        
+$numResultadovista++;
+$contador++;   
+$numResultados++;
+ $sumaResultado += $item->candidatos_count;
 
+$porcentaje = ($item->candidatos_count / $totalVotosPorCargo[$item->idcargo]) * 100;
 
-        
+$pdf->SetLeftMargin(16);
+
+      $pdf->Cell(7,5, utf8_decode("$contador"), 1);
      $pdf->Cell(25,5, utf8_decode("$item->cedula"), 1, 0, 'C');
     $pdf->Cell(90,5, "$item->nombres $item->apellidos", 1, 0, 'C');
-    $pdf->Cell(20,5,"$item->candidatos_count", 1, 0, 'C');
-    $pdf->Cell(20,5,"",1, 0, 'C');
-     $pdf->Cell(25,5,"",1);
-      $pdf->Ln(5);
+    $pdf->Cell(18,5,"$item->candidatos_count", 1, 0, 'C');
+   $pdf->Cell(18,5,number_format($porcentaje, 2),1, 0, 'C');
+     $pdf->Cell(25,5,"",1, 0, 'C');
+$pdf->Ln(5);
+
+ $pdf->SetLeftMargin(16);
+      $totalvotos=$totalvotos+$item->candidatos_count;
 
   }
 
 
-$pdf->Output('D', 'Resultados.pdf');
 
+
+if ($numResultadovista > 0) {
+
+            
+
+
+        $pdf->Ln(1);
+             $pdf->Ln(3);
+  $pdf->SetLeftMargin(95);
+ $pdf->Cell(43,5, "Total Votos", 1, 0, 'C');
+
+ $pdf->Cell(18,5,"$sumaResultado",1, 0, 'C');
+
+  $pdf->SetLeftMargin(16);
+$pdf->Ln(5);
+
+
+        }
+
+$pdf->Ln(3);
+  $pdf->SetFont('Arial', 'B', 11);
+  $pdf->SetLeftMargin(95);
+ $pdf->Cell(43,5, "Total General de Votos", 1, 0, 'C');
+
+      
+ $pdf->Cell(18,5,"$totalvotos",1, 0, 'C');
+ $pdf->SetLeftMargin(16);
+// $pdf->Output('D', 'Resultados.pdf');
+$pdf->SetFont('Arial', '', 11);
         $pdf->Output();
 
         exit;
