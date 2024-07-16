@@ -2,7 +2,6 @@
 @extends('adminlte::page')
 
 
-
 @section('content')
     <x-app-layout>
     
@@ -24,6 +23,11 @@
        <br>
             <a type="button"href="{{ route('registros.create') }}"class="bg-indigo-500 px-12 py-2 rounded text-gray-200 font-semibold hover:bg-indigo-800 transition duration-200 each-in-out text-center ">Registrar</a>
         </div>
+
+
+
+ 
+
 <div class="grid grid-cols-1">
 <form action="{{ route('import.registros') }}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto mt-8">
     @csrf

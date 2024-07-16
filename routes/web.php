@@ -12,6 +12,7 @@ use App\Http\Controllers\IglesiaController;
 use App\Http\Controllers\CandidatosController;
 use App\Http\Controllers\EleccionesController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+
 
 Route::get('/', function () {
     return view('welcome');

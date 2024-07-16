@@ -292,6 +292,8 @@ return [
     |
     */
 
+    
+
     'menu' => [
         // Navbar items:
         [
@@ -327,6 +329,7 @@ return [
             'text' => 'Miembros',
             'url' => 'registros',
             'icon' => 'fa fa-users',
+            'can' => 'admin-access',
             
         ],
 
@@ -473,6 +476,9 @@ return [
         ],
     ],
 
+    
+
+
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
@@ -506,6 +512,9 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Plugins-Configuration
     |
     */
+
+
+
 
     'plugins' => [
         'Datatables' => [

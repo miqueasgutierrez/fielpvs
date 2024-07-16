@@ -28,6 +28,8 @@ use App\Models\RegistroIglesia;
 
 use App\Models\Ambitodependencias;
 
+
+
 class RegistroController extends Controller
 {
     /**
@@ -38,7 +40,9 @@ class RegistroController extends Controller
     public function index()
 
     {
-           
+         
+
+
         $registros = Registro::paginate(1000);
          return view('registros.index', compact('registros'));
 
