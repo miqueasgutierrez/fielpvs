@@ -315,12 +315,15 @@ return [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
+          
         ],
 
          [
             'text' => 'Federacion',
             'url' => 'dashboard',
             'icon' => 'fa fa-globe',
+
+            
             
         ],
 
@@ -329,13 +332,13 @@ return [
             'text' => 'Miembros',
             'url' => 'registros',
             'icon' => 'fa fa-users',
-            'can' => 'admin-access',
-            
+            'can' => 'admin',  
         ],
 
          [
             'text' => 'Dependencias',
             'icon' => 'fas fa-sitemap',
+             'can' => 'admin',
             'submenu' => [
                 [
                     'text' => 'Listado de Dependencias',
@@ -360,6 +363,7 @@ return [
          [
             'text' => 'Circuitos',
             'url' => 'circuitos',
+             'can' => 'admin',
             'icon' => 'fa fa-globe-americas',
            
             
@@ -369,6 +373,7 @@ return [
         [
             'text' => 'Zonas',
             'url' => 'zonas',
+             'can' => 'admin',
             'icon' => 'fas fa-network-wired',
             
         ],
@@ -378,6 +383,7 @@ return [
             'text' => 'Iglesias',
             'url' => 'iglesias',
             'icon' => 'fas fa-church',
+             'can' => 'admin',
             
         ],
 
@@ -385,6 +391,7 @@ return [
             [
             'text' => 'Candidatos',
             'url' => 'candidatos',
+             'can' => 'admin',
             'icon' => 'fas fa-user-tie',
             
         ],
@@ -394,86 +401,12 @@ return [
          [
             'text' => 'Elecciones',
             'url' => 'elecciones',
+             'can' => 'votante',
+              'can' => 'admin',
             'icon' => 'fas fa-hands-helping',
             
         ],
 
-
-
-
-        [
-            'text' => 'Resultados',
-            'url' => 'Resultados',
-            'icon' => 'fas fa-chart-bar',
-            
-        ],
-       
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'Ayuda'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
     ],
 
     

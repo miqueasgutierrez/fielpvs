@@ -26,143 +26,89 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
+    
 
-Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    // Rutas accesibles solo para administrador
+    Route::middleware(['role:admin'])->group(function () {
+        // Registro
+        Route::resource('/registros', RegistroController::class);
+        
+        // Dependencias
+        Route::resource('/dependencias', DependenciaController::class);
+        
+        // Cargos
+        Route::resource('/cargos', CargoController::class);
+        
+        // Cargo dependencias
+        Route::resource('/cargosdependencias', CargoDependenciaController::class);
+        Route::delete('/cargosdependencias/{id1}/{id2}', [CargoDependenciaController::class, 'destroy'])->name('cargosdependencias.destroy');
+        
+        // Zonas
+        Route::resource('/zonas', ZonaController::class);
+        Route::post('zonas/storeMultiple', [ZonaController::class, 'storeMultiple'])->name('zonas.storeMultiple');
+        
+        // Circuitos
+        Route::resource('/circuitos', CircuitoController::class);
+        
+        // Candidatos
+        Route::resource('/candidatos', CandidatosController::class);
+        Route::post('candidatos/storeMultiple', [CandidatosController::class, 'storeMultiple'])->name('candidatos.storeMultiple');
+        
+        // Iglesias
+        Route::resource('/iglesias', IglesiaController::class);
+        Route::post('iglesias/storeMultiple', [IglesiaController::class, 'storeMultiple'])->name('iglesias.storeMultiple');
+        
+        // Resultados PDF
+        Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
+        
+        // API endpoints
+        Route::get('/apizonas/{circuitoId}', [IglesiaController::class, 'getZonas'])->name('getZonas');
+        Route::get('/api-iglesias/{zonaId}', [RegistroController::class, 'getIglesias'])->name('getIglesias');
+        Route::get('/api-cargos/{dependenciaId}', [CandidatosController::class, 'getCargos'])->name('getCargos');
+        
+        // Importar registros
+        Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');
+        
+        // Obtener cargos de dependencias
+        Route::get('/cargos/{dependencia_id}', [DependenciaController::class, 'getCargos']);
+    });
+
+    // Editar perfil
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/registros', RegistroController::class);
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
+// Rutas accesibles para votantes
+Route::middleware(['role:votante'])->group(function () {
+    
+    Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
+    Route::get('elecciones/cargos/{iddependencia}/{idambito}', [EleccionesController::class, 'cargos'])->name('elecciones.cargos');
+    Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
+    Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
+    Route::get('elecciones/opciones/{iddependencia}/{idambito}', [EleccionesController::class, 'opciones'])->name('elecciones.opciones');
+    Route::post('elecciones/datos', [EleccionesController::class, 'datos'])->name('elecciones.datos');
+    Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
+    Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
+    Route::post('elecciones/vistaresultados', [EleccionesController::class, 'vistaresultados'])->name('elecciones.vistaresultados');
 });
 
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/dependencias', DependenciaController::class);
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/cargos', CargoController::class);
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/cargosdependencias', CargoDependenciaController::class);
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+// Rutas accesibles para admin y operador
+Route::middleware(['role:admin,operador'])->group(function () {
     Route::resource('/elecciones', EleccionesController::class);
-
- Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
-
- Route::get('elecciones/cargos/{iddependencia}/{idambito}', [EleccionesController::class, 'cargos'])->name('elecciones.cargos');
-
-Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
-
-Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
-
-Route::get('elecciones/opciones/{iddependencia}/{idambito}', [EleccionesController::class, 'opciones'])->name('elecciones.opciones');
-
-Route::post('elecciones/datos', [EleccionesController::class, 'datos'])->name('elecciones.datos');
-
-Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
-
-
- Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
-
- Route::post('elecciones/vistaresultados', [EleccionesController::class, 'vistaresultados'])->name('elecciones.vistaresultados');
-
-
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
 });
-
-
-
-Route::delete('/cargosdependencias/{id1}/{id2}', [CargoDependenciaController::class, 'destroy'])->name('cargosdependencias.destroy');
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/circuitos', CircuitoController::class);
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/zonas', ZonaController::class);
-    Route::post('zonas/storeMultiple', [ZonaController::class, 'storeMultiple'])->name('zonas.storeMultiple');
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/candidatos', CandidatosController::class);
-    Route::post('candidatos/storeMultiple', [CandidatosController::class, 'storeMultiple'])->name('candidatos.storeMultiple');
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-
-
-Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::resource('/iglesias', IglesiaController::class);
-     
-      Route::post('iglesias/storeMultiple', [IglesiaController::class, 'storeMultiple'])->name('iglesias.storeMultiple');
-
-    Route::get('/dashboard', function(){
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
-
-
-
-Route::get('/apizonas/{circuitoId}', [IglesiaController::class, 'getZonas'])->name('getZonas');
-
-Route::get('/api-iglesias/{zonaId}', [RegistroController::class, 'getIglesias'])->name('getIglesias');
-
-
-Route::get('/api-cargos/{dependenciaId}', [CandidatosController::class, 'getCargos'])->name('getCargos');
-
-
-
-Route::post('/import-registros', [RegistrosImportController::class, 'import'])->name('import.registros');
-
-Route::get('/cargos/{dependencia_id}', [DependenciaController::class, 'getCargos']);
-
-
 
 require __DIR__.'/auth.php';

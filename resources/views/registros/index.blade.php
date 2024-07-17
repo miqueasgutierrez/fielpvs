@@ -15,6 +15,8 @@
 
             </div>
 
+</ul>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 mt-5 mx-7">
 
 

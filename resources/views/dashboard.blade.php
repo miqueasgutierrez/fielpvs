@@ -7,6 +7,8 @@
 @stop
 
 @section('content')
+
+
      <div class="container">
 <marquee><h2>BIENVENIDOS AL SISTEMA DE REGISTRO MIEMBROS | CONEF 2024</h2></marquee>
 <hr height="2" color="beige" />
