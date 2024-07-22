@@ -33,7 +33,8 @@ class CargoDependenciaController extends Controller
      */
     public function create()
     {
-         $dependencias = Dependencia::paginate(1000);
+         $dependencias = Dependencia::orderBy('orden', 'asc')->get();
+
            $cargos = Cargo::paginate(1000);
            $ambitosdependencias =Ambitodependencias::paginate(1000);
 

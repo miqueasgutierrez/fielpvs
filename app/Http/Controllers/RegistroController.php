@@ -60,7 +60,7 @@ class RegistroController extends Controller
 
  $circuitos = Circuito::all();
 
- $dependencias = Dependencia::paginate(1000);
+ $dependencias = Dependencia::orderBy('orden', 'asc')->get();
 
        $cargosDependencias = dependencia_cargo::with(['cargo', 'dependencia','ambito'])
 

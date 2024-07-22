@@ -27,11 +27,23 @@ class AuthenticatedSessionController extends Controller
     {
        
 
-        $request->authenticate();
+          $request->authenticate();
 
-        $request->session()->regenerate();
+    $request->session()->regenerate();
 
+    // Obtener el usuario autenticado
+    $user = Auth::user();
+
+    // Redirigir según el rol del usuario
+    if ($user->hasRole('admin')) {
+        return redirect()->intended('/dashboard');
+    } elseif ($user->hasRole('votante')) {
+        return redirect()->intended('/elecciones/vista1');
+    } else {
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+
     }
 
     /**

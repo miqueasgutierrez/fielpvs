@@ -11,7 +11,7 @@ class Dependencia extends Model
 
      protected $table = 'dependencias';
 
-    protected $fillable= ['nombre'];
+    protected $fillable= ['nombre','orden'];
 
    
   public function ambitos()

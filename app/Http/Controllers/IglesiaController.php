@@ -132,6 +132,8 @@ class IglesiaController extends Controller
      public function getZonas($circuitoId)    
     {
 
+      
+
         $zonas = Zona::where('circuito_id', $circuitoId)->pluck('nombre', 'id');
         return response()->json($zonas);
 

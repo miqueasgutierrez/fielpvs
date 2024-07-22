@@ -7,7 +7,7 @@ use App\Models\dependencia_cargo;
 use App\Models\Dependencia;
 use App\Models\Registro;
 use App\Models\Candidatos;
-
+use App\Models\EstadoDependencia;
 
 use Illuminate\Http\Request;
 
@@ -41,7 +41,7 @@ class CandidatosController extends Controller
      */
     public function create()
     {
-         $dependencias = Dependencia::all();
+      $dependencias = Dependencia::orderBy('orden', 'asc')->get();
 
          $registros = Registro::paginate(1000);
 
@@ -71,6 +71,35 @@ class CandidatosController extends Controller
                 'id_dependencia_cargos' => $idcargo
             ]);
         }
+
+
+$id_dependencia=$request->input('id_dependencia');
+   $currentYear = date('Y');
+
+     $existingRecord = EstadoDependencia::where('id_dependencia', $id_dependencia)
+            ->whereYear('created_at', $currentYear)
+            ->first();
+
+
+if ($existingRecord) {
+
+
+     return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
+
+          
+        }
+
+
+           $estadoDependencia = new EstadoDependencia([
+            'id_dependencia' => $request->input('id_dependencia'),
+           'estado' => 1, 
+        ]);
+
+        // Guardar la instancia en la base de datos
+        $estadoDependencia->save();
+
+
+
 
          return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
     }

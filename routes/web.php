@@ -11,6 +11,7 @@ use App\Http\Controllers\ZonaController;
 use App\Http\Controllers\IglesiaController;
 use App\Http\Controllers\CandidatosController;
 use App\Http\Controllers\EleccionesController;
+use App\Http\Controllers\EstadoDependenciaController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
@@ -39,9 +40,30 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+
+
+
+// Rutas accesibles para votantes
+Route::middleware(['role:votante'])->group(function () {
+
+    
+  Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
+  Route::get('elecciones/vista1', [EleccionesController::class, 'vista1'])->name('elecciones.vista1');
+
+ Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
+   
+});
+
+
     // Rutas accesibles solo para administrador
+
     Route::middleware(['role:admin'])->group(function () {
         // Registro
+        
+
+ Route::get('/estado_dependencias/{iddependencia}/{estado}', [EstadoDependenciaController::class, 'update'])->name('update');
+
+
         Route::resource('/registros', RegistroController::class);
         
         // Dependencias
@@ -82,33 +104,44 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
         
         // Obtener cargos de dependencias
         Route::get('/cargos/{dependencia_id}', [DependenciaController::class, 'getCargos']);
-    });
-
+   
     // Editar perfil
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+
+// Rutas accesibles para admin y operador
+Route::middleware(['role:operador'])->group(function () {
+
+
+
+
+   
 });
 
-// Rutas accesibles para votantes
-Route::middleware(['role:votante'])->group(function () {
-    
-    Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
+});
+
+    Route::middleware(['role:operador|admin'])->group(function () {
+    Route::resource('/elecciones', EleccionesController::class);
+
+
+  
+     Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
     Route::get('elecciones/cargos/{iddependencia}/{idambito}', [EleccionesController::class, 'cargos'])->name('elecciones.cargos');
-    Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
-    Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
+    
+   
     Route::get('elecciones/opciones/{iddependencia}/{idambito}', [EleccionesController::class, 'opciones'])->name('elecciones.opciones');
     Route::post('elecciones/datos', [EleccionesController::class, 'datos'])->name('elecciones.datos');
     Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
     Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
     Route::post('elecciones/vistaresultados', [EleccionesController::class, 'vistaresultados'])->name('elecciones.vistaresultados');
+    
 });
 
-// Rutas accesibles para admin y operador
-Route::middleware(['role:admin,operador'])->group(function () {
-    Route::resource('/elecciones', EleccionesController::class);
+
 });
 
 require __DIR__.'/auth.php';

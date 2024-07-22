@@ -54,6 +54,7 @@
         <th class="sorting sorting_asc text-center ">CARGOS</th>
         <th class="sorting sorting_asc text-center ">POSTULADOS</th>
          <th class="sorting sorting_asc text-center ">VOTAR</th>
+         <th class="sorting sorting_asc text-center ">RESULTADOS</th>
          <th class="sorting sorting_asc text-center ">ACCIONES</th>
       </tr>
     </thead>
@@ -62,24 +63,31 @@
 
     <tbody>
 
+        @php
+
+ $ultimadependencia = "";
+  @endphp
+
      @foreach ($elecciones as $eleccion)
+
    
-    @php
-         $nombreambito = $eleccion->nombre;
-         $idambito = $eleccion->id;
-        $ultimadependencia = "";
+     @php
+
+         $nombreambito = $eleccion->ambito;
+         $idambito = $eleccion->idambito;
+       
     @endphp
 
-    @foreach ($eleccion->dependencias as $dependencia)
-
-     @php
-            $idDependencia = $dependencia->dependencia->id;
-            $nombreDependencia = $dependencia->dependencia->nombre;
-        @endphp
+    
 
 
-  @if ($nombreDependencia != $ultimadependencia)
+
+  @if ($eleccion->dependencia != $ultimadependencia)
+
+           
+         
       <tr>
+
 
 
 
@@ -95,7 +103,9 @@
 <br>
 <br>
 
-<p>{{ $nombreDependencia }}</p>
+
+
+<p>{{  $eleccion->dependencia }}</p>
 <p></p>
 <br>
 <br>
@@ -128,7 +138,7 @@
 
            </td>
         <td class="px-4 py-2 text-center fixed-width">
-  <a href="{{ route('elecciones.electiva', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+  <a href="{{ route('elecciones.electiva', ['iddependencia' => $eleccion->iddependencia, 'idambito' => $idambito]) }}" class="list-group-item">
     <!-- Your link text here -->
 
         <div  class="inner small-box bg-success">
@@ -151,7 +161,7 @@
 </td>
           <td class="px-4 py-2 text-center ">
 
-              <a href="{{ route('elecciones.cargos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+              <a href="{{ route('elecciones.cargos', ['iddependencia' => $eleccion->iddependencia, 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box  ">
         <br>
 <br>
@@ -172,7 +182,7 @@
           </div>
         <td class="px-4 py-2 text-center ">
 
-              <a href="{{ route('elecciones.candidatos', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+              <a href="{{ route('elecciones.candidatos', ['iddependencia' => $eleccion->iddependencia , 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box bg-warning ">
         <br>
 <br>
@@ -193,7 +203,7 @@
 
         <td class="px-4 py-2 text-center ">
 
-              <a href="{{ route('elecciones.elector', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+              <a href="{{ route('elecciones.elector', ['iddependencia' => $eleccion->iddependencia, 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box  ">
         <br>
 <br>
@@ -216,29 +226,60 @@
 
         <td class="px-4 py-2 text-center ">
 
-              <a href="{{ route('elecciones.opciones', ['iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="list-group-item">
+              <a href="{{ route('elecciones.opciones', ['iddependencia' => $eleccion->iddependencia, 'idambito' => $idambito]) }}" class="list-group-item">
         <div  class="inner small-box bg-warning ">
         <br>
 <br>
 
 <br>
-        <i class="fa fa-unlock-alt fa-5x" aria-hidden="true"></i>
+        <i class="fas fa-chart-bar fa-5x" aria-hidden="true"></i>
     </a>
 
     <br>
 <br>
 <br>
+ </div>
+        </td>
+
+
+
+
+
+
+           <td class="px-4 py-2 text-center ">
+
+                            <br>
+<br>
+<br>
+
+            @if ($eleccion->estado == 1)
+<button id="lock-toggle-button" data-id="{{ $eleccion->iddependencia }}" data-status="{{ $eleccion->estado }}" class="lock-toggle-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+    <i class="fas fa-lock-open fa-5x"></i> Activo
+</button>
+
+
+@else
+
+<button id="lock-toggle-button" data-id="{{ $eleccion->iddependencia }}" data-status="{{ $eleccion->estado }}" class="lock-toggle-button bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+    <i class="fas fa-lock fa-5x"></i> Cerrado
+</button>
+
+
+
 
 
        </div>
         </td>
+
+          @endif
     
      
+
             @php
-                $ultimadependencia = $nombreDependencia;
+                $ultimadependencia = $eleccion->dependencia;
             @endphp
+         
         @endif
-    @endforeach
 @endforeach
     </tbody>
   </table>
@@ -249,6 +290,53 @@
 </x-app-layout>
 
 <script>
+
+
+function updateButtonContent(button) {
+    var status = button.data('status');
+
+    if (status === 1) {
+
+         button.html('<i class="fas fa-lock"></i> Cerrado');
+        button.removeClass('bg-green-500').addClass('bg-red-500');
+
+       
+    } else if (status === 0) {
+         button.html('<i class="fas fa-lock-open"></i> Activo');
+        button.removeClass('bg-red-500').addClass('bg-green-500');
+       
+    }
+}
+
+
+$(document).ready(function() {
+    $('.lock-toggle-button').click(function() {
+        var button = $(this);
+        var id = button.data('id');
+        var currentStatus = button.data('status');
+        var newStatus = currentStatus === 1 ? 0 : 1;
+
+        console.log(id,newStatus);
+
+        $.ajax({
+            url: '/fielpvs/public/estado_dependencias/' + id + '/' + newStatus,
+            method: 'GET',
+            success: function(response) {
+                button.data('status', newStatus);
+                if (newStatus === 1) {
+                    button.removeClass('bg-red-500').addClass('bg-green-500');
+                    button.html('<i class="fas fa-lock-open fa-5x"></i> Activo');
+                } else {
+                    button.removeClass('bg-green-500').addClass('bg-red-500');
+                    button.html('<i class="fas fa-lock fa-5x"></i> Cerrado');
+                }
+            }
+        });
+    });
+});
+
+
+
     (function () {
   'use strict'
   //debemos crear la clase formEliminar dentro del form del boton borrar

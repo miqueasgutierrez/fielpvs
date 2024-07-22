@@ -63,7 +63,7 @@
      
     </div>
     <div class="col">
-    <button onclick="window.location.href='{{ route('elecciones.index') }}'" class="btn btn-primary">
+    <button onclick="window.location.href='{{ route('elecciones.vista1') }}'" class="btn btn-primary">
         <i class="fa fa-reply"></i> Volver
     </button>
     </div>

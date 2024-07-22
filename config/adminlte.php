@@ -407,6 +407,29 @@ return [
             
         ],
 
+        [
+            'text' => 'Elecciones',
+            'url' => 'elecciones',
+             'can' => 'operador',
+            'icon' => 'fas fa-hands-helping',
+            
+        ],
+
+         [
+            'text' => 'Resultados',
+            'url' => '',
+             'can' => 'operador',
+         'icon' => 'fas fa-chart-bar',            
+        ],
+
+          [
+            'text' => 'Resultados',
+            'url' => '',
+             'can' => 'admin',
+         'icon' => 'fas fa-chart-bar',            
+        ],
+
+
     ],
 
     

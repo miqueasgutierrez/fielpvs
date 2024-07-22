@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Dependencia;
 
 use App\Models\Registro;
@@ -22,9 +24,9 @@ class EleccionesController extends Controller
      */
     public function index()
     {
-           $elecciones = Ambitodependencias::with(['dependencias.dependencia.cargos' => function($query) {
-        $query->orderBy('nombre', 'asc');
-    }])->get();
+           $elecciones = DB::select('
+            SELECT d.id as iddependencia , d.nombre as dependencia , ad.id as idambito, ad.nombre as ambito , ed.estado as estado FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN dependencia_cargos dc ON d.id =dc.id_dependencia INNER JOIN ambitos_dependencias ad ON dc.id_ambito= ad.id WHERE YEAR(ed.created_at)= YEAR(CURDATE())  ORDER BY d.orden ASC
+        ');
 
         return view('elecciones.index',compact('elecciones'));
     }
@@ -109,6 +111,86 @@ class EleccionesController extends Controller
     }
 
 
+public function vista1() 
+
+{
+
+$user = Auth::user();
+
+$idcedula = $user->name;
+
+
+
+$elector = Registro::where('cedula', $idcedula)->first();
+
+$idambito1='1';
+$idambito2='2';
+$idambito3='3';
+$idambito4='4';
+
+        $consulta1 = 'SELECT d.id, d.nombre 
+              FROM ambitos_dependencias ad 
+              INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
+              INNER JOIN dependencias d ON dc.id_dependencia = d.id 
+              WHERE ad.id = ?';
+
+$idambito1 = 1; // Reemplaza con el valor adecuado para $idambito1
+
+$resultconsulta1 = DB::select($consulta1, [$idambito1]);
+
+// Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+$dependencias1 = collect($resultconsulta1)->map(function ($item) {
+    return [
+        'id' => $item->id,
+        'nombre' => $item->nombre,
+    ];
+})->all();
+
+// Segunda consulta
+$consulta2 = 'SELECT d.nombre 
+              FROM ambitos_dependencias ad 
+              INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
+              INNER JOIN dependencias d ON dc.id_dependencia = d.id 
+              INNER JOIN candidatos c ON c.id_dependencia_cargos = dc.id 
+              INNER JOIN elecciones e ON e.id_candidato = c.id 
+              WHERE ad.id = ? 
+                AND e.id_votante = ? 
+                AND YEAR(e.created_at) = ?';
+
+$electorId = $elector->id; // Reemplaza con el id correcto del elector
+$currentYear = date('Y'); // Obtener el año actual o asignarlo según sea necesario
+
+$resultconsulta2 = DB::select($consulta2, [$idambito1, $electorId, $currentYear]);
+
+// Extraer los valores 'nombre' del resultado de la segunda consulta
+$dependencias2 = array_map(function($item) {
+    return $item->nombre;
+}, $resultconsulta2);
+
+// Encontrar la diferencia entre los nombres de dependencias
+$elecciones1 = array_diff(array_column($dependencias1, 'nombre','id'), $dependencias2);
+
+
+
+$dependenciasConIdNombre = [];
+
+foreach ($elecciones1 as $id => $nombre) {
+    $dependenciasConIdNombre[] = [
+        'id' => $id,
+        'nombre' => $nombre,
+    ];
+}
+
+// Mostrar el resultado
+
+
+$eleccionesnacionales=$dependenciasConIdNombre;
+
+
+   return view('elecciones.vista1', compact('elector','eleccionesnacionales'));
+
+     }
+
     public function datos(Request $request)
     
     {
@@ -118,19 +200,12 @@ class EleccionesController extends Controller
     $idcedula = $request->input('cedula');
 
     $iddependencia = $request->input('iddependencia');
- 
- 
 
  $elector = Registro::where('cedula', $idcedula)->first();
 
-
-
- 
         if (!$elector) {
             return redirect()->back()->with('error', 'La cédula no existe en los registros.Verifique o registre sus datos.');
         }
-
-
 
 $idambito1='1';
 $idambito2='2';
