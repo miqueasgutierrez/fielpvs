@@ -128,11 +128,16 @@ $idambito2='2';
 $idambito3='3';
 $idambito4='4';
 
+ $restricciones = 'SELECT d.id, d.nombre 
+              FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN dependencia_cargos dc ON d.id =dc.id_dependencia INNER JOIN ambitos_dependencias ad ON dc.id_ambito= ad.id WHERE ed.estado=1 AND YEAR(ed.created_at)= YEAR(CURDATE()) AND ad.id = ? ORDER BY d.orden ASC ';
+
+              
+
+//AMBITO NACIONAL
+
+
         $consulta1 = 'SELECT d.id, d.nombre 
-              FROM ambitos_dependencias ad 
-              INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
-              INNER JOIN dependencias d ON dc.id_dependencia = d.id 
-              WHERE ad.id = ?';
+              FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN dependencia_cargos dc ON d.id =dc.id_dependencia INNER JOIN ambitos_dependencias ad ON dc.id_ambito= ad.id WHERE ed.estado=1 AND YEAR(ed.created_at)= YEAR(CURDATE()) AND ad.id = ? ORDER BY d.orden ASC ';
 
 $idambito1 = 1; // Reemplaza con el valor adecuado para $idambito1
 

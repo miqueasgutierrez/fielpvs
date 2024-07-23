@@ -84,7 +84,7 @@ class RegistroController extends Controller
 
 
         $request->validate([
-            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','pastor' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable','ministro_ungido' => 'required'
+            'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','pastor' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable','ministro_ungido' => 'nullable'
         ]);
 
 
@@ -110,7 +110,15 @@ class RegistroController extends Controller
             ]);
         }
     }
+    else {
 
+         RegistroDependenciaCargo::create([
+                'registro_id' => $nuevoRegistro->id,
+                'dependencia_cargos_id' => '152',
+            ]);
+
+    }
+    
 
 
      if ($request->has('ministerio')) {
@@ -122,6 +130,15 @@ class RegistroController extends Controller
             ]);
         }
     }
+    else
+    {
+        ministerio::create([
+                'id_registro' => $nuevoRegistro->id,
+                'nombre' => 'ninguno',
+            ]);
+    }
+
+
 
 
      if ($request->has('iglesia')) {
@@ -134,12 +151,20 @@ class RegistroController extends Controller
     }
 
 
-
      if ($request->has('categoria_ungidos') && $request->input('categoria_ungidos') !== null) {
     Categoria_ungidos::create([
         'id_registro' => $nuevoRegistro->id,
         'nombre' => $request->input('categoria_ungidos'),
     ]);
+}
+else
+{
+ 
+ Categoria_ungidos::create([
+        'id_registro' => $nuevoRegistro->id,
+        'nombre' => 'ninguna',
+    ]);
+
 }
 
 

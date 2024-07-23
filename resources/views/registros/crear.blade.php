@@ -341,7 +341,7 @@
                             
                            <div class="grid grid-cols-1">
     <label for="modalSelector">¿Es usted un ministro ungido?</label>
-    <select id="modalSelector" name="ministro_ungido" class="p-2 border rounded" required>
+    <select id="modalSelector" name="ministro_ungido" class="p-2 border rounded" >
       <option value="">Seleccione</option>
       <option value="modal2">Sí</option>
       <option value="modal3">No</option>
