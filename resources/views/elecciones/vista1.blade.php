@@ -133,7 +133,7 @@ $idDependencia = $dependencia['id'];
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('2-Ambito Regional:') }}
+        2-Ambito Regional:   {{  $infovotante->circuito }}
        </h5>
 
  
@@ -180,6 +180,131 @@ $idDependencia = $dependencia['id'];
 
 
 
+
+
+
+
+<!-- AMBITO ZONAL-->
+
+
+<div class="table-responsive">
+    @php
+    $eleccioneszonales = collect($eleccioneszonales);
+@endphp
+
+ <table id="" class="table table-bordered table-striped dataTable dtr-inline">
+  <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+        3-Ambito Zonal:   {{  $infovotante->zona }}
+       </h5>
+
+ 
+@if($eleccioneszonales->isEmpty())
+        <tr>
+            <td colspan="4" class="text-center"><p>No tienes permiso para votar en esta elección.</p></td>
+        </tr>
+    @else
+   
+     @foreach ($eleccioneszonales as $dependencia)
+  
+@php   
+$idDependencia = $dependencia['id'];
+   @endphp
+
+  <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+
+
+<div class="inner small-box bg-info fixed-width">
+
+<br>
+<br>
+<br>
+<br>
+<br>
+  <p>{{ $dependencia['nombre'] }}</p>
+<p></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+           </td>
+ @endforeach
+
+  @endif
+</tr>
+</table>
+</div>
+
+
+
+
+
+
+
+
+<!-- AMBITO REGIONAL-->
+
+
+<div class="table-responsive">
+    @php
+    $eleccionesregionales = collect($eleccionesregionales);
+@endphp
+
+ <table id="" class="table table-bordered table-striped dataTable dtr-inline">
+  <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+        4-Ambito Local: Iglesia {{  $infovotante->iglesia }}
+       </h5>
+
+ 
+@if($eleccionesregionales->isEmpty())
+        <tr>
+            <td colspan="4" class="text-center"><p>No tienes permiso para votar en esta elección.</p></td>
+        </tr>
+    @else
+   
+     @foreach ($eleccionesregionales as $dependencia)
+  
+@php   
+$idDependencia = $dependencia['id'];
+   @endphp
+
+  <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+
+
+<div class="inner small-box bg-info fixed-width">
+
+<br>
+<br>
+<br>
+<br>
+<br>
+  <p>{{ $dependencia['nombre'] }}</p>
+<p></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+           </td>
+ @endforeach
+
+  @endif
+</tr>
+</table>
+</div>
+
+
+
+
+
+
+
 </div>
 </div>
 </x-app-layout>
@@ -212,19 +337,11 @@ $idDependencia = $dependencia['id'];
     })
 })()
 
-
-
-
-
-
-
 </script>
 
 <script >
     
     new DataTable('#zonas');
-
-
 
 </script>
 
