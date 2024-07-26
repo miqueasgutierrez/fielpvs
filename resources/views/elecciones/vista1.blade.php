@@ -58,7 +58,7 @@
 
 
 <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('Opciones a Votar') }}
+          {{ __('Opciones a Votar:') }}
        </h3>
 
    @php   
@@ -67,7 +67,10 @@ $id_votante = $elector->id;
  $idambito = 1;
    @endphp
 
- 
+ <!-- AMBITO NACIONAL-->
+
+
+
   <div class="table-responsive">
     @php
     $eleccionesnacionales = collect($eleccionesnacionales);
@@ -75,17 +78,72 @@ $id_votante = $elector->id;
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('Ambito Nacional') }}
+          {{ __('1-Ambito Nacional:') }}
        </h5>
 
  
 @if($eleccionesnacionales->isEmpty())
         <tr>
-            <td colspan="4"><p>No hay dependencias para votar en este ambito.</p></td>
+            <td colspan="4" class="text-center"><p>No tienes permiso para votar en esta elección.</p></td>
         </tr>
     @else
    
      @foreach ($eleccionesnacionales as $dependencia)
+  
+@php   
+$idDependencia = $dependencia['id'];
+   @endphp
+
+  <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+
+
+<div class="inner small-box bg-info fixed-width">
+
+<br>
+<br>
+<br>
+<br>
+<br>
+  <p>{{ $dependencia['nombre'] }}</p>
+<p></p>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
+
+           </td>
+ @endforeach
+
+  @endif
+</tr>
+</table>
+</div>
+
+
+<!-- AMBITO REGIONAL-->
+
+
+<div class="table-responsive">
+    @php
+    $eleccionesregionales = collect($eleccionesregionales);
+@endphp
+
+ <table id="" class="table table-bordered table-striped dataTable dtr-inline">
+  <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+          {{ __('2-Ambito Regional:') }}
+       </h5>
+
+ 
+@if($eleccionesregionales->isEmpty())
+        <tr>
+            <td colspan="4" class="text-center"><p>No tienes permiso para votar en esta elección.</p></td>
+        </tr>
+    @else
+   
+     @foreach ($eleccionesregionales as $dependencia)
   
 @php   
 $idDependencia = $dependencia['id'];

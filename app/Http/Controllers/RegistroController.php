@@ -342,6 +342,16 @@ if ($registroIglesia) {
     }
 }
 
+else {
+
+         RegistroDependenciaCargo::create([
+                'registro_id' => $registro->id,
+                'dependencia_cargos_id' => '152',
+            ]);
+
+    }
+
+
 if ($request->has('ministerio')) {
     foreach ($request->ministerio as $ministerionombre) {
         // Buscar o crear el registro y actualizarlo
@@ -353,6 +363,14 @@ if ($request->has('ministerio')) {
         );
     }
 }
+
+else
+    {
+        ministerio::create([
+                'id_registro' => $registro->id,
+                'nombre' => 'ninguno',
+            ]);
+    }
 
 
 
@@ -372,6 +390,16 @@ if ($request->has('categoria_ungidos') && $request->input('categoria_ungidos') !
         'id_registro' => $registro->id,
         'nombre' => $request->input('categoria_ungidos'),
     ]);
+}
+
+else
+{
+ 
+ Categoria_ungidos::create([
+        'id_registro' => $registro->id,
+        'nombre' => 'ninguna',
+    ]);
+
 }
 
 

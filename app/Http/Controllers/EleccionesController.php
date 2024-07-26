@@ -111,90 +111,219 @@ class EleccionesController extends Controller
     }
 
 
-public function vista1() 
+ public function vista1()
+    {
+        $user = Auth::user();
+        $idcedula = $user->name;
+        $elector = Registro::where('cedula', $idcedula)->first();
 
-{
+        $idambito1 = 1; // Ejemplo, puedes ajustar según tus necesidades
+        $idambito2 = 2; // Definidos pero no utilizados
+        $idambito3 = 3;
+        $idambito4 = 4;
 
-$user = Auth::user();
+           $this->eleccionesnacionales=null;
+           $this->eleccionesregionales=null;
 
-$idcedula = $user->name;
+        // Llamar a restriccionesnacionales para establecer la variable global
+        $this->restriccionesnacionales($idcedula);
+
+         $this->restriccionesregionales($idcedula);
+
+        // Retorna la vista con las variables necesarias
+         return view('elecciones.vista1', [
+            'elector' => $elector,
+            'eleccionesnacionales' => $this->eleccionesnacionales,
+            'eleccionesregionales' => $this->eleccionesregionales // Acceder a la propiedad de clase
+        ]);
+    }
+
+    protected function restriccionesnacionales($idcedula)
+    {
+        // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
+        
+
+        $restriccionnacional1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
+
+        $resultadorestriccionnacional1 = DB::select($restriccionnacional1, [$idcedula]);
+ 
+
+        if ($resultadorestriccionnacional1) {
+            $this->mostrartodaslasdependenciasambitonacional();
+        }
+    }
 
 
+    //////////////AMBITO NACIONAL///////////////////////////////////////////////////////////////
 
-$elector = Registro::where('cedula', $idcedula)->first();
-
-$idambito1='1';
-$idambito2='2';
-$idambito3='3';
-$idambito4='4';
-
- $restricciones = 'SELECT d.id, d.nombre 
-              FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN dependencia_cargos dc ON d.id =dc.id_dependencia INNER JOIN ambitos_dependencias ad ON dc.id_ambito= ad.id WHERE ed.estado=1 AND YEAR(ed.created_at)= YEAR(CURDATE()) AND ad.id = ? ORDER BY d.orden ASC ';
-
-              
-
-//AMBITO NACIONAL
-
-
+    protected function mostrartodaslasdependenciasambitonacional()
+    {
         $consulta1 = 'SELECT d.id, d.nombre 
-              FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN dependencia_cargos dc ON d.id =dc.id_dependencia INNER JOIN ambitos_dependencias ad ON dc.id_ambito= ad.id WHERE ed.estado=1 AND YEAR(ed.created_at)= YEAR(CURDATE()) AND ad.id = ? ORDER BY d.orden ASC ';
+            FROM dependencias d 
+            INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia 
+            INNER JOIN dependencia_cargos dc ON d.id = dc.id_dependencia 
+            INNER JOIN ambitos_dependencias ad ON dc.id_ambito = ad.id 
+            WHERE ed.estado = 1 
+            AND YEAR(ed.created_at) = YEAR(CURDATE()) 
+            AND ad.id = ? 
+            ORDER BY d.orden ASC';
 
-$idambito1 = 1; // Reemplaza con el valor adecuado para $idambito1
+        $idambito1 = 1; // Reemplaza con el valor adecuado
 
-$resultconsulta1 = DB::select($consulta1, [$idambito1]);
+        $resultconsulta1 = DB::select($consulta1, [$idambito1]);
 
-// Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
-$dependencias1 = collect($resultconsulta1)->map(function ($item) {
-    return [
-        'id' => $item->id,
-        'nombre' => $item->nombre,
-    ];
-})->all();
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
 
-// Segunda consulta
-$consulta2 = 'SELECT d.nombre 
-              FROM ambitos_dependencias ad 
-              INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
-              INNER JOIN dependencias d ON dc.id_dependencia = d.id 
-              INNER JOIN candidatos c ON c.id_dependencia_cargos = dc.id 
-              INNER JOIN elecciones e ON e.id_candidato = c.id 
-              WHERE ad.id = ? 
-                AND e.id_votante = ? 
-                AND YEAR(e.created_at) = ?';
+        if ($dependencias1) {
+            $this->verificarvotacionesnacionales($dependencias1);
+        }
+    }
 
-$electorId = $elector->id; // Reemplaza con el id correcto del elector
-$currentYear = date('Y'); // Obtener el año actual o asignarlo según sea necesario
+    protected function verificarvotacionesnacionales($dependencias1)
+    {
+        $user = Auth::user();
+        $idcedula = $user->name;
+        $elector = Registro::where('cedula', $idcedula)->first();
 
-$resultconsulta2 = DB::select($consulta2, [$idambito1, $electorId, $currentYear]);
-
-// Extraer los valores 'nombre' del resultado de la segunda consulta
-$dependencias2 = array_map(function($item) {
-    return $item->nombre;
-}, $resultconsulta2);
-
-// Encontrar la diferencia entre los nombres de dependencias
-$elecciones1 = array_diff(array_column($dependencias1, 'nombre','id'), $dependencias2);
+        $idambito1 = 1; // Reemplaza con el valor adecuado
+        $electorId = $elector->id; // ID del elector
+        $currentYear = date('Y'); // Año actual
 
 
 
-$dependenciasConIdNombre = [];
+        $consulta2 = 'SELECT d.nombre 
+            FROM ambitos_dependencias ad 
+            INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
+            INNER JOIN dependencias d ON dc.id_dependencia = d.id 
+            INNER JOIN candidatos c ON c.id_dependencia_cargos = dc.id 
+            INNER JOIN elecciones e ON e.id_candidato = c.id 
+            WHERE ad.id = ? 
+            AND e.id_votante = ? 
+            AND YEAR(e.created_at) = ?';
 
-foreach ($elecciones1 as $id => $nombre) {
-    $dependenciasConIdNombre[] = [
-        'id' => $id,
-        'nombre' => $nombre,
-    ];
-}
+        $resultconsulta2 = DB::select($consulta2, [$idambito1, $electorId, $currentYear]);
 
-// Mostrar el resultado
+        // Extraer los valores 'nombre' del resultado de la segunda consulta
+        $dependencias2 = array_map(function ($item) {
+            return $item->nombre;
+        }, $resultconsulta2);
+
+        // Encontrar la diferencia entre los nombres de dependencias
+        $dependencias1Nombres = array_column($dependencias1, 'nombre', 'id');
+        $elecciones1 = array_diff($dependencias1Nombres, $dependencias2);
+
+        $dependenciasConIdNombre = [];
+        foreach ($elecciones1 as $id => $nombre) {
+            $dependenciasConIdNombre[] = [
+                'id' => $id,
+                'nombre' => $nombre,
+            ];
+        }
+
+        // Asignar el resultado a la variable global (si es necesario)
+        $this->eleccionesnacionales = $dependenciasConIdNombre;
+    }
 
 
-$eleccionesnacionales=$dependenciasConIdNombre;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////AMBITO REGIONAL///////////////////////////////////////////////////////////////
+
+    protected function restriccionesregionales($idcedula)
+    {
+        // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
+        $restriccionregional1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
+
+        $resultadorestriccionregional1 = DB::select($restriccionregional1, [$idcedula]);
+ 
+
+        if ($resultadorestriccionregional1) {
+            $this->mostrartodaslasdependenciasambitoregional();
+        }
+    }
 
 
-   return view('elecciones.vista1', compact('elector','eleccionesnacionales'));
+    protected function mostrartodaslasdependenciasambitoregional()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre 
+            FROM dependencias d 
+            INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia 
+            INNER JOIN dependencia_cargos dc ON d.id = dc.id_dependencia 
+            INNER JOIN ambitos_dependencias ad ON dc.id_ambito = ad.id 
+            WHERE ed.estado = 1 
+            AND YEAR(ed.created_at) = YEAR(CURDATE()) 
+            AND ad.id = ? 
+            ORDER BY d.orden ASC';
 
-     }
+        $idambito2 = 2; // Reemplaza con el valor adecuado
+
+        $resultconsulta1 = DB::select($consulta1, [$idambito2]);
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesregionales($dependencias1);
+        }
+    }
+
+    protected function verificarvotacionesregionales($dependencias1)
+    {
+        $user = Auth::user();
+        $idcedula = $user->name;
+        $elector = Registro::where('cedula', $idcedula)->first();
+
+        $idambito2 =2 ; // Reemplaza con el valor adecuado-
+        $electorId = $elector->id; // ID del elector
+        $currentYear = date('Y'); // Año actual
+
+        $consulta2 = 'SELECT d.nombre 
+            FROM ambitos_dependencias ad 
+            INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
+            INNER JOIN dependencias d ON dc.id_dependencia = d.id 
+            INNER JOIN candidatos c ON c.id_dependencia_cargos = dc.id 
+            INNER JOIN elecciones e ON e.id_candidato = c.id 
+            WHERE ad.id = ? 
+            AND e.id_votante = ? 
+            AND YEAR(e.created_at) = ?';
+
+        $resultconsulta2 = DB::select($consulta2, [$idambito2, $electorId, $currentYear]);
+
+        // Extraer los valores 'nombre' del resultado de la segunda consulta
+        $dependencias2 = array_map(function ($item) {
+            return $item->nombre;
+        }, $resultconsulta2);
+
+        // Encontrar la diferencia entre los nombres de dependencias
+        $dependencias1Nombres = array_column($dependencias1, 'nombre', 'id');
+        $elecciones1 = array_diff($dependencias1Nombres, $dependencias2);
+
+        $dependenciasConIdNombre = [];
+        foreach ($elecciones1 as $id => $nombre) {
+            $dependenciasConIdNombre[] = [
+                'id' => $id,
+                'nombre' => $nombre,
+            ];
+        }
+
+        // Asignar el resultado a la variable global (si es necesario)
+        $this->eleccionesregionales = $dependenciasConIdNombre;
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public function datos(Request $request)
     
