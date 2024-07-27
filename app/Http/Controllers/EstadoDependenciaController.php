@@ -69,12 +69,12 @@ class EstadoDependenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $idDependencia, $newStatus)
+    public function update(Request $request, $idestadodependencia, $newStatus)
 {
   
 
     // Encuentra el registro por su ID de dependencia
-    $estadoDependencia = EstadoDependencia::where('id_dependencia', $idDependencia)->firstOrFail();
+    $estadoDependencia = EstadoDependencia::where('id', $idestadodependencia)->firstOrFail();
 
 
    

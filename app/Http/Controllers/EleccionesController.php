@@ -25,7 +25,7 @@ class EleccionesController extends Controller
     public function index()
     {
            $elecciones = DB::select('
-            SELECT d.id as iddependencia , d.nombre as dependencia , ad.id as idambito, ad.nombre as ambito , ed.estado as estado FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN dependencia_cargos dc ON d.id =dc.id_dependencia INNER JOIN ambitos_dependencias ad ON dc.id_ambito= ad.id WHERE YEAR(ed.created_at)= YEAR(CURDATE())  ORDER BY d.orden ASC
+            SELECT  ed.id as idestadodependencia, d.id as iddependencia , d.nombre as dependencia , ad.id as idambito, ad.nombre as ambito , ed.estado as estado FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ad.id=ed.id_ambito WHERE YEAR(ed.created_at)= YEAR(CURDATE()) ORDER BY d.orden ASC;
         ');
 
         return view('elecciones.index',compact('elecciones'));
@@ -437,7 +437,7 @@ class EleccionesController extends Controller
 
 //////////////AMBITO LOCAL///////////////////////////////////////////////////////////////
 
-    protected function restriccioneslocal($idcedula)
+    protected function restriccioneslocales($idcedula)
     {
         // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
         $restriccionlocal1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';

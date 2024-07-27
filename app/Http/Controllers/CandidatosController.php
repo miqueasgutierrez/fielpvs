@@ -65,6 +65,10 @@ class CandidatosController extends Controller
 
         $idcargo = $request->id_cargo;
 
+        $idambito= dependencia_cargo::where('id', $idcargo)->first();
+
+
+
         foreach ($request->idcandidato as $idcandidato) {
             Candidatos::create([
                 'id_candidato' => $idcandidato,
@@ -76,9 +80,10 @@ class CandidatosController extends Controller
 $id_dependencia=$request->input('id_dependencia');
    $currentYear = date('Y');
 
-     $existingRecord = EstadoDependencia::where('id_dependencia', $id_dependencia)
-            ->whereYear('created_at', $currentYear)
-            ->first();
+    $existingRecord = EstadoDependencia::where('id_dependencia', $id_dependencia)
+    ->whereYear('created_at', $currentYear)
+    ->where('id_ambito', $idambito->id_ambito)
+    ->first();
 
 
 if ($existingRecord) {
@@ -88,11 +93,13 @@ if ($existingRecord) {
 
           
         }
+        
 
 
            $estadoDependencia = new EstadoDependencia([
             'id_dependencia' => $request->input('id_dependencia'),
            'estado' => 1, 
+           'id_ambito' => $idambito->id_ambito  
         ]);
 
         // Guardar la instancia en la base de datos

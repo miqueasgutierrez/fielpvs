@@ -13,7 +13,8 @@ class EstadoDependencia extends Model
 
     protected $fillable = [
         'id_dependencia',
-        'estado'
+        'estado',
+        'id_ambito'
     ];
 
  public function dependencia()

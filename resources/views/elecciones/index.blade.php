@@ -65,7 +65,7 @@
 
         @php
 
- $ultimadependencia = "";
+ 
   @endphp
 
      @foreach ($elecciones as $eleccion)
@@ -82,7 +82,7 @@
 
 
 
-  @if ($eleccion->dependencia != $ultimadependencia)
+
 
            
          
@@ -253,14 +253,14 @@
 <br>
 
             @if ($eleccion->estado == 1)
-<button id="lock-toggle-button" data-id="{{ $eleccion->iddependencia }}" data-status="{{ $eleccion->estado }}" class="lock-toggle-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+<button id="lock-toggle-button" data-id="{{ $eleccion->idestadodependencia }}" data-status="{{ $eleccion->estado }}" class="lock-toggle-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
     <i class="fas fa-lock-open fa-5x"></i> Activo
 </button>
 
 
 @else
 
-<button id="lock-toggle-button" data-id="{{ $eleccion->iddependencia }}" data-status="{{ $eleccion->estado }}" class="lock-toggle-button bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+<button id="lock-toggle-button" data-id="{{ $eleccion->idestadodependencia }}" data-status="{{ $eleccion->estado }}" class="lock-toggle-button bg-red-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
     <i class="fas fa-lock fa-5x"></i> Cerrado
 </button>
 
@@ -278,8 +278,7 @@
             @php
                 $ultimadependencia = $eleccion->dependencia;
             @endphp
-         
-        @endif
+      
 @endforeach
     </tbody>
   </table>
