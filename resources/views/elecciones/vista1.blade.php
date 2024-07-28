@@ -241,16 +241,14 @@ $idDependencia = $dependencia['id'];
 
 
 
-
-
-
-
-<!-- AMBITO REGIONAL-->
+<!-- AMBITO LOCAL-->
 
 
 <div class="table-responsive">
     @php
-    $eleccionesregionales = collect($eleccionesregionales);
+    $eleccioneslocales = collect($eleccioneslocales);
+
+
 @endphp
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
@@ -259,15 +257,21 @@ $idDependencia = $dependencia['id'];
        </h5>
 
  
-@if($eleccionesregionales->isEmpty())
+@if($eleccioneslocales->isEmpty())
         <tr>
             <td colspan="4" class="text-center"><p>No tienes permiso para votar en esta elección.</p></td>
         </tr>
     @else
    
-     @foreach ($eleccionesregionales as $dependencia)
+     @foreach ($eleccioneslocales as $dependencia)
+
+
+   
   
 @php   
+
+
+
 $idDependencia = $dependencia['id'];
    @endphp
 
@@ -282,7 +286,7 @@ $idDependencia = $dependencia['id'];
 <br>
 <br>
 <br>
-  <p>{{ $dependencia['nombre'] }}</p>
+  <p>{{ $dependencia['descripcion_local'] }}</p>
 <p></p>
 <br>
 <br>
