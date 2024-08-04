@@ -281,7 +281,7 @@
     Predicador (a) de circuito
 </label><br>
 <label>
-    <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador nacional">
+    <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador (a) nacional">
     Predicador (a) nacional
 </label><br>
 <label>

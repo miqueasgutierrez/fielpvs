@@ -214,55 +214,55 @@
    <label for=""> SELECCIONE SU CATEGORIA:</label><br>
 
     <label>
-    <input type="checkbox" id="obrero_pastor" name="ministerio[]" value="Obrero Pastor">
+    <input type="checkbox" id="obrero_pastor" name="ministerio[]" value="Obrero Pastor" {{ in_array('Obrero Pastor', $selectedMinisterios) ? 'checked' : '' }}>
     Obrero Pastor (el que está encargado de un campo Blanco)
 </label><br>
 <label>
-    <input type="checkbox" id="predicador_circuito" name="ministerio[]" value="Predicador de circuito">
+    <input type="checkbox" id="predicador_circuito" name="ministerio[]" value="Predicador (a) de circuito" {{ in_array('Predicador (a) de circuito', $selectedMinisterios) ? 'checked' : '' }}>
     Predicador (a) de circuito
 </label><br>
 <label>
-    <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador nacional">
+    <input type="checkbox" id="predicador_nacional" name="ministerio[]" value="Predicador (a) nacional" {{ in_array('Predicador (a) nacional', $selectedMinisterios) ? 'checked' : '' }}>
     Predicador (a) nacional
 </label><br>
 <label>
-    <input type="checkbox" id="misionera_reconocida" name="ministerio[]" value="Misionera Reconocida">
+    <input type="checkbox" id="misionera_reconocida" name="ministerio[]" value="Misionera Reconocida" {{ in_array('Misionera Reconocida', $selectedMinisterios) ? 'checked' : '' }} >
     Misionera Reconocida
 </label><br>
 <label>
-    <input type="checkbox" id="docente_titular" name="ministerio[]" value="Docente Titular">
+    <input type="checkbox" id="docente_titular" name="ministerio[]" value="Docente Titular"{{ in_array('Docente Titular', $selectedMinisterios) ? 'checked' : '' }}>
     Docente Titular
 </label><br>
 <label>
-    <input type="checkbox" id="docente_prueba" name="ministerio[]" value="Docente a Prueba">
+    <input type="checkbox" id="docente_prueba" name="ministerio[]" value="Docente a Prueba" {{ in_array('Docente a Prueba', $selectedMinisterios) ? 'checked' : '' }}>
     Docente a Prueba
 </label><br>
 <label>
-    <input type="checkbox" id="directivo_jovenes" name="ministerio[]" value="Directivo de Jóvenes">
+    <input type="checkbox" id="directivo_jovenes" name="ministerio[]" value="Directivo de Jóvenes" {{ in_array('Directivo de Jóvenes', $selectedMinisterios) ? 'checked' : '' }}>
     Directivo de Jóvenes
 </label><br>
 <label>
-    <input type="checkbox" id="directivo_damas" name="ministerio[]" value="Directivo de Damas">
+    <input type="checkbox" id="directivo_damas" name="ministerio[]" value="Directivo de Damas"{{ in_array('Directivo de Damas', $selectedMinisterios) ? 'checked' : '' }}>
     Directivo de Damas
 </label><br>
 <label>
-    <input type="checkbox" id="directivo_evangelismo" name="ministerio[]" value="Directivo de Evangelismo">
+    <input type="checkbox" id="directivo_evangelismo" name="ministerio[]" value="Directivo de Evangelismo" {{ in_array('Directivo de Evangelismo', $selectedMinisterios) ? 'checked' : '' }}>
     Directivo de Evangelismo
 </label><br>
 <label>
-    <input type="checkbox" id="directivo_intercesion" name="ministerio[]" value="Directivo de Intercesión">
+    <input type="checkbox" id="directivo_intercesion" name="ministerio[]" value="Directivo de Intercesión" {{ in_array('Directivo de Intercesión', $selectedMinisterios) ? 'checked' : '' }}>
     Directivo de Intercesión
 </label><br>
 <label>
-    <input type="checkbox" id="directivo_escuela_dominical" name="ministerio[]" value="Directivo de Escuela Dominical">
+    <input type="checkbox" id="directivo_escuela_dominical" name="ministerio[]" value="Directivo de Escuela Dominical" {{ in_array('Directivo de Escuela Dominical', $selectedMinisterios) ? 'checked' : '' }}>
     Directivo de Escuela Dominical
 </label><br>
 <label>
-    <input type="checkbox" id="besf" name="ministerio[]" value="BESF">
+    <input type="checkbox" id="besf" name="ministerio[]" value="BESF" {{ in_array('BESF', $selectedMinisterios) ? 'checked' : '' }}>
     BESF (Jerarquía correspondiente)
 </label><br>
 <label>
-    <input type="checkbox" id="coordinador_zona" name="ministerio[]" value="Coordinador de Zona">
+    <input type="checkbox" id="coordinador_zona" name="ministerio[]" value="Coordinador de Zona" {{ in_array('Coordinador de Zona', $selectedMinisterios) ? 'checked' : '' }}>
     Coordinador de Zona
 </label><br>
 

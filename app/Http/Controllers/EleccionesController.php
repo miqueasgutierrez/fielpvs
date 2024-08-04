@@ -137,7 +137,6 @@ class EleccionesController extends Controller
 
         // Llamar a restriccionesnacionales para establecer la variable global
         $this->restriccionesnacionales($idcedula);
-
          $this->restriccionesregionales($idcedula);
           $this->restriccioneszonales($idcedula);
           $this->restriccioneslocales($idcedula);
@@ -156,30 +155,97 @@ class EleccionesController extends Controller
 
     protected function restriccionesnacionales($idcedula)
     {
-        // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
+
+
+
+
+
+    // RESTRICCION AMBITO NACIONAL
         
+
+ ////////// RESTRICCION 1 //////////
+
 
         $restriccionnacional1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
 
         $resultadorestriccionnacional1 = DB::select($restriccionnacional1, [$idcedula]);
- 
 
+
+ ////////// RESTRICCION 2 //////////
+
+$restriccionnacional2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida" )';
+
+$resultadorestriccionnacional2 = DB::select($restriccionnacional2, [$idcedula]);
+
+
+ ////////// RESTRICCION 3  //////////
+
+$restriccionnacional3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) nacional" )';
+
+$resultadorestriccionnacional3 = DB::select($restriccionnacional3, [$idcedula]);
+
+
+////////// RESTRICCION 4  //////////
+
+$restriccionnacional4 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Docente Titular" )';
+
+$resultadorestriccionnacional4 = DB::select($restriccionnacional4, [$idcedula]);
+
+
+
+
+ ////////// RESTRICCION 1 //////////
         if ($resultadorestriccionnacional1) {
-            $this->mostrartodaslasdependenciasambitonacional();
+            $this->dependenciasrestriccion1nacional();
         }
+
+        else { 
+
+            ////////// RESTRICCION 2 //////////
+
+        if($resultadorestriccionnacional2) {
+
+            $this->dependenciasrestriccion2nacional();
+
+             }
+
+             else {
+
+                if($resultadorestriccionnacional3) {
+
+                $this->dependenciasrestriccion3nacional();
+
+             }  
+
+             else {
+
+
+                if($resultadorestriccionnacional4) {
+
+                $this->dependenciasrestriccion4nacional();
+
+             }  
+
+
+             }
+
+             }
+         }
+         
     }
 
 
     //////////////AMBITO NACIONAL///////////////////////////////////////////////////////////////
+ ////////// RESTRICCION 1 //////////
 
-    protected function mostrartodaslasdependenciasambitonacional()
+    protected function dependenciasrestriccion1nacional()
     {
         $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id = ? AND ed.id_ambito= ? 
             ORDER BY d.orden ASC';
 
-        $idambito1 = 1; // Reemplaza con el valor adecuado
+        $idambito = 1; // Reemplaza con el valor adecuado
 
-       $resultconsulta1 = DB::select($consulta1, [$idambito1, $idambito1]);
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
 
 
 
@@ -199,6 +265,87 @@ class EleccionesController extends Controller
 
     }
 
+     ////////// RESTRICCION 2 //////////
+
+protected function dependenciasrestriccion2nacional()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" OR d.nombre="SONADAM" OR d.nombre="SONAJOV" OR d.nombre="EVANGELISMO Y MISIONES" OR d.nombre="ESCUELA DOMINICAL" OR d.nombre="INTERCESIÓN") ORDER BY d.orden ASC';
+
+        $idambito = 1; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesnacionales($dependencias1);
+        }
+
+    }
+
+
+     ////////// RESTRICCION 3 //////////
+
+protected function dependenciasrestriccion3nacional()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" OR d.nombre="EVANGELISMO Y MISIONES") ORDER BY d.orden ASC';
+
+        $idambito = 1; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesnacionales($dependencias1);
+        }
+
+    }
+
+
+
+    ////////// RESTRICCION 4 //////////
+
+protected function dependenciasrestriccion4nacional()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS"  OR d.nombre="IBFS") ORDER BY d.orden ASC';
+
+        $idambito = 1; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesnacionales($dependencias1);
+        }
+
+    }
 
 
     protected function verificarvotacionesnacionales($dependencias1)
@@ -261,16 +408,78 @@ class EleccionesController extends Controller
 
     protected function restriccionesregionales($idcedula)
     {
-        // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
+        
         $restriccionregional1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
 
         $resultadorestriccionregional1 = DB::select($restriccionregional1, [$idcedula]);
- 
+
+        $restriccionregional2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida")';
+
+        $resultadorestriccionregional2 = DB::select($restriccionregional2, [$idcedula]);
+
+
+         ////////// RESTRICCION 3  //////////
+
+$restriccionregional3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) de circuito" )';
+
+$resultadorestriccionregional3 = DB::select($restriccionregional3, [$idcedula]);
+
+
+
+////////// RESTRICCION 4  //////////
+
+$restriccionregional4 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Docente Titular" )';
+
+$resultadorestriccionregional4 = DB::select($restriccionregional4, [$idcedula]);
+
 
         if ($resultadorestriccionregional1) {
             $this->mostrartodaslasdependenciasambitoregional();
         }
+
+        else { 
+
+        if($resultadorestriccionregional2) {
+
+            $this->dependenciasrestriccion2regional();
+
+
+             }
+
+             else
+                 {
+
+                    if($resultadorestriccionregional3) {
+
+                $this->dependenciasrestriccion3regional();
+
+
+                     }
+
+                     else {
+
+                        if($resultadorestriccionregional4) {
+
+
+
+                       $this->dependenciasrestriccion4regional();
+
+
+                     }
+
+
+                     }
+
+
+                 }
+
+         }
+
     }
+
+
+
+    ///// Restriccion 1 /////
 
 
     protected function mostrartodaslasdependenciasambitoregional()
@@ -278,9 +487,9 @@ class EleccionesController extends Controller
         $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id = ? AND ed.id_ambito= ? 
             ORDER BY d.orden ASC';
 
-        $idambito2 = 2; // Reemplaza con el valor adecuado
+        $idambito = 2; // Reemplaza con el valor adecuado
 
-          $resultconsulta1 = DB::select($consulta1, [$idambito2, $idambito2]);
+          $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
 
         // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
         $dependencias1 = collect($resultconsulta1)->map(function ($item) {
@@ -294,6 +503,90 @@ class EleccionesController extends Controller
             $this->verificarvotacionesregionales($dependencias1);
         }
     }
+
+ ///// Restriccion 2 /////
+
+protected function dependenciasrestriccion2regional()
+    {
+         $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA REGIONAL DE LA FIELPVS" OR d.nombre="SONADAM" OR d.nombre="SONAJOV" OR d.nombre="EVANGELISMO Y MISIONES" OR d.nombre="ESCUELA DOMINICAL" OR d.nombre="INTERCESIÓN") ORDER BY d.orden ASC';
+
+        $idambito = 2; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesregionales($dependencias1);
+        }
+
+    }
+
+
+
+    protected function dependenciasrestriccion3regional()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA DE PRESBITERIO"  OR d.nombre="EVANGELISMO Y MISIONES"   OR d.nombre="SONAJOV" ) ORDER BY d.orden ASC';
+
+        $idambito = 2; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesregionales($dependencias1);
+        }
+
+    }
+
+
+
+
+  ////////// RESTRICCION 4 //////////
+
+protected function dependenciasrestriccion4regional()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA DE PRESBITERIO" ) ORDER BY d.orden ASC';
+
+        $idambito = 2; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesregionales($dependencias1);
+        }
+
+    }
+
 
     protected function verificarvotacionesregionales($dependencias1)
     {
@@ -343,21 +636,42 @@ class EleccionesController extends Controller
     }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////AMBITO ZONAL///////////////////////////////////////////////////////////////
 
     protected function restriccioneszonales($idcedula)
     {
-        // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
         $restriccionzonal1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
 
         $resultadorestriccionzonal1 = DB::select($restriccionzonal1, [$idcedula]);
+
+        $restriccionzonal2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida" )';
+
+        $resultadorestriccionzonal2 = DB::select($restriccionzonal2, [$idcedula]);
  
 
         if ($resultadorestriccionzonal1) {
             $this->mostrartodaslasdependenciasambitozonal();
         }
+
+        else { 
+
+        if($resultadorestriccionzonal2) {
+
+            $this->dependenciaszonalesrestriccion2();
+
+
+             }
+
+         }
     }
 
 
@@ -366,9 +680,9 @@ class EleccionesController extends Controller
         $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id = ? AND ed.id_ambito= ?
             ORDER BY d.orden ASC';
 
-        $idambito3 = 3; // Reemplaza con el valor adecuado
+        $idambito = 3; // Reemplaza con el valor adecuado
 
-            $resultconsulta1 = DB::select($consulta1, [$idambito3, $idambito3]);
+            $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
 
         // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
         $dependencias1 = collect($resultconsulta1)->map(function ($item) {
@@ -382,6 +696,37 @@ class EleccionesController extends Controller
             $this->verificarvotacioneszonales($dependencias1);
         }
     }
+
+
+
+protected function dependenciaszonalesrestriccion2()
+    {
+        $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" OR d.nombre="SONADAM" OR d.nombre="SONAJOV" OR d.nombre="EVANGELISMO Y MISIONES" OR d.nombre="ESCUELA DOMINICAL" OR d.nombre="INTERCESIÓN") ORDER BY d.orden ASC';
+
+        $idambito = 3; // Reemplaza con el valor adecuado
+
+       $resultconsulta1 = DB::select($consulta1, [$idambito, $idambito]);
+
+
+
+
+        // Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
+        $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'nombre' => $item->nombre,
+            ];
+        })->all();
+
+        if ($dependencias1) {
+            $this->verificarvotacionesnacionales($dependencias1);
+        }
+
+    }
+
+
+
+
 
     protected function verificarvotacioneszonales($dependencias1)
     {
@@ -435,30 +780,49 @@ class EleccionesController extends Controller
 
 
 
+
+
+
+
+
+
 //////////////AMBITO LOCAL///////////////////////////////////////////////////////////////
 
   protected function restriccioneslocales($idcedula)
 {
     // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
-    $restriccionlocal1 = 'SELECT * FROM registros r 
-                          INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id 
-                          INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id 
-                          INNER JOIN dependencias d ON dc.id_dependencia=d.id 
-                          INNER JOIN cargos c ON dc.id_cargo = c.id 
-                          INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id 
-                          WHERE r.cedula = ? 
-                          AND (c.nombre = "Presbítero" 
-                          OR c.nombre = "Vice-presbítero" 
-                          OR cu.nombre = "ANCIANO NACIONAL" 
-                          OR cu.nombre = "ANCIANO REGIONAL" 
-                          OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
+     $restriccionlocal1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
 
     $resultadorestriccionlocal1 = DB::select($restriccionlocal1, [$idcedula]);
+
+
+     $restriccionlocal2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida")';
+
+        $resultadorestriccionlocal2 = DB::select($restriccionlocal2, [$idcedula]);
+
+ $this->mostrartodaslasdependenciasambitolocal();
+ 
 
     if ($resultadorestriccionlocal1) {
         $this->mostrartodaslasdependenciasambitolocal();
     }
+
+
+        else { 
+
+        if($resultadorestriccionlocal2) {
+
+            $this->dependenciaslocalesesrestriccion2();
+
+
+             }
+
+         }
 }
+
+
+///Restriccion1 /////
+
 
 protected function mostrartodaslasdependenciasambitolocal()
 {
@@ -481,6 +845,35 @@ protected function mostrartodaslasdependenciasambitolocal()
         $this->verificarvotacioneslocales($dependencias1);
     }
 }
+
+
+///Restriccion2 /////
+
+
+protected function dependenciaslocalesesrestriccion2()
+{
+    $consulta1 = 'SELECT d.id, d.nombre,d.descripcion_local FROM dependencias d INNER JOIN estado_dependencias ed ON d.id = ed.id_dependencia INNER JOIN ambitos_dependencias ad ON ed.id_ambito = ad.id WHERE ed.estado = 1 AND YEAR(ed.created_at) = YEAR(CURDATE()) AND ad.id =?  AND ed.id_ambito=? AND (d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" OR d.nombre="SONADAM" OR d.nombre="SONAJOV" OR d.nombre="EVANGELISMO Y MISIONES" OR d.nombre="ESCUELA DOMINICAL" OR d.nombre="INTERCESIÓN") ORDER BY d.orden ASC';
+
+    $idambito4 = 4; // Reemplaza con el valor adecuado
+
+    $resultconsulta1 = DB::select($consulta1, [$idambito4, $idambito4]);
+
+    // Extraer los valores 'id', 'nombre' y 'descripcion_local' del resultado de la primera consulta
+    $dependencias1 = collect($resultconsulta1)->map(function ($item) {
+        return [
+            'id' => $item->id,
+            'nombre' => $item->nombre,
+            'descripcion_local' => $item->descripcion_local ?? ''
+        ];
+    })->all();
+
+    if ($dependencias1) {
+        $this->verificarvotacioneslocales($dependencias1);
+    }
+}
+
+
+
 
 protected function verificarvotacioneslocales($dependencias1)
 {
