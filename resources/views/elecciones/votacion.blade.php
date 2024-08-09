@@ -81,13 +81,23 @@
 <tr>
 
 </form>
+
+
+@php
+    $numerocargo = 0;
+@endphp
     
    @foreach($dependencia->cargos as $cargo)
+
+
+   @php
+        $numerocargo++;
+    @endphp
 
   <td class="px-4 py-2 text-center ">
  <a href="#{{ $cargo->nombre }}" class="">
 
-<div   id="detalles"  class="inner small-box bg-info fixed-width centrar-imagen">
+<div   id="cargo{{$numerocargo}}"  class="inner small-box bg-info fixed-width centrar-imagen">
 
 
 
@@ -146,7 +156,18 @@
     <div class="card-body table-responsive p-0" style="height: 600px;">    
 <table class="table table-head-fixed text-nowrap table-bordered table-hover">
 
+@php
+    $contador = 0;
+@endphp
+
  @foreach($dependencia->cargos as $cargo)
+
+
+   @php
+        $contador++;
+    @endphp
+
+
     </thead >
       
 
@@ -171,7 +192,12 @@
        <tbody>
       
    <form>
+
+
+
 @foreach($cargo->candidatos as $candidato)
+
+
   
 <td scope="col" class="centrar-imagen">
    
@@ -183,7 +209,7 @@
        <div class="form-check form-check-inline">
 
         
-                <input  onclick="agregarDetalle('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
+                <input  onclick="agregarcargo{{$contador}}('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
                     '{{ $candidato->registro->apellidos }}',
             '{{ $candidato->registro->imagen }}',
             '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
@@ -219,18 +245,21 @@
 
 var cont = 0; // Definir cont fuera de la función para que mantenga el valor entre llamadas a 
 
-    function agregarDetalle(idcandidato,nombres,apellidos,imagen,cargo){
+    function agregarcargo1(idcandidato,nombres,apellidos,imagen,cargo){
    
+
+    $("#imagen").remove();
+     $("#candidatocargo1").remove();
+
  console.log(idcandidato,nombres,apellidos,imagen,cargo);
 
 
     if (idcandidato!="") {
-        var fila='<div class="filas centrar-imagen centrar-texto" id="fila'+cont+'">'+
-    '<img onclick="eliminarDetalle('+cont+')" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
-    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button>';
-        cont++;
-        detalles++;
-        $('#detalles').append(fila);
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo1">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo1()">X</button>';
+       
+        $('#cargo1').append(fila);
 
 
         $("#imagen").remove();
@@ -242,8 +271,19 @@ var cont = 0; // Definir cont fuera de la función para que mantenga el valor en
 }
 
 
-function eliminarDetalle(indice){
-$("#fila"+indice).remove();
+
+
+
+function eliminarcargo1(){
+
+  $("#candidatocargo1").remove();
+
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo1">'+
+    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo1').append(fila);
 
 
 }
