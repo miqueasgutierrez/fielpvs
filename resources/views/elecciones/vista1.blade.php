@@ -71,7 +71,6 @@ $id_votante = $elector->id;
 
 
 
-  <div class="table-responsive">
     @php
     $eleccionesnacionales = collect($eleccionesnacionales);
 @endphp
@@ -160,7 +159,41 @@ $idDependencia = $dependencia['id'];
 <br>
 <br>
 <br>
-  <p>{{ $dependencia['nombre'] }}</p>
+  @php
+        switch ($dependencia['nombre']) {
+            case 'SONADAM':
+                $message = "DAMAS";
+                break;
+            case 'EVANGELISMO Y MISIONES':
+                $message = "EVANGELISMO";
+                break;
+            case 'EVANGELISMO Y MISIONES':
+                $message = "EVANGELISMO";
+                break;
+            case 'SONAJOV':
+                $message = "JÓVENES REGIONALES ";
+                break;
+            case 'SONAJOV':
+                $message = "JÓVENES REGIONALES ";
+                break;
+            case 'INTERCESIÓN':
+                $message = "INTERCESIÓN";
+                break;
+            case 'PRESBÍTERO REGIONAL':
+                $message = "PRESBÍTERO REGIONAL";
+                break;
+            case 'ESCUELA DOMINICAL':
+                $message = "ESCUELA DOMINICAL";
+                break;
+
+            default:
+                $message = "";
+        }
+    @endphp
+
+
+
+  <p>{{ $message }}</p>
 <p></p>
 <br>
 <br>
@@ -309,7 +342,6 @@ $idDependencia = $dependencia['id'];
 
 
 
-</div>
 </div>
 </x-app-layout>
 

@@ -420,7 +420,7 @@ protected function dependenciasrestriccion4nacional()
 
          ////////// RESTRICCION 3  //////////
 
-$restriccionregional3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) de circuito" )';
+$restriccionregional3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) de circuito" OR m.nombre="Predicador (a) nacional" )';
 
 $resultadorestriccionregional3 = DB::select($restriccionregional3, [$idcedula]);
 

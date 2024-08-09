@@ -74,33 +74,33 @@
  <input type="hidden" name="iddependencia" value="{{ $dependencia->id }}">
  <input type="hidden" name="idvotante" value="{{ $idvotante }}">
  <input type="hidden" name="cedula" value="{{ $cedula }}">
-<table id="detalles" class="table table-bordered table-striped dataTable dtr-inline" style="">
+<table class="table table-bordered table-striped dataTable dtr-inline" style="">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Opciones a Votar') }}
        </h5>
 <tr>
+
+</form>
     
    @foreach($dependencia->cargos as $cargo)
 
   <td class="px-4 py-2 text-center ">
  <a href="#{{ $cargo->nombre }}" class="">
 
-<div class="inner small-box bg-info fixed-width">
+<div   id="detalles"  class="inner small-box bg-info fixed-width centrar-imagen">
 
-   
 
-<br>
-<br>
-<br>
-<br>
+
 <br>
 <p> {{ $cargo->nombre }}   </p>
+
+
+          <img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">
+       
+
 <p></p>
 <br>
-<br>
-<br>
-<br>
-<br>
+
 
 </div>
 </a>
@@ -168,10 +168,9 @@
     </tr>  
         @else
          
-
-    
        <tbody>
- 
+      
+   <form>
 @foreach($cargo->candidatos as $candidato)
   
 <td scope="col" class="centrar-imagen">
@@ -182,20 +181,31 @@
       <p scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }} {{ $candidato->registro->apellidos }}</p>
 
        <div class="form-check form-check-inline">
+
+        
                 <input  onclick="agregarDetalle('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
                     '{{ $candidato->registro->apellidos }}',
             '{{ $candidato->registro->imagen }}',
             '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+
+
+
+ 
                
             </div>
     
     </td>
 
+
  @endforeach
-</form>
+
+  </form>
 
   @endif
+
     @endforeach
+
+
 
 </tbody>
   </table>
@@ -215,14 +225,16 @@ var cont = 0; // Definir cont fuera de la función para que mantenga el valor en
 
 
     if (idcandidato!="") {
-
-     
-        var fila='<td class="filas centrar-imagen centrar-texto" id="fila'+cont+'">'+
+        var fila='<div class="filas centrar-imagen centrar-texto" id="fila'+cont+'">'+
     '<img onclick="eliminarDetalle('+cont+')" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
     '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button>';
         cont++;
         detalles++;
         $('#detalles').append(fila);
+
+
+        $("#imagen").remove();
+
 
     }else{
         alert("error al ingresar el detalle, revisar las datos del articulo ");

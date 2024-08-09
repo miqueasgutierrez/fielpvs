@@ -21,11 +21,6 @@ Preguntas
 cargos de la directiva regional 
 
 
-2
-RESBITERIO GENERAL (PRESBITEROS, VICEPRESBITEROS, ANCIANOS
-NACIONALES Y REGIONALES Y DIRECTIVA NACIONAL)
-
-votan por la directiva de zona,
 
 
 OBREROS OFICIALIZADOS es el mismo Obrero PASTOR?
@@ -38,4 +33,43 @@ OBRERAS CON MAS DE TRES AÑOS PRESENTADAS AL CIRCUITO? esta deberia ser una opci
  la  directiva de jovenes es  SONAJOV
 
 
+
+
+
+
+@php
+        switch ($dependencia['nombre']) {
+            case 'SONADAM':
+                $message = "DAMAS";
+                break;
+            case 'EVANGELISMO Y MISIONES':
+                $message = "EVANGELISMO";
+                break;
+            case 'EVANGELISMO Y MISIONES':
+                $message = "EVANGELISMO";
+                break;
+            case 'SONAJOV':
+                $message = "JÓVENES REGIONALES ";
+                break;
+            case 'SONAJOV':
+                $message = "JÓVENES REGIONALES ";
+                break;
+            case 'INTERCESIÓN':
+                $message = "INTERCESIÓN";
+                break;
+            case 'PRESBÍTERO REGIONAL':
+                $message = "PRESBÍTERO REGIONAL";
+                break;
+            case 'ESCUELA DOMINICAL':
+                $message = "ESCUELA DOMINICAL";
+                break;
+
+            default:
+                $message = "";
+        }
+    @endphp
+
+
+
+  <p>{{ $message }}</p>
 
