@@ -14,7 +14,8 @@ class dependencia_cargo extends Model
     protected $fillable = [
         'id_dependencia',
         'id_cargo',
-        'id_ambito'
+        'id_ambito',
+        'cantidad'
         // Otros campos si los hay
     ];
 

@@ -63,6 +63,15 @@
         </select>
     </div>
 
+     <div class="form-group">
+        <label for="cargo">Cantidad:</label>
+        <input type="number" name="cantidad" placeholder="cantidad"  value="">
+
+        
+    </div>
+
+
+
     <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
 

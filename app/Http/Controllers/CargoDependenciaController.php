@@ -55,10 +55,11 @@ class CargoDependenciaController extends Controller
         'id_dependencia' => 'required|exists:dependencias,id',
         'id_cargo' => 'required|exists:cargos,id', 
         'id_ambito' => 'required|exists:ambitos_dependencias,id', 
+         'cantidad' => 'nullable|integer|min:1',
     ]);
 
     // Obtener los datos del formulario
-    $data = $request->only(['id_dependencia', 'id_cargo', 'id_ambito']);
+    $data = $request->only(['id_dependencia', 'id_cargo', 'id_ambito','cantidad']);
     
     // Usar firstOrCreate para evitar duplicados
     dependencia_cargo::firstOrCreate($data);

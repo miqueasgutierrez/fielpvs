@@ -1027,9 +1027,6 @@ foreach ($elecciones1 as $id => $nombre) {
 $eleccionesnacionales=$dependenciasConIdNombre;
 
 
-
-
-
    return view('elecciones.datos', compact('elector','eleccionesnacionales','iddependencia'));
 
     }
@@ -1054,9 +1051,20 @@ $eleccionesnacionales=$dependenciasConIdNombre;
         }]);
     }])->findOrFail($iddependencia);
 
+   
+
+   $consultavocales = 'SELECT cantidad FROM dependencia_cargos WHERE id_dependencia = ? AND id_ambito = ? AND id_cargo=41';
+
+$resultado = DB::selectOne($consultavocales, [$iddependencia, $idambito]);
+
+$cantidadvocales = $resultado ? $resultado->cantidad : null;
+
+    $cantidadvocales = $resultado ? $resultado->cantidad : null;
+
+
       $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
 
-    return view('elecciones.votacion', compact('dependencia','ambito','idvotante','cedula'));
+    return view('elecciones.votacion', compact('cantidadvocales','dependencia','ambito','idvotante','cedula'));
 
     }
 

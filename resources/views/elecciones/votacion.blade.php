@@ -94,6 +94,8 @@
         $numerocargo++;
     @endphp
 
+    @if($cargo->nombre !== 'Vocales')
+
   <td class="px-4 py-2 text-center ">
  <a href="#{{ $cargo->nombre }}" class="">
 
@@ -104,8 +106,7 @@
 <br>
 <p> {{ $cargo->nombre }}   </p>
 
-
-          <img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">
+          <img  id="imagen{{$numerocargo}}" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">
        
 
 <p></p>
@@ -117,10 +118,24 @@
 
            </td>
 
+           @else
+@for ($i = 0; $i < $cantidadvocales; $i++)
+    <td class="px-4 py-2 text-center">
+        <a href="#{{ $cargo->nombre }}" class="">
+            <div id="cargovocal{{ $i + 1 }}" class="inner small-box bg-info fixed-width centrar-imagen">
+                <br>
+                <p>Vocal {{ $i + 1 }}</p>
+                <img id="imagenvocal{{ $i + 1 }}" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full" alt="Imagen">
+                <p></p>
+                <br>
+            </div>
+        </a>
+    </td>
+@endfor
+    
+@endif
 
         @endforeach
-
-
 
         <td class="px-4 py-2 text-center ">
  <a type="submit" id="submitButton" class="">
@@ -162,8 +177,9 @@
 
  @foreach($dependencia->cargos as $cargo)
 
-
    @php
+
+
         $contador++;
     @endphp
 
@@ -193,12 +209,14 @@
       
    <form>
 
-
-
 @foreach($cargo->candidatos as $candidato)
 
 
-  
+
+@if($cargo->nombre !== 'Vocales')
+
+    <!-- Código HTML o Blade a mostrar si $cargo->nombre no es igual a "vocales" -->
+
 <td scope="col" class="centrar-imagen">
    
 
@@ -208,19 +226,39 @@
 
        <div class="form-check form-check-inline">
 
-        
-                <input  onclick="agregarcargo{{$contador}}('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
+            <input  onclick="agregarcargo{{$contador}}('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
                     '{{ $candidato->registro->apellidos }}',
             '{{ $candidato->registro->imagen }}',
             '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
 
-
-
- 
-               
             </div>
-    
     </td>
+
+@else
+
+<form>
+<td scope="col" class="centrar-imagen">
+   
+
+ <img src="../../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
+
+      <p scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }} {{ $candidato->registro->apellidos }}</p>
+
+       <div class="form-check form-check-inline">
+
+            <input  onclick="agregarvocal('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
+                    '{{ $candidato->registro->apellidos }}',
+            '{{ $candidato->registro->imagen }}',
+            '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+
+            </div>
+    </td>
+
+  </form>
+    @endif
+
+
+
 
 
  @endforeach
@@ -243,7 +281,9 @@
 <script>
 
 
-var cont = 0; // Definir cont fuera de la función para que mantenga el valor entre llamadas a 
+////////////////////////////cargo1 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
 
     function agregarcargo1(idcandidato,nombres,apellidos,imagen,cargo){
    
@@ -262,7 +302,104 @@ var cont = 0; // Definir cont fuera de la función para que mantenga el valor en
         $('#cargo1').append(fila);
 
 
-        $("#imagen").remove();
+        $("#imagen1").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo1(){
+
+  $("#candidatocargo1").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo1">'+
+    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo1').append(fila);
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////cargo2 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo2(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen2").remove();
+     $("#candidatocargo2").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo2">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo2()">X</button>';
+       
+        $('#cargo2').append(fila);
+
+
+        $("#imagen2").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo2(){
+
+
+
+  $("#candidatocargo2").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo2">'+
+    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo2').append(fila);
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+ cont = 0;
+
+
+function agregarvocal(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+$("#imagen").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+
+    if (idcandidato!="") {
+
+             cont++;
+
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatovocal'+cont+'">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarvocal'+cont+'()">X</button>';
+
+    
+       
+      $('#cargovocal' + cont).append(fila);
+
+        // Remover elemento si es necesario
+        $("#imagenvocal" + cont).remove();
 
 
     }else{
@@ -272,21 +409,61 @@ var cont = 0; // Definir cont fuera de la función para que mantenga el valor en
 
 
 
+function eliminarvocal1() {
+    
+    $("#candidatovocal1").remove();
+
+$("#imagen").remove();
 
 
-function eliminarcargo1(){
-
-  $("#candidatocargo1").remove();
-
-
-
-  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo1">'+
+     var fila='<div class="filas centrar-imagen centrar-texto" id="candidatovocal1">'+
     '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
        
-        $('#cargo1').append(fila);
+        $('#cargovocal1').append(fila);
+
+        cont = 0;
+
 
 
 }
+
+
+function eliminarvocal2() {
+    
+    $("#candidatovocal2").remove();
+
+$("#imagen").remove();
+
+
+     var fila='<div class="filas centrar-imagen centrar-texto" id="candidatovocal2">'+
+    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargovocal2').append(fila);
+
+        cont = 1;
+
+  
+}
+
+
+
+function eliminarvocal3() {
+    
+    $("#candidatovocal3").remove();
+
+$("#imagen").remove();
+
+
+     var fila='<div class="filas centrar-imagen centrar-texto" id="candidatovocal3">'+
+    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargovocal3').append(fila);
+
+        cont = 2;
+
+  
+}
+
 
 
 
