@@ -64,7 +64,7 @@
    @php   
 $id_votante = $elector->id;
 
- $idambito = 1;
+ $idambito1 = 1;
    @endphp
 
  <!-- AMBITO NACIONAL-->
@@ -94,7 +94,7 @@ $idDependencia = $dependencia['id'];
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito1]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">
@@ -146,10 +146,12 @@ $idDependencia = $dependencia['id'];
   
 @php   
 $idDependencia = $dependencia['id'];
+
+$idambito2 = 2; 
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito2]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">
@@ -184,6 +186,10 @@ $idDependencia = $dependencia['id'];
                 break;
             case 'ESCUELA DOMINICAL':
                 $message = "ESCUELA DOMINICAL";
+                break;
+
+             case 'BESF':
+                $message = "BESF";
                 break;
 
             default:
@@ -240,11 +246,15 @@ $idDependencia = $dependencia['id'];
      @foreach ($eleccioneszonales as $dependencia)
   
 @php   
+
+
+$idambito3= 3; 
+
 $idDependencia = $dependencia['id'];
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito3]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">
@@ -303,13 +313,13 @@ $idDependencia = $dependencia['id'];
   
 @php   
 
-
+$idambito4= 4; 
 
 $idDependencia = $dependencia['id'];
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito]) }}" class="">
+    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito4]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">

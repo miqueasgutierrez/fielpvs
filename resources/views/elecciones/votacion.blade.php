@@ -75,6 +75,19 @@
  <input type="hidden" name="idvotante" value="{{ $idvotante }}">
  <input type="hidden" name="cedula" value="{{ $cedula }}">
 <table class="table table-bordered table-striped dataTable dtr-inline" style="">
+
+
+
+   
+
+    <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+          {{$dependencia->nombre}}  {{ $ambito->nombre  }}
+       </h5>
+
+       <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+          
+       </h5>
+
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
           {{ __('Opciones a Votar') }}
        </h5>
@@ -192,7 +205,13 @@
         <thead id="{{ $cargo->nombre }}"  class="bg-secondary text-white">
       <td  class="centrar-texto" colspan="1" scope="col">Candidatos a:</td>
      
-      <td class="centrar-texto  " colspan="2" scope="col">{{ $cargo->nombre  }} {{ $ambito->nombre  }} {{ $dependencia->nombre  }}</td>
+      <td class="centrar-texto  " colspan="2" scope="col">
+
+         <h7 class="font-semibold text-xl text-gray-800 leading-tight text-center text-white ">
+           {{ $cargo->nombre  }}
+       </h7>
+
+    </td>
      <td  class="centrar-texto" colspan="1" scope="col">(marque una opcion)</td>
      
     </tr>
@@ -288,7 +307,7 @@ var cont = 0; //
     function agregarcargo1(idcandidato,nombres,apellidos,imagen,cargo){
    
 
-    $("#imagen").remove();
+    $("#imagen1").remove();
      $("#candidatocargo1").remove();
 
  console.log(idcandidato,nombres,apellidos,imagen,cargo);
@@ -317,7 +336,7 @@ function eliminarcargo1(){
 
 
   var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo1">'+
-    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+    '<img  id="imagen1" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
        
         $('#cargo1').append(fila);
 
@@ -365,11 +384,422 @@ function eliminarcargo2(){
 
 
   var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo2">'+
-    '<img  id="imagen" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+    '<img  id="imagen2" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
        
         $('#cargo2').append(fila);
 
 }
+
+
+
+
+
+
+
+////////////////////////////cargo3 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo3(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen3").remove();
+     $("#candidatocargo3").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo3">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo3()">X</button>';
+       
+        $('#cargo3').append(fila);
+
+
+        $("#imagen3").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo3(){
+
+  $("#candidatocargo3").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo3">'+
+    '<img  id="imagen3" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo3').append(fila);
+
+}
+
+
+
+
+////////////////////////////cargo4 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo4(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen4").remove();
+     $("#candidatocargo4").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo4">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo4()">X</button>';
+       
+        $('#cargo4').append(fila);
+
+
+        $("#imagen4").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo4(){
+
+  $("#candidatocargo4").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo4">'+
+    '<img  id="imagen4" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo4').append(fila);
+
+}
+
+
+////////////////////////////cargo5 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo5(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen4").remove();
+     $("#candidatocargo5").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo5">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo5()">X</button>';
+       
+        $('#cargo5').append(fila);
+
+
+        $("#imagen5").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo5(){
+
+  $("#candidatocargo5").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo5">'+
+    '<img  id="imagen5" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo5').append(fila);
+
+}
+
+
+
+
+////////////////////////////cargo6 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo6(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen6").remove();
+     $("#candidatocargo6").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo6">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo6()">X</button>';
+       
+        $('#cargo6').append(fila);
+
+
+        $("#imagen6").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo6(){
+
+  $("#candidatocargo6").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo6">'+
+    '<img  id="imagen6" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo6').append(fila);
+
+}
+
+
+
+
+
+////////////////////////////cargo7 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo7(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen7").remove();
+     $("#candidatocargo7").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo7">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo7()">X</button>';
+       
+        $('#cargo7').append(fila);
+
+
+        $("#imagen7").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo7(){
+
+  $("#candidatocargo7").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo7">'+
+    '<img  id="imagen7" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo7').append(fila);
+
+}
+
+
+////////////////////////////cargo8 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo8(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen8").remove();
+     $("#candidatocargo8").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo8">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo8()">X</button>';
+       
+        $('#cargo8').append(fila);
+
+
+        $("#imagen8").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo8(){
+
+  $("#candidatocargo8").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo8">'+
+    '<img  id="imagen8" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo8').append(fila);
+
+}
+
+
+
+
+
+
+////////////////////////////cargo9 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo9(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen9").remove();
+     $("#candidatocargo9").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo9">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo9()">X</button>';
+       
+        $('#cargo9').append(fila);
+
+
+        $("#imagen9").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo9(){
+
+  $("#candidatocargo9").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo9">'+
+    '<img  id="imagen9" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo9').append(fila);
+
+}
+
+
+
+
+////////////////////////////cargo10 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo10(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen11").remove();
+     $("#candidatocargo10").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo10">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo10()">X</button>';
+       
+        $('#cargo10').append(fila);
+
+
+        $("#imagen10").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo10(){
+
+  $("#candidatocargo10").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo10">'+
+    '<img  id="imagen6" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo10').append(fila);
+
+}
+
+
+
+
+
+
+////////////////////////////cargo11 ////////////////////////////////////////////////////////
+
+var cont = 0; //  
+
+    function agregarcargo11(idcandidato,nombres,apellidos,imagen,cargo){
+   
+
+    $("#imagen11").remove();
+     $("#candidatocargo11").remove();
+
+ console.log(idcandidato,nombres,apellidos,imagen,cargo);
+
+
+    if (idcandidato!="") {
+        var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo11">'+
+    '<img onclick="" src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+    '<p>'+nombres+'</p></td><input type="hidden" name="idcandidato[]" value="'+idcandidato+'"><input type="hidden" name="nombres[]" value="'+nombres+'"><input type="hidden" name="apellidos[]" value="'+apellidos+'"><input type="hidden" name="cargo[]" value="'+cargo+'">'+'<button type="button" class="btn btn-danger" onclick="eliminarcargo11()">X</button>';
+       
+        $('#cargo11').append(fila);
+
+
+        $("#imagen11").remove();
+
+
+    }else{
+        alert("error al ingresar el detalle, revisar las datos del articulo ");
+    }
+}
+
+
+function eliminarcargo11(){
+
+  $("#candidatocargo11").remove();
+
+
+  var fila='<div class="filas centrar-imagen centrar-texto" id="candidatocargo11">'+
+    '<img  id="imagen6" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">';
+       
+        $('#cargo11').append(fila);
+
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
