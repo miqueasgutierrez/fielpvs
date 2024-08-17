@@ -14,6 +14,7 @@ use App\Http\Controllers\EleccionesController;
 use App\Http\Controllers\EstadoDependenciaController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ResultadosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +47,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 // Rutas accesibles para votantes
 Route::middleware(['role:votante'])->group(function () {
 
-    
+      Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
+
   Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
   Route::get('elecciones/vista1', [EleccionesController::class, 'vista1'])->name('elecciones.vista1');
 
@@ -92,7 +94,9 @@ Route::middleware(['role:votante'])->group(function () {
         Route::post('iglesias/storeMultiple', [IglesiaController::class, 'storeMultiple'])->name('iglesias.storeMultiple');
         
         // Resultados PDF
-        Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
+
+        Route::get('/resultados/nacionales', [ResultadosController::class, 'nacionales'])->name('resultados.nacionales');
+         
         
         // API endpoints
         Route::get('/apizonas/{circuitoId}', [IglesiaController::class, 'getZonas'])->name('getZonas');
@@ -127,7 +131,10 @@ Route::middleware(['role:operador'])->group(function () {
     Route::middleware(['role:operador|admin'])->group(function () {
     Route::resource('/elecciones', EleccionesController::class);
 
+  Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
 
+  Route::post('/resultadonacional', [PDFController::class, 'resultadonacional'])->name('resultadonacional');
+  
   
      Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');
     Route::get('elecciones/cargos/{iddependencia}/{idambito}', [EleccionesController::class, 'cargos'])->name('elecciones.cargos');
@@ -135,7 +142,7 @@ Route::middleware(['role:operador'])->group(function () {
    
     Route::get('elecciones/opciones/{iddependencia}/{idambito}', [EleccionesController::class, 'opciones'])->name('elecciones.opciones');
     Route::post('elecciones/datos', [EleccionesController::class, 'datos'])->name('elecciones.datos');
-    Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
+  
     Route::get('elecciones/candidatos/electiva/{iddependencia}/{idambito}', [EleccionesController::class, 'electiva'])->name('elecciones.electiva');
     Route::post('elecciones/vistaresultados', [EleccionesController::class, 'vistaresultados'])->name('elecciones.vistaresultados');
     

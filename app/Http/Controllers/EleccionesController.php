@@ -1073,6 +1073,7 @@ $cantidadvocales = $resultado ? $resultado->cantidad : null;
 
 
 
+
     // Asignación de variables
     $idVotante = $request->idvotante;
     $idCandidatos = $request->idcandidato;
@@ -1086,83 +1087,44 @@ $cantidadvocales = $resultado ? $resultado->cantidad : null;
     }
 
     // Redireccionamiento con mensaje de éxito
-$iddependencia = $request->input('iddependencia');
+$user = Auth::user();
+        $idcedula = $user->name;
+        $elector = Registro::where('cedula', $idcedula)->first();
 
-$idcedula = $request->input('cedula');
- 
-  $elector = Registro::where('cedula', $idcedula)->first();
+// Buscar iglesia zona y region del votante
 
-$idambito1='1';
-$idambito2='2';
-$idambito3='3';
-$idambito4='4';
+         $consultarvotante = 'SELECT c.nombre as circuito , z.nombre as zona , i.nombre as iglesia FROM registros r INNER JOIN registro_iglesias ri ON r.id=ri.id_registro INNER JOIN iglesias i ON i.id=ri.id_iglesia INNER JOIN zonas z ON z.id=i.zona_id INNER JOIN circuitos c ON z.circuito_id=c.id WHERE r.cedula= ?  ';
 
-$currentYear = date('Y');
+        $infovotante = DB::select($consultarvotante, [$idcedula]);
 
-// Consultar si el votante ya ha realizado el voto en esa dependencia.
+        $infovotante = $infovotante[0];
 
+        $idambito1 = 1; // Ejemplo, puedes ajustar según tus necesidades
+        $idambito2 = 2; // Definidos pero no utilizados
+        $idambito3 = 3;
+        $idambito4 = 4;
 
-$consulta1 = 'SELECT d.id, d.nombre 
-              FROM ambitos_dependencias ad 
-              INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
-              INNER JOIN dependencias d ON dc.id_dependencia = d.id 
-              WHERE ad.id = ?';
+           $this->eleccionesnacionales=null;
+           $this->eleccionesregionales=null;
+           $this->eleccioneszonales=null;
+           $this->eleccioneslocales=null;
 
-$idambito1 = 1; // Reemplaza con el valor adecuado para $idambito1
+        // Llamar a restriccionesnacionales para establecer la variable global
+        $this->restriccionesnacionales($idcedula);
+         $this->restriccionesregionales($idcedula);
+          $this->restriccioneszonales($idcedula);
+          $this->restriccioneslocales($idcedula);
+   
 
-    $resultconsulta1 = DB::select($consulta1, [$idambito1]);
-
-// Extraer los valores 'id' y 'nombre' del resultado de la primera consulta
-$dependencias1 = collect($resultconsulta1)->map(function ($item) {
-    return [
-        'id' => $item->id,
-        'nombre' => $item->nombre,
-    ];
-})->all();
-
-// Segunda consulta
-$consulta2 = 'SELECT d.nombre 
-              FROM ambitos_dependencias ad 
-              INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito 
-              INNER JOIN dependencias d ON dc.id_dependencia = d.id 
-              INNER JOIN candidatos c ON c.id_dependencia_cargos = dc.id 
-              INNER JOIN elecciones e ON e.id_candidato = c.id 
-              WHERE ad.id = ? 
-                AND e.id_votante = ? 
-                AND YEAR(e.created_at) = ?';
-
-$electorId = $elector->id; // Reemplaza con el id correcto del elector
-$currentYear = date('Y'); // Obtener el año actual o asignarlo según sea necesario
-
-$resultconsulta2 = DB::select($consulta2, [$idambito1, $electorId, $currentYear]);
-
-// Extraer los valores 'nombre' del resultado de la segunda consulta
-$dependencias2 = array_map(function($item) {
-    return $item->nombre;
-}, $resultconsulta2);
-
-// Encontrar la diferencia entre los nombres de dependencias
-$elecciones1 = array_diff(array_column($dependencias1, 'nombre','id'), $dependencias2);
-
-
-
-$dependenciasConIdNombre = [];
-
-foreach ($elecciones1 as $id => $nombre) {
-    $dependenciasConIdNombre[] = [
-        'id' => $id,
-        'nombre' => $nombre,
-    ];
-}
-
-// Mostrar el resultado
-
-
-$eleccionesnacionales=$dependenciasConIdNombre;
-
-
-return view('elecciones.datos', compact('elector', 'eleccionesnacionales','iddependencia'))
-    ->with('success', 'Votacion Exitosa.');
+        // Retorna la vista con las variables necesarias
+         return view('elecciones.vista1', [
+            'elector' => $elector,
+            'infovotante' => $infovotante,
+            'eleccionesnacionales' => $this->eleccionesnacionales,
+            'eleccionesregionales' => $this->eleccionesregionales,
+             'eleccioneszonales' => $this->eleccioneszonales,
+             'eleccioneslocales' => $this->eleccioneslocales, // Acceder a la propiedad de clase
+        ]);
 
   
     }

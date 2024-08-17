@@ -419,14 +419,55 @@ return [
             'text' => 'Resultados',
             'url' => '',
              'can' => 'operador',
-         'icon' => 'fas fa-chart-bar',            
+         'icon' => 'fas fa-chart-bar',
+         'submenu' => [
+                [
+                    'text' => 'Listado de Dependencias',
+                    'url' => 'dependencias',
+                ],
+
+
+                [
+                    'text' => 'Cargos de Dependencias',
+                    'url' => 'cargosdependencias',
+                ],
+
+                [
+                    'text' => 'Cargos',
+                    'url' => 'cargos',
+                ],
+
+            ],            
         ],
 
           [
             'text' => 'Resultados',
             'url' => '',
              'can' => 'admin',
-         'icon' => 'fas fa-chart-bar',            
+         'icon' => 'fas fa-chart-bar',
+           'submenu' => [
+                [
+                    'text' => 'Nacionales',
+                    'url' => 'resultados/nacionales',
+                ],
+
+
+                [
+                    'text' => 'Regionales',
+                    'url' => 'cargosdependencias',
+                ],
+
+                [
+                    'text' => 'Zonales',
+                    'url' => 'cargos',
+                ],
+
+                  [
+                    'text' => 'Locales',
+                    'url' => 'cargos',
+                ],
+
+            ],                      
         ],
 
 

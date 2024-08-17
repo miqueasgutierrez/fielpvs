@@ -1,4 +1,13 @@
 
+
+
+
+
+ $pdf->SetLeftMargin(95);
+
+
+
+
 # fielpvs
  Sistema de Elecciones
 codigo para convertit registros en usuarios 

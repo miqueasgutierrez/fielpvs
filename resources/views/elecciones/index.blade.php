@@ -44,8 +44,8 @@
           {{ __('Registro de elecciones') }}
        </h3>
 
-      <div class="card-body table-responsive p-0" style="height: 600px;">  
-  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
+      <div class="card-body table-responsive p-0" style="height: 900px;">  
+  <table id="elecciones" class="table dataTable table-bordered table-striped dataTable dtr-inline">
     <thead>
       <tr class="bg-gray-800 text-white">
         <th class="sorting sorting_asc text-center fixed-width">DEPENDENCIA</th>
@@ -360,7 +360,7 @@ $(document).ready(function() {
 
 <script >
     
-    new DataTable('#zonas');
+    new DataTable('#elecciones');
 
 
 
