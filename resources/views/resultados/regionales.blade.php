@@ -30,11 +30,11 @@
             <div class="bg-white shadow-md rounded-lg p-8">
                 <!-- Título del formulario -->
                 <h3 class="text-xl font-semibold text-gray-800 mb-6 text-center">
-                    {{ __('Resultados Nacionales') }}
+                    {{ __('Resultados Regionales') }}
                 </h3>
 
                 <!-- Formulario -->
-                <form action="{{ route('resultadonacional') }}" method="POST" id="hidden-fields-form"  target="_blank">
+                <form action="{{ route('resultadoregional') }}" method="POST" id="hidden-fields-form"  target="_blank">
                     @csrf
 
                     <div class="mb-4">
@@ -42,11 +42,20 @@
                         <select name="iddependencia" id="dependencia" class="form-control">
              <option value="">Seleccione una Dependencia</option>
             @foreach($dependencias as $dependencias)
-                <option value="{{ $dependencias->id }}">{{ $dependencias->nombre }}</option>
+                <option value="{{ $dependencias->id }}">{{ $dependencias->descripcion_regional }}</option>
             @endforeach
         </select>
 
-         <input type="hidden" name="idambito" id="hiddenField2" value="1">
+            <div class="grid grid-cols-1">
+            <label for="circuito_id">Circuito</label>
+            <select class="form-control" id="circuito_id" name="idcircuito" required>
+                @foreach($circuitos as $circuito)
+                    <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
+
+         <input type="hidden" name="idambito" id="hiddenField2" value="2">
 
                     </div>
 

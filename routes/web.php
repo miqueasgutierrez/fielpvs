@@ -131,9 +131,16 @@ Route::middleware(['role:operador'])->group(function () {
     Route::middleware(['role:operador|admin'])->group(function () {
     Route::resource('/elecciones', EleccionesController::class);
 
+
+        Route::get('/resultados/regionales', [ResultadosController::class, 'regionales'])->name('resultados.regionales');
+         
+
   Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
 
   Route::post('/resultadonacional', [PDFController::class, 'resultadonacional'])->name('resultadonacional');
+
+
+   Route::post('/resultadoregional', [PDFController::class, 'resultadoregional'])->name('resultadoregional');
   
   
      Route::get('elecciones/candidatos/{iddependencia}/{idambito}', [EleccionesController::class, 'candidatos'])->name('elecciones.candidatos');

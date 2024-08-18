@@ -454,7 +454,7 @@ return [
 
                 [
                     'text' => 'Regionales',
-                    'url' => 'cargosdependencias',
+                    'url' => 'resultados/regionales',
                 ],
 
                 [

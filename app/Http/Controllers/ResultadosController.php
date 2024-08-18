@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Dependencia;
 
+
+use App\Models\Circuito;
+
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -91,7 +95,7 @@ class ResultadosController extends Controller
     {
 
         $sql = "
-    SELECT id, nombre 
+    SELECT id, nombre
     FROM dependencias 
     WHERE nombre NOT IN ('DIRECTIVA DE ZONA NACIONAL', 'PRESBÍTERO REGIONAL', 'NINGUNA') 
     ORDER BY orden ASC;
@@ -100,6 +104,29 @@ class ResultadosController extends Controller
 
 
           return view('resultados.nacionales', compact('dependencias'));
+
+       
+    }
+
+
+
+
+    public function regionales()
+    {
+
+        $sql = "
+    SELECT id, nombre , descripcion_regional 
+    FROM dependencias 
+    WHERE nombre NOT IN ('DIRECTIVA DE ZONA NACIONAL', 'DIRECTIVA NACIONAL DE LA FIELPVS', 'NINGUNA','IBFS') 
+    ORDER BY orden ASC;
+";
+      $dependencias = DB::select($sql);
+
+
+          $circuitos = Circuito::all();
+
+
+          return view('resultados.regionales', compact('dependencias','circuitos'));
 
        
     }
