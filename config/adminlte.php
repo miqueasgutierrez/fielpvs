@@ -464,7 +464,7 @@ return [
 
                   [
                     'text' => 'Locales',
-                    'url' => 'cargos',
+                    'url' => 'resultados/locales',
                 ],
 
             ],                      

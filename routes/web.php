@@ -131,7 +131,10 @@ Route::middleware(['role:operador'])->group(function () {
         Route::get('/resultados/regionales', [ResultadosController::class, 'regionales'])->name('resultados.regionales');
 
           Route::get('/resultados/zonales', [ResultadosController::class, 'zonales'])->name('resultados.zonales');
+
+           Route::get('/resultados/locales', [ResultadosController::class, 'locales'])->name('resultados.locales');
          
+          Route::post('/resultadolocal', [PDFController::class, 'resultadolocal'])->name('resultadolocal');
 
   Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
 

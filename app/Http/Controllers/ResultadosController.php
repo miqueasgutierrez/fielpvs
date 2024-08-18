@@ -151,5 +151,22 @@ class ResultadosController extends Controller
     }
 
 
+       public function locales()
+    {
+
+        $sql = "
+    SELECT id, nombre  
+    FROM dependencias 
+
+";
+      $dependencias = DB::select($sql);
+      
+
+   $circuitos = Circuito::all();
+          return view('resultados.zonales', compact('dependencias','circuitos'));
+       
+    }
+
+
 
 }
