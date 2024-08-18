@@ -119,11 +119,7 @@ Route::middleware(['role:votante'])->group(function () {
 
 // Rutas accesibles para admin y operador
 Route::middleware(['role:operador'])->group(function () {
-
-
-
-
-   
+  
 });
 
 });
@@ -133,11 +129,16 @@ Route::middleware(['role:operador'])->group(function () {
 
 
         Route::get('/resultados/regionales', [ResultadosController::class, 'regionales'])->name('resultados.regionales');
+
+          Route::get('/resultados/zonales', [ResultadosController::class, 'zonales'])->name('resultados.zonales');
          
 
   Route::post('/resultadofinalpdf', [PDFController::class, 'resultadofinalpdf'])->name('resultadofinalpdf');
 
   Route::post('/resultadonacional', [PDFController::class, 'resultadonacional'])->name('resultadonacional');
+
+
+  Route::post('/resultadozonal', [PDFController::class, 'resultadozonal'])->name('resultadozonal');
 
 
    Route::post('/resultadoregional', [PDFController::class, 'resultadoregional'])->name('resultadoregional');

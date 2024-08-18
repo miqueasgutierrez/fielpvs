@@ -132,5 +132,24 @@ class ResultadosController extends Controller
     }
 
 
+    public function zonales()
+    {
+
+        $sql = "
+    SELECT id, nombre  
+    FROM dependencias 
+    WHERE nombre= 'DIRECTIVA DE ZONA NACIONAL'
+";
+      $dependencias = DB::select($sql);
+      
+
+   $circuitos = Circuito::all();
+
+
+          return view('resultados.zonales', compact('dependencias','circuitos'));
+       
+    }
+
+
 
 }

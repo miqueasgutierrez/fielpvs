@@ -459,7 +459,7 @@ return [
 
                 [
                     'text' => 'Zonales',
-                    'url' => 'cargos',
+                    'url' => 'resultados/zonales',
                 ],
 
                   [
