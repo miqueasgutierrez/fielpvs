@@ -34,7 +34,7 @@
                 </h3>
 
                 <!-- Formulario -->
-                <form action="{{ route('resultalocal') }}" method="POST" id="hidden-fields-form"  target="_blank">
+                <form action="{{ route('resultadolocal') }}" method="POST" id="hidden-fields-form"  target="_blank">
                     @csrf
 
 
@@ -45,7 +45,7 @@
                         <select name="iddependencia" id="dependencia" class="form-control">
              <option value="">Seleccione una Dependencia</option>
             @foreach($dependencias as $dependencias)
-                <option value="{{ $dependencias->id }}">{{ $dependencias->nombre }}</option>
+                <option value="{{ $dependencias->id }}">{{ $dependencias->descripcion_local }}</option>
             @endforeach
         </select>
 
@@ -67,6 +67,18 @@
                             <option value="">Seleccione una zona</option>
                             <!-- Las opciones de zona se llenarán dinámicamente -->
                         </select>
+                    </div>
+
+                    <div class="grid grid-cols-1">
+                            <label for="iglesia">Iglesia:</label>
+
+
+                            <select id="iglesia" class="form-control"  name="iglesia" >
+    <!-- Options for churches -->
+</select>
+
+         
+
                     </div>
 
                      <div class="mb-4">
@@ -163,6 +175,21 @@ $('#circuito').change(function() {
             }
         });
     });
+
+    $('#zona').change(function() {
+    var zonaId = $(this).val();
+    // Realizar una solicitud AJAX para obtener las iglesias de la zona seleccionada
+    $.get('/fielpvs/public/api-iglesias/' + zonaId, function(iglesias) {
+        $('#iglesia').empty();
+        $('#iglesia').append('<option value="">Seleccione una iglesia</option>');
+        $.each(iglesias, function(id, nombre) {
+            $('#iglesia').append('<option value="' + id + '">' + nombre + '</option>');
+        });
+    });
+
+});
+
+
 </script>
 
 @stop

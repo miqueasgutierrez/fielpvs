@@ -10,6 +10,8 @@ use App\Models\Dependencia;
 
 use App\Models\Registro;
 
+use App\Models\Iglesia;
+
 use App\Models\dependencia_cargo;
 use App\Models\Ambitodependencias;
 use App\Models\Elecciones;
@@ -81,7 +83,7 @@ class PDFController extends Controller
             r.cedula,
             r.imagen,
             c.nombre
-        LIMIT 0, 25;
+        LIMIT 0, 200;
     ";
 
     $dependencia = DB::select($sql, [$currentYear,$currentYear, $iddependencia, $idambito]);
@@ -161,7 +163,12 @@ class PDFController extends Controller
 
             $contador++;
             $sumaResultado += $item->candidatos_count;
-            $porcentaje = ($item->candidatos_count / $totalVotosPorCargo) * 100;
+
+           if ($totalVotosPorCargo > 0) {
+    $porcentaje = ($item->candidatos_count / $totalVotosPorCargo) * 100;
+} else {
+    $porcentaje = 0;  // Si $totalVotosPorCargo es 0, establece el porcentaje en 0
+}
 
             $pdf->Cell(7, 5, utf8_decode("$contador"), 1, 0, 'C');
             $pdf->Cell(25, 5, utf8_decode("$item->cedula"), 1, 0, 'C');
@@ -274,7 +281,7 @@ public function resultadonacional(Request $request)
             r.cedula,
             r.imagen,
             c.nombre
-        LIMIT 0, 25;
+        LIMIT 0, 200;
     ";
 
     $dependencia = DB::select($sql, [$anio,$anio, $iddependencia, $idambito]);
@@ -451,7 +458,7 @@ $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
 
     $anio = $request->input('anio');
 
-    $nombredependencia = Dependencia::where('id', $iddependencia)->value('nombre');
+    $nombredependencia = Dependencia::where('id', $iddependencia)->value('descripcion_regional');
     $nombreambito = Ambitodependencias::where('id', $idambito)->value('nombre');
     $currentYear = date('Y'); // Año actual
 
@@ -503,7 +510,7 @@ $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
             r.imagen,
             c.nombre,
             ci.nombre
-        LIMIT 0, 25
+        LIMIT 0, 200
     ";
 
     $dependencia = DB::select($sql, [$anio, $anio,$iddependencia, $idambito, $idcircuito]);
@@ -746,7 +753,7 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
             r.imagen,
             c.nombre,
             ci.nombre
-        LIMIT 0, 25
+        LIMIT 0, 200
     ";
 
     $dependencia = DB::select($sql, [$anio, $iddependencia, $idambito, $idcircuito , $idzona]);
@@ -918,6 +925,8 @@ $nombrecircuito = DB::select($sqlcircuito, [$idcircuito]);
 
 $idzona = $request->input('zona_id');
 
+$idiglesia = $request->input('iglesia');
+
   $sqlzona = "
     SELECT nombre 
     FROM zonas 
@@ -927,7 +936,7 @@ $idzona = $request->input('zona_id');
 
 $zona = DB::select($sqlzona, [$idzona]);
 
-$ambito='Zonal';
+$ambito='Local';
 
 
 $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
@@ -935,8 +944,11 @@ $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
 $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
 
     $anio = $request->input('anio');
+    $idiglesia = $request->input('iglesia');
 
-    $nombredependencia = Dependencia::where('id', $iddependencia)->value('nombre');
+     $nombreiglesia = Iglesia::where('id', $idiglesia)->value('nombre');
+
+    $nombredependencia = Dependencia::where('id', $iddependencia)->value('descripcion_local');
     $nombreambito = Ambitodependencias::where('id', $idambito)->value('nombre');
     $currentYear = date('Y'); // Año actual
 
@@ -975,10 +987,12 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
         LEFT JOIN 
             elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
         WHERE 
-            d.id = ?
+            YEAR(ca.created_at) = ?
+            AND  d.id = ?
             AND ad.id = ?
             AND ci.id=?
             AND z.id=?
+            AND i.id=?
         GROUP BY 
             d.id, 
             c.id, 
@@ -991,13 +1005,11 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
         LIMIT 0, 25
     ";
 
-    $dependencia = DB::select($sql, [$anio, $iddependencia, $idambito, $idcircuito , $idzona]);
-
-
+    $dependencia = DB::select($sql, [$anio,$anio,$iddependencia, $idambito, $idcircuito , $idzona,$idiglesia]);
 
 
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("RESULTADO DE ELECIONES: $anio ")), 0, 'C', false);
-    $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("DEPENDENCIA: $nombredependencia  | ÁMBITO: $ambito | CIRCUITO: $nombre | ZONA: $nombrezona ")), 0, 'C', false);
+    $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("DEPENDENCIA: $nombredependencia  | ÁMBITO: $ambito | CIRCUITO: $nombre | ZONA: $nombrezona | IGLESIA: $nombreiglesia   ")), 0, 'C', false);
 
     $imagelogofielvs = public_path('imagen/logos/60year.png');
     $pdf->Image($imagelogofielvs, 10, 17, 45, 0, 'PNG');

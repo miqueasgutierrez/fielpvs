@@ -155,15 +155,16 @@ class ResultadosController extends Controller
     {
 
         $sql = "
-    SELECT id, nombre  
+    SELECT id, nombre, descripcion_local   
     FROM dependencias 
-
-";
-      $dependencias = DB::select($sql);
-      
+    WHERE nombre NOT IN ('PRESBÍTERO REGIONAL','IBFS','IBFS','BESF', 'DIRECTIVA DE ZONA NACIONAL', 'DIRECTIVA NACIONAL DE LA FIELPVS', 'NINGUNA','IBFS') 
+    ORDER BY orden ASC;
+    ";  
+    
+   $dependencias = DB::select($sql);
 
    $circuitos = Circuito::all();
-          return view('resultados.zonales', compact('dependencias','circuitos'));
+          return view('resultados.locales', compact('dependencias','circuitos'));
        
     }
 

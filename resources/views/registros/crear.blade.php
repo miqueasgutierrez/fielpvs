@@ -402,7 +402,7 @@
                             <label for="iglesia">Iglesia:</label>
 
 
-                            <select id="iglesia" name="iglesia" >
+                            <select id="iglesia" class="form-control"  name="iglesia" >
     <!-- Options for churches -->
 </select>
 
