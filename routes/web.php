@@ -52,7 +52,10 @@ Route::middleware(['role:votante'])->group(function () {
   Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
   Route::get('elecciones/vista1', [EleccionesController::class, 'vista1'])->name('elecciones.vista1');
 
- Route::get('elecciones/votacion/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacion'])->name('elecciones.votacion');
+ Route::get('elecciones/votacionnacional/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacionnacional'])->name('elecciones.votacion');
+
+
+  Route::get('elecciones/votacionregional/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacionregional'])->name('elecciones.votacionregional');
    
 });
 

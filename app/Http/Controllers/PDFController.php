@@ -83,6 +83,8 @@ class PDFController extends Controller
             r.cedula,
             r.imagen,
             c.nombre
+             ORDER BY 
+            c.orden ASC
         LIMIT 0, 200;
     ";
 
@@ -281,6 +283,8 @@ public function resultadonacional(Request $request)
             r.cedula,
             r.imagen,
             c.nombre
+             ORDER BY 
+            c.orden ASC
         LIMIT 0, 200;
     ";
 
@@ -510,6 +514,8 @@ $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
             r.imagen,
             c.nombre,
             ci.nombre
+             ORDER BY 
+            c.orden ASC
         LIMIT 0, 200
     ";
 
@@ -753,6 +759,8 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
             r.imagen,
             c.nombre,
             ci.nombre
+            ORDER BY 
+            c.orden ASC 
         LIMIT 0, 200
     ";
 
@@ -910,7 +918,7 @@ public function resultadolocal(Request $request)
     $pdf->SetFont('Arial', 'B', 11);
 
     $iddependencia = $request->input('iddependencia');
-    $idambito = $request->input('idambito');
+    $idambito =4;
 
     $idcircuito = $request->input('circuito');
 
@@ -1002,11 +1010,17 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
             r.imagen,
             c.nombre,
             ci.nombre
+             ORDER BY 
+            c.orden ASC
+
         LIMIT 0, 25
     ";
 
+
     $dependencia = DB::select($sql, [$anio,$anio,$iddependencia, $idambito, $idcircuito , $idzona,$idiglesia]);
 
+
+    dd($dependencia);
 
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("RESULTADO DE ELECIONES: $anio ")), 0, 'C', false);
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("DEPENDENCIA: $nombredependencia  | ÁMBITO: $ambito | CIRCUITO: $nombre | ZONA: $nombrezona | IGLESIA: $nombreiglesia   ")), 0, 'C', false);

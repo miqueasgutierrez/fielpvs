@@ -71,17 +71,37 @@
 </div>
 <form id="myForm" action="{{ route('elecciones.votacionfinal') }}" method="POST" enctype="multipart/form-data">
     @csrf
- <input type="hidden" name="iddependencia" value="{{ $dependencia->id }}">
+ <input type="hidden" name="iddependencia" value="{{ $nombredependencia->id }}">
  <input type="hidden" name="idvotante" value="{{ $idvotante }}">
  <input type="hidden" name="cedula" value="{{ $cedula }}">
 <table class="table table-bordered table-striped dataTable dtr-inline" style="">
 
 
 
-   
-
     <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{$dependencia->nombre}}  {{ $ambito->nombre  }}
+         @switch($ambito->id)
+
+
+    @case(1)
+        {{$nombredependencia->nombre}}
+        @break
+
+    @case(2)
+        {{$nombredependencia->descripcion_regional}}
+        @break
+
+    @case(3)
+        {{$nombredependencia->nombre}}
+        @break
+
+    @case(4)
+        {{$nombredependencia->descripcion_local}}
+        @break
+
+    @default
+        <!-- Optionally handle other cases or display nothing -->
+        {{ 'No applicable ámbito' }}
+@endswitch 
        </h5>
 
        <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
@@ -95,46 +115,42 @@
 
 </form>
 
-
 @php
     $numerocargo = 0;
+    $ultimocargo = '';
 @endphp
     
-   @foreach($dependencia->cargos as $cargo)
+   @foreach($dependencia as $cargo)
 
+            @if($cargo->nombrecargo != $ultimocargo) 
 
-   @php
-        $numerocargo++;
-    @endphp
-
-    @if($cargo->nombre !== 'Vocales')
+            @php
+             $numerocargo++;
+            @endphp
+    
+    @if($cargo->nombrecargo !== 'Vocales')
 
   <td class="px-4 py-2 text-center ">
- <a href="#{{ $cargo->nombre }}" class="">
+ <a href="#{{ $cargo->nombrecargo }}" class="">
 
 <div   id="cargo{{$numerocargo}}"  class="inner small-box bg-info fixed-width centrar-imagen">
 
-
-
 <br>
-<p> {{ $cargo->nombre }}   </p>
+<p> {{ $cargo->nombrecargo }}   </p>
 
-          <img  id="imagen{{$numerocargo}}" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">
-       
+          <img  id="imagen{{$numerocargo}}" src="/fielpvs/public/imagen/perfil.svg" class="w-16 h-16 rounded-full  " alt="Imagen">   
 
 <p></p>
 <br>
 
-
 </div>
 </a>
-
-           </td>
+</td>
 
            @else
 @for ($i = 0; $i < $cantidadvocales; $i++)
     <td class="px-4 py-2 text-center">
-        <a href="#{{ $cargo->nombre }}" class="">
+        <a href="#{{ $cargo->nombrecargo }}" class="">
             <div id="cargovocal{{ $i + 1 }}" class="inner small-box bg-info fixed-width centrar-imagen">
                 <br>
                 <p>Vocal {{ $i + 1 }}</p>
@@ -147,6 +163,14 @@
 @endfor
     
 @endif
+
+ @else
+
+@endif
+
+@php
+  $ultimocargo =$cargo->nombrecargo;
+ @endphp
 
         @endforeach
 
@@ -181,34 +205,35 @@
 <br>
 
 
-    <div class="card-body table-responsive p-0" style="height: 600px;">    
+
+<div class="card-body table-responsive p-0" style="height: 600px;">    
 <table class="table table-head-fixed text-nowrap table-bordered table-hover">
 
 @php
     $contador = 0;
+    $ultimocargo2 = '';
 @endphp
+    
+   @foreach($dependencia as $cargo)
 
- @foreach($dependencia->cargos as $cargo)
-
-   @php
-
-
-        $contador++;
-    @endphp
+            @if($cargo->nombrecargo != $ultimocargo2) 
 
 
-    </thead >
-      
 
-    <thead class="">
+            @php
+             $contador++;
+            @endphp
+
+
+ <thead class="">
     <tr>
-        <thead id="{{ $cargo->nombre }}"  class="bg-secondary text-white">
+        <thead id="{{ $cargo->nombrecargo }}"  class="bg-secondary text-white">
       <td  class="centrar-texto" colspan="1" scope="col">Candidatos a:</td>
      
       <td class="centrar-texto  " colspan="2" scope="col">
 
          <h7 class="font-semibold text-xl text-gray-800 leading-tight text-center text-white ">
-           {{ $cargo->nombre  }}
+           {{ $cargo->nombrecargo  }}
        </h7>
 
     </td>
@@ -217,38 +242,32 @@
     </tr>
   </thead>
 
-    @if($cargo->candidatos->isEmpty())
-         <tr>
-      <td colspan="4"><p>No hay candidatos para este cargo.</p></td>
-      
-    </tr>  
-        @else
-         
-       <tbody>
+@endif
+
+    
+    @if($cargo->nombrecargo !== 'Vocales')
+
+
+   
       
    <form>
 
-@foreach($cargo->candidatos as $candidato)
-
-
-
-@if($cargo->nombre !== 'Vocales')
 
     <!-- Código HTML o Blade a mostrar si $cargo->nombre no es igual a "vocales" -->
 
 <td scope="col" class="centrar-imagen">
    
 
- <img src="../../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
+ <img src="../../../../imagen/{{$cargo->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
 
-      <p scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }} {{ $candidato->registro->apellidos }}</p>
+      <p scope="col" class="centrar-texto" >{{ $cargo->nombres }} {{ $cargo->apellidos }}</p>
 
        <div class="form-check form-check-inline">
 
-            <input  onclick="agregarcargo{{$contador}}('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
-                    '{{ $candidato->registro->apellidos }}',
-            '{{ $candidato->registro->imagen }}',
-            '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+            <input  onclick="agregarcargo{{$contador}}('{{ $cargo->id }}','{{ $cargo->nombres }}',
+                    '{{ $cargo->apellidos }}',
+            '{{ $cargo->imagen }}',
+            '{{ $cargo->nombres }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
 
             </div>
     </td>
@@ -259,32 +278,32 @@
 <td scope="col" class="centrar-imagen">
    
 
- <img src="../../../../imagen/{{$candidato->registro->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
+ <img src="../../../../imagen/{{$cargo->imagen}}" class="w-16 h-16 rounded-full" alt="Imagen">
 
-      <p scope="col" class="centrar-texto" >{{ $candidato->registro->nombres }} {{ $candidato->registro->apellidos }}</p>
+      <p scope="col" class="centrar-texto" >{{ $cargo->nombres }} {{ $cargo->apellidos }}</p>
 
        <div class="form-check form-check-inline">
 
-            <input  onclick="agregarvocal('{{ $candidato->id }}','{{ $candidato->registro->nombres }}',
-                    '{{ $candidato->registro->apellidos }}',
-            '{{ $candidato->registro->imagen }}',
-            '{{ $cargo->nombre }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+            <input  onclick="agregarvocal('{{ $cargo->id }}','{{ $cargo->nombres }}',
+                    '{{ $cargo->apellidos }}',
+            '{{ $cargo->imagen }}',
+            '{{ $cargo->nombres }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
 
             </div>
     </td>
 
   </form>
-    @endif
-
-
-
-
-
- @endforeach
+   
 
   </form>
 
   @endif
+
+
+@php
+  $ultimocargo2 =$cargo->nombrecargo;
+ @endphp
+
 
     @endforeach
 
@@ -294,6 +313,11 @@
   </table>
 </div>
 
+
+
+
+
+   
 
 </x-app-layout>
 

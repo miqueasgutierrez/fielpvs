@@ -150,7 +150,7 @@ $idambito2 = 2;
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito2]) }}" class="">
+    <a   href="{{ route('elecciones.votacionregional', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito2]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">
