@@ -56,6 +56,11 @@ Route::middleware(['role:votante'])->group(function () {
 
 
   Route::get('elecciones/votacionregional/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacionregional'])->name('elecciones.votacionregional');
+
+   Route::get('elecciones/votacionzonal/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacionzonal'])->name('elecciones.votacionzonal');
+
+
+    Route::get('elecciones/votacionlocal/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacionlocal'])->name('elecciones.votacionlocal');
    
 });
 

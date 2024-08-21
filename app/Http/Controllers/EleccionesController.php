@@ -1062,7 +1062,7 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
             ci.nombre as circuito,
             c.id AS idcargo, 
             r.nombres, 
-            r.id idcandidato ,
+            ca.id idcandidato ,
             r.apellidos, 
             r.cedula AS cedula, 
             r.imagen AS imagen,
@@ -1104,7 +1104,8 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
             r.cedula,
             r.imagen,
             c.nombre,
-            ci.nombre
+            ci.nombre,
+            ca.id
              ORDER BY 
             c.orden ASC
         LIMIT 0, 200
@@ -1135,11 +1136,18 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
 
     // Año actual
     $currentYear = date('Y');
-    $idcircuito = 3;
+    $sqlcircuito = "SELECT ci.id as idcircuito  FROM registros r INNER JOIN registro_iglesias ri ON ri.id_registro=r.id INNER JOIN iglesias i ON i.id=ri.id_iglesia
+        INNER JOIN zonas z ON z.id= i.zona_id 
+        INNER JOIN circuitos ci ON ci.id=z.circuito_id
+        WHERE r.id=? ";
+
+     $circuito = DB::selectOne($sqlcircuito, [$idvotante]);
+
+     $idcircuito = $circuito->idcircuito;
 
     
  $sqldependencia = "
-    SELECT id, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
+    SELECT id, nombre, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
 ";
 
 $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
@@ -1151,7 +1159,7 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
             ci.nombre as circuito,
             c.id AS idcargo, 
             r.nombres, 
-            r.id idcandidato ,
+            ca.id idcandidato ,
             r.apellidos, 
             r.cedula AS cedula, 
             r.imagen AS imagen,
@@ -1184,7 +1192,7 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
             YEAR(ca.created_at) = ?
             AND d.id = ?
             AND ad.id = ?
-            AND ci.id=?
+            AND ci.id = ?
         GROUP BY 
             d.id, 
             c.id, 
@@ -1194,7 +1202,8 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
             r.cedula,
             r.imagen,
             c.nombre,
-            ci.nombre
+            ci.nombre,
+            ca.id
              ORDER BY 
             c.orden ASC
         LIMIT 0, 200
@@ -1215,9 +1224,211 @@ $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
     return view('elecciones.votacion', compact('cantidadvocales', 'nombredependencia','dependencia', 'ambito', 'idvotante', 'cedula'));
 }
 
+
+
+
+
+
+
+
+public function votacionlocal($idvotante, $iddependencia, $idambito)
+{
+    // Obtener la cédula del votante
+    $cedula = Registro::where('id', $idvotante)->value('cedula');
+
+    // Año actual
+    $currentYear = date('Y');
+    $sqliglesia = "SELECT i.id as idiglesia  FROM registros r INNER JOIN registro_iglesias ri ON ri.id_registro=r.id INNER JOIN iglesias i ON i.id=ri.id_iglesia
+        INNER JOIN zonas z ON z.id= i.zona_id 
+        INNER JOIN circuitos ci ON ci.id=z.circuito_id
+        WHERE r.id=? ";
+
+     $iglesia = DB::selectOne($sqliglesia, [$idvotante]);
+
+     $idiglesia = $iglesia->idiglesia;
+
+    
+ $sqldependencia = "
+    SELECT id, nombre, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
+";
+
+$nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
+
+
+    $sql = "
+       SELECT 
+            d.id,
+            ci.nombre as circuito,
+            c.id AS idcargo, 
+            r.nombres, 
+            ca.id idcandidato ,
+            r.apellidos, 
+            r.cedula AS cedula, 
+            r.imagen AS imagen,
+            c.nombre AS nombrecargo, 
+            COUNT(e.id) AS candidatos_count,
+            CASE 
+                WHEN COUNT(e.id) > 0 THEN 'Con Votos' 
+                ELSE 'Sin Votos' 
+            END AS estado_votos
+        FROM 
+            dependencias d
+        INNER JOIN 
+            dependencia_cargos dc ON d.id = dc.id_dependencia
+        INNER JOIN 
+            cargos c ON c.id = dc.id_cargo
+        INNER JOIN 
+            candidatos ca ON dc.id = ca.id_dependencia_cargos
+        INNER JOIN 
+            ambitos_dependencias ad ON ad.id = dc.id_ambito
+        INNER JOIN 
+            registros r ON r.id = ca.id_candidato 
+        INNER JOIN registro_iglesias ri ON ri.id_registro=r.id
+        
+        INNER JOIN iglesias i ON i.id=ri.id_iglesia
+        INNER JOIN zonas z ON z.id= i.zona_id 
+        INNER JOIN circuitos ci ON ci.id=z.circuito_id 
+        LEFT JOIN 
+            elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
+        WHERE 
+            YEAR(ca.created_at) = ?
+            AND d.id = ?
+            AND ad.id = ?
+            AND i.id = ?
+        GROUP BY 
+            d.id, 
+            c.id, 
+            r.id,
+            r.nombres, 
+            r.apellidos, 
+            r.cedula,
+            r.imagen,
+            c.nombre,
+            ci.nombre,
+            ca.id
+             ORDER BY 
+            c.orden ASC
+        LIMIT 0, 200
+    ";
+
+    $dependencia = DB::select($sql, [$currentYear, $currentYear,$iddependencia, $idambito, $idiglesia]);
+
+
+    // Consultar la cantidad de vocales
+    $consultavocales = 'SELECT cantidad FROM dependencia_cargos WHERE id_dependencia = ? AND id_ambito = ? AND id_cargo = 41';
+    $resultado = DB::selectOne($consultavocales, [$iddependencia, $idambito]);
+    $cantidadvocales = $resultado ? $resultado->cantidad : null;
+
+    // Consultar el ámbito con sus dependencias
+    $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+
+    // Retornar la vista con los datos
+    return view('elecciones.votacion', compact('cantidadvocales', 'nombredependencia','dependencia', 'ambito', 'idvotante', 'cedula'));
+}
+
+
+
+ public function votacionzonal($idvotante, $iddependencia, $idambito)
+{
+    // Obtener la cédula del votante
+    $cedula = Registro::where('id', $idvotante)->value('cedula');
+
+    // Año actual
+    $currentYear = date('Y');
+    $sqlzona = "SELECT ci.id as idcircuito, z.id as idzona  FROM registros r INNER JOIN registro_iglesias ri ON ri.id_registro=r.id INNER JOIN iglesias i ON i.id=ri.id_iglesia
+        INNER JOIN zonas z ON z.id= i.zona_id 
+        INNER JOIN circuitos ci ON ci.id=z.circuito_id
+        WHERE r.id=? ";
+
+     $zona = DB::selectOne($sqlzona, [$idvotante]);
+
+     $idzona = $zona->idzona;
+
+    
+ $sqldependencia = "
+    SELECT id, nombre, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
+";
+
+$nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
+
+
+    $sql = "
+       SELECT 
+            d.id,
+            ci.nombre as circuito,
+            c.id AS idcargo, 
+            r.nombres, 
+            ca.id idcandidato ,
+            r.apellidos, 
+            r.cedula AS cedula, 
+            r.imagen AS imagen,
+            c.nombre AS nombrecargo, 
+            COUNT(e.id) AS candidatos_count,
+            CASE 
+                WHEN COUNT(e.id) > 0 THEN 'Con Votos' 
+                ELSE 'Sin Votos' 
+            END AS estado_votos
+        FROM 
+            dependencias d
+        INNER JOIN 
+            dependencia_cargos dc ON d.id = dc.id_dependencia
+        INNER JOIN 
+            cargos c ON c.id = dc.id_cargo
+        INNER JOIN 
+            candidatos ca ON dc.id = ca.id_dependencia_cargos
+        INNER JOIN 
+            ambitos_dependencias ad ON ad.id = dc.id_ambito
+        INNER JOIN 
+            registros r ON r.id = ca.id_candidato 
+        INNER JOIN registro_iglesias ri ON ri.id_registro=r.id
+        
+        INNER JOIN iglesias i ON i.id=ri.id_iglesia
+        INNER JOIN zonas z ON z.id= i.zona_id 
+        INNER JOIN circuitos ci ON ci.id=z.circuito_id 
+        LEFT JOIN 
+            elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
+        WHERE 
+            YEAR(ca.created_at) = ?
+            AND d.id = ?
+            AND ad.id = ?
+            AND z.id = ?
+        GROUP BY 
+            d.id, 
+            c.id, 
+            r.id,
+            r.nombres, 
+            r.apellidos, 
+            r.cedula,
+            r.imagen,
+            c.nombre,
+            ci.nombre,
+            ca.id
+             ORDER BY 
+            c.orden ASC
+        LIMIT 0, 200
+    ";
+
+    $dependencia = DB::select($sql, [$currentYear, $currentYear,$iddependencia, $idambito, $idzona]);
+
+
+    // Consultar la cantidad de vocales
+    $consultavocales = 'SELECT cantidad FROM dependencia_cargos WHERE id_dependencia = ? AND id_ambito = ? AND id_cargo = 41';
+    $resultado = DB::selectOne($consultavocales, [$iddependencia, $idambito]);
+    $cantidadvocales = $resultado ? $resultado->cantidad : null;
+
+    // Consultar el ámbito con sus dependencias
+    $ambito = Ambitodependencias::with(['dependencias'])->findOrFail($idambito);
+
+    // Retornar la vista con los datos
+    return view('elecciones.votacion', compact('cantidadvocales', 'nombredependencia','dependencia', 'ambito', 'idvotante', 'cedula'));
+}
+
+
+
+
+
      public function votacionfinal(Request $request)
     {
-
 
 
 

@@ -264,10 +264,10 @@
 
        <div class="form-check form-check-inline">
 
-            <input  onclick="agregarcargo{{$contador}}('{{ $cargo->id }}','{{ $cargo->nombres }}',
+            <input  onclick="agregarcargo{{$contador}}('{{ $cargo->idcandidato }}','{{ $cargo->nombres }}',
                     '{{ $cargo->apellidos }}',
             '{{ $cargo->imagen }}',
-            '{{ $cargo->nombres }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+            '{{ $cargo->nombrecargo }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
 
             </div>
     </td>
@@ -284,10 +284,10 @@
 
        <div class="form-check form-check-inline">
 
-            <input  onclick="agregarvocal('{{ $cargo->id }}','{{ $cargo->nombres }}',
+            <input  onclick="agregarvocal('{{ $cargo->idcandidato }}','{{ $cargo->nombres }}',
                     '{{ $cargo->apellidos }}',
             '{{ $cargo->imagen }}',
-            '{{ $cargo->nombres }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
+            '{{ $cargo->nombrecargo }}')" class="form-check-input" type="radio" name="voteOption" id="option1" value="option1">
 
             </div>
     </td>

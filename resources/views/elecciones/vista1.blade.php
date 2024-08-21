@@ -253,7 +253,7 @@ $idDependencia = $dependencia['id'];
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito3]) }}" class="">
+    <a   href="{{ route('elecciones.votacionzonal', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito3]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">
@@ -318,7 +318,7 @@ $idDependencia = $dependencia['id'];
    @endphp
 
   <td id="{{$idDependencia}}" class="px-4 py-2 text-center ">
-    <a   href="{{ route('elecciones.votacion', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito4]) }}" class="">
+    <a   href="{{ route('elecciones.votacionlocal', ['idvotante' => $id_votante,'iddependencia' => $idDependencia, 'idambito' => $idambito4]) }}" class="">
 
 
 <div class="inner small-box bg-info fixed-width">

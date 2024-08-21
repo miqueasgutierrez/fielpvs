@@ -1020,7 +1020,6 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
     $dependencia = DB::select($sql, [$anio,$anio,$iddependencia, $idambito, $idcircuito , $idzona,$idiglesia]);
 
 
-    dd($dependencia);
 
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("RESULTADO DE ELECIONES: $anio ")), 0, 'C', false);
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("DEPENDENCIA: $nombredependencia  | ÁMBITO: $ambito | CIRCUITO: $nombre | ZONA: $nombrezona | IGLESIA: $nombreiglesia   ")), 0, 'C', false);
