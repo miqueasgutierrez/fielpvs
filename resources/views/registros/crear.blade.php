@@ -200,10 +200,10 @@
     
             <div id="cargos-dependencias-lista">
                 @foreach($cargosDependencias as $cargoDependencia)
+              
                     <div class="dependencia-item" data-dependencia-id="{{ $cargoDependencia->dependencia->id }}">
                         <input type="checkbox" id="cargo_dependencia{{ $cargoDependencia->id }}" name="cargo_dependencia[]" value="{{ $cargoDependencia->id }}">
                         <label for="dependencia_cargo{{ $cargoDependencia->id }}">{{ $cargoDependencia->cargo->nombre}}</label>
-
                         <label>( {{ $cargoDependencia->ambito-> 
                         nombre }} )</label>
                     </div>
