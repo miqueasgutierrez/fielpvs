@@ -153,4 +153,10 @@ OBRERAS CON MAS DE TRES AÑOS PRESENTADAS AL CIRCUITO? esta deberia ser una opci
 
 
 
+DELETE FROM registros;
+
+ALTER TABLE registros AUTO_INCREMENT = 1;
+
+
+
 

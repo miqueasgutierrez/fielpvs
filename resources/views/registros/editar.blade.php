@@ -84,7 +84,7 @@
 
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">Telefono:</label>
-                            <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="telefono" name="telefono" placeholder="Numero Celular" value="{{ $registro->telefono}}" required >
+                            <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="telefono" name="telefono" placeholder="Numero Celular" value="{{ $registro->telefono}}" >
 
                         </div>
                         <div class="grid grid-cols-1">
@@ -107,9 +107,11 @@
                             </div>
                         </div>
 
+
+
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">PROFESION U OFICIO:</label>
-                            <input type="profesion" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogar" value="{{ $registro->profesion}}" required>
+                            <input type="profesion" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" id="profesion" name="profesion" placeholder="ej. Ingeniero, Trabajador de hogar" value="{{ $registro->profesion }}" >
                         </div>
 
 <div class="grid grid-cols-1">
@@ -309,10 +311,10 @@
                         
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">CIRCUITO:</label>
-                              <select name="circuito" id="circuito" class="form-control" required>
+                              <select name="circuito" id="circuito" class="form-control" >
                             <option value="">Seleccione un circuito</option>
 
-                             <option value="" selected> {{ $circuito->nombre ?? '' }}</option>
+                           
 
                             @foreach($circuitos as $circuito)
                                 <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
@@ -378,7 +380,7 @@
 
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">direccion:</label>
-                            <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"  name="direccion" placeholder="" value="{{ $registro->direccion}}" required>
+                            <input type="text" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"  name="direccion" placeholder="" value="{{ $registro->direccion}}" >
                         </div>
 
 

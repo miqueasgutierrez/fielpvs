@@ -349,9 +349,9 @@
                         <div class="grid grid-cols-1">
                            
 
-                            <label for="anio_uncion">Año de unción:</label>
+                            <label for="anio_uncion">Fecha de unción:</label>
     <div class="flex items-center space-x-4">
-      <input type="number" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ old('fecha_uncion') }}">
+      <input type="date" class="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="fecha_uncion" id="anio_uncion" placeholder="ej. 1990" min="1900" max="2034" value="{{ old('fecha_uncion') }}">
     </div>
 
                         </div>

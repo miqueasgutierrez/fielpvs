@@ -6,6 +6,8 @@ use App\Models\Registro;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
+use Carbon\Carbon;
+
 class RegistrosImport implements ToModel,WithHeadingRow
 {
     /**
@@ -17,10 +19,17 @@ class RegistrosImport implements ToModel,WithHeadingRow
 
     {
 
+         ini_set('max_execution_time', 500);
 
-        // Invertir el formato de fecha de dd/mm/yyyy a yyyy-mm-dd
-    $fecha_nacimiento = date('Y-m-d', strtotime($row['fecha_nacimiento']));
-    $fecha_uncion = date('Y-m-d', strtotime($row['fecha_uncion']));
+
+        
+         $result = $row['fecha_nacimiento'];
+
+
+
+       $fecha = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($result));
+            // Otros campos según sea necesario...
+
 
     // Buscar si ya existe un registro con la misma cédula
     $registro = Registro::where('cedula', $row['cedula'])->first();
@@ -28,45 +37,39 @@ class RegistrosImport implements ToModel,WithHeadingRow
     // Si existe, actualiza el registro, de lo contrario, crea uno nuevo
     if ($registro) {
         $registro->update([
-            'nombres' => $row['nombres'],
+             'cedula' => $row['cedula'],
             'apellidos' => $row['apellidos'],
-            'imagen' => $row['imagen'],
+            'nombres' => $row['nombres'],
+            'edad' => $row['edad'],
+            'fecha_nacimiento'=> $fecha->format('Y-m-d'),
             'telefono' => $row['telefono'],
-            'fecha_nacimiento'=>  $fecha_nacimiento,
-            'edad' => $row['edad'],  
-            'genero' => $row['genero'],
+            'estado_civil' => $row['estado_civil'], 
+            'genero' => $row['genero'], 
             'profesion' => $row['profesion'],
-             'ministerio' => $row['ministerio'],
-            'dependencia' => $row['dependencia'],
-            'circuito' => $row['circuito'],
-            'zona' => $row['zona'],
-            'direccion' => $row['direccion'],
-            'estado_civil' => $row['estado_civil'],
-            'ministro_ordenado' => $row['ministro_ordenado'],
-            'fecha_uncion' => $fecha_uncion,
+            'pastor' => $row['pastor'],
+            'ministro_ungido' => $row['ministro_ungido'],
+            'fecha_uncion' => $row['fecha_uncion'],   
         ]);
     } else {
         // Si no existe, crea un nuevo registro
         $registro = Registro::create([
-            'cedula'  => $row['cedula'],
-            'nombres' => $row['nombres'],
+             'cedula' => $row['cedula'],
             'apellidos' => $row['apellidos'],
-            'imagen' => $row['imagen'],
+            'nombres' => $row['nombres'],
+            'edad' => $row['edad'],
+            'fecha_nacimiento'=>  $fecha->format('Y-m-d'),
             'telefono' => $row['telefono'],
-            'fecha_nacimiento'=>  $fecha_nacimiento,
-             'edad' => $row['edad'],  
-            'genero' => $row['genero'],
-             'profesion' => $row['profesion'],
-             'ministerio' => $row['ministerio'],
-              'dependencia' => $row['dependencia'],
-               'circuito' => $row['circuito'],
-               'zona' => $row['zona'],
-               'direccion' => $row['direccion'],
-                'estado_civil' => $row['estado_civil'],
-              'ministro_ordenado' => $row['ministro_ordenado'],
-               'fecha_uncion' => $fecha_uncion,
+            'estado_civil' => $row['estado_civil'],
+            'genero' => $row['genero'], 
+            'profesion' => $row['profesion'],
+            'pastor' => $row['pastor'],
+            'ministro_ungido' => $row['ministro_ungido'], 
+            'fecha_uncion' => $row['fecha_uncion'], 
         ]);
     }
+
+
+
 
     return $registro;
 

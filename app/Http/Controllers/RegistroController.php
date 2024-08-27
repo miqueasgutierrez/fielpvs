@@ -43,7 +43,7 @@ class RegistroController extends Controller
          
 
 
-        $registros = Registro::paginate(1000);
+        $registros = Registro::paginate(5000);
          return view('registros.index', compact('registros'));
 
     }
@@ -298,15 +298,15 @@ if ($registroIglesia) {
         'apellidos' => 'required|string|max:255',
         'imagen' => 'nullable|image|mimes:jpeg,png,svg|max:1024',
         'fecha_nacimiento' => 'required|date',
-        'telefono' => 'required|string|max:255',
-        'edad' => 'required|integer|min:0',
-        'genero' => 'required|string|in:masculino,femenino',
-        'profesion' => 'required|string|max:255',
-        'pastor' => 'required|string|max:255',
-        'direccion' => 'required|string|max:255',
-        'estado_civil' => 'required|string|in:soltero,casado',
+        'telefono' => 'nullable|string|max:255',
+        'edad' => 'nullable|integer|min:0',
+        'genero' => 'nullable|string|in:masculino,femenino',
+        'profesion' => 'nullable|string|max:255',
+        'pastor' => 'nullable|string|max:255',
+        'direccion' => 'nullable|string|max:255',
+        'estado_civil' => 'nullable|string|in:soltero,casado',
         'fecha_uncion' => 'nullable',
-        'ministro_ungido' => 'required'
+        'ministro_ungido' => 'nullable'
     ]);
 
 

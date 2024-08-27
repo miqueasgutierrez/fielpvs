@@ -118,7 +118,6 @@ $idDependencia = $dependencia['id'];
   @endif
 </tr>
 </table>
-</div>
 
 
 <!-- AMBITO REGIONAL-->
