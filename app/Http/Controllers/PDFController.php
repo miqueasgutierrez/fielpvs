@@ -1155,6 +1155,119 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
 
 
 
+public function comprobante(Request $request)
+{
+
+
+
+$iddependencia = $request->input('iddependencia');
+    $idambito = $request->input('idambito');
+
+
+
+$sqldependencia = "
+    SELECT id, nombre, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
+";
+
+$nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
+
+$nombreambito = Ambitodependencias::where('id', $idambito)->value('nombre');
+
+switch ($idambito) {
+    case 1:
+        $nombredeeleccion = 'ELECCIONES NACIONALES';
+        break;
+
+    case 2:
+         $nombredeeleccion = 'ELECCIONES REGIONALES';
+        break;
+
+    case 3:
+        $nombredeeleccion = 'ELECCIONES DE ZONA';
+        break;
+
+    case 4:
+        $nombredeeleccion = 'ELECCIONES LOCALES';
+        break;
+
+    default:
+        // Asignar un valor por defecto si el ámbito no coincide con ninguno de los casos
+        $nombredepartamento = 'No applicable ámbito';
+        break;
+}
+
+
+switch ($idambito) {
+    case 1:
+        $nombredepartamento = $nombredependencia->nombre;
+        break;
+
+    case 2:
+        $nombredepartamento = $nombredependencia->descripcion_regional;
+        break;
+
+    case 3:
+        $nombredepartamento = $nombredependencia->nombre;
+        break;
+
+    case 4:
+        $nombredepartamento = $nombredependencia->descripcion_local;
+        break;
+
+    default:
+        // Asignar un valor por defecto si el ámbito no coincide con ninguno de los casos
+        $nombredepartamento = 'No applicable ámbito';
+        break;
+}
+
+
+
+
+
+
+
+
+ // Crear un nuevo PDF con dimensiones específicas
+    $pdf = new FPDFWrapper('P', 'mm', array(80, 157));
+    $pdf->SetMargins(4, 10, 4);
+    $pdf->AddPage();
+
+    // Configurar la fuente y el color del texto
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetTextColor(0, 0, 0);
+
+    // Añadir espacio en blanco
+    $pdf->Ln(3);
+
+    // Agregar textos en el PDF
+    
+    
+     $imagelogofielvs = public_path('imagen/logos/CONEF.png');
+    $pdf->Image($imagelogofielvs,17, 10, 50, 0, 'PNG');
+
+     $currentYear = date('Y'); // Año actual
+
+       $pdf->Ln(25);
+
+     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("ELECCIONES: $currentYear ")), 0, 'C', false);
+
+    // Añadir más espacio en blanco
+    $pdf->Ln(9);
+
+    // Definir el nombre del archivo
+    $nombreArchivo = 'comprobante.pdf';
+
+    // Generar y enviar el PDF al navegador
+    $pdf->Output('I', $nombreArchivo);
+
+    // Terminar el script
+    exit;
+
+
+
+ }
+
+
 
 
 

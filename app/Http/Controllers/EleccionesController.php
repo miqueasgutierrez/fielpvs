@@ -1474,16 +1474,19 @@ $user = Auth::user();
           $this->restriccioneslocales($idcedula);
    
 
-        // Retorna la vista con las variables necesarias
-         return view('elecciones.vista1', [
-            'elector' => $elector,
-            'infovotante' => $infovotante,
-            'eleccionesnacionales' => $this->eleccionesnacionales,
-            'eleccionesregionales' => $this->eleccionesregionales,
-             'eleccioneszonales' => $this->eleccioneszonales,
-             'eleccioneslocales' => $this->eleccioneslocales, // Acceder a la propiedad de clase
-        ]);
 
+
+        // Retorna la vista con las variables necesarias
+         return redirect()->route('elecciones.vista1')
+                     ->with([
+                         'mensaje' => 'Votación realizada exitosamente.',
+                         'elector' => $elector,
+                         'infovotante' => $infovotante,
+                         'eleccionesnacionales' => $this->eleccionesnacionales,
+                         'eleccionesregionales' => $this->eleccionesregionales,
+                         'eleccioneszonales' => $this->eleccioneszonales,
+                         'eleccioneslocales' => $this->eleccioneslocales,
+                     ]);
   
     }
 

@@ -3,6 +3,81 @@
 
 
 
+$iddependencia = $request->input('iddependencia');
+    $idambito = $request->input('idambito');
+
+
+
+$sqldependencia = "
+    SELECT id, nombre, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
+";
+
+$nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
+
+$nombreambito = Ambitodependencias::where('id', $idambito)->value('nombre');
+
+switch ($idambito) {
+    case 1:
+        $nombredeeleccion = 'ELECCIONES NACIONALES';
+        break;
+
+    case 2:
+         $nombredeeleccion = 'ELECCIONES REGIONALES';
+        break;
+
+    case 3:
+        $nombredeeleccion = 'ELECCIONES DE ZONA';
+        break;
+
+    case 4:
+        $nombredeeleccion = 'ELECCIONES LOCALES';
+        break;
+
+    default:
+        // Asignar un valor por defecto si el ámbito no coincide con ninguno de los casos
+        $nombredepartamento = 'No applicable ámbito';
+        break;
+}
+
+
+switch ($idambito) {
+    case 1:
+        $nombredepartamento = $nombredependencia->nombre;
+        break;
+
+    case 2:
+        $nombredepartamento = $nombredependencia->descripcion_regional;
+        break;
+
+    case 3:
+        $nombredepartamento = $nombredependencia->nombre;
+        break;
+
+    case 4:
+        $nombredepartamento = $nombredependencia->descripcion_local;
+        break;
+
+    default:
+        // Asignar un valor por defecto si el ámbito no coincide con ninguno de los casos
+        $nombredepartamento = 'No applicable ámbito';
+        break;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # fielpvs
  Sistema de Elecciones
 codigo para convertit registros en usuarios 
@@ -17,6 +92,17 @@ php artisan db:seed --class=AssignPermissionToVotanteSeeder
 
 
 
+
+<div class="comprobante">
+        <h1>¡Votación Exitosa!</h1>
+        <p>Gracias por participar en la votación.</p>
+        <p><strong>Comprobante de Votación:</strong></p>
+        <p>ID de Votación: <strong>{{ session('ticket') }}</strong></p>
+        <p>Nombre del Elector: <strong>{{ session('elector') }}</strong></p>
+        <!-- Agrega más detalles si es necesario -->
+    </div>
+
+    
 
 Preguntas 
 

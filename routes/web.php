@@ -47,6 +47,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function() {
 // Rutas accesibles para votantes
 Route::middleware(['role:votante'])->group(function () {
 
+       Route::post('/comprobante', [PDFController::class, 'comprobante'])->name('comprobante');
+
       Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
 
   Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');

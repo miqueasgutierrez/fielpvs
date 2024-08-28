@@ -72,6 +72,9 @@
 <form id="myForm" action="{{ route('elecciones.votacionfinal') }}" method="POST" enctype="multipart/form-data">
     @csrf
  <input type="hidden" name="iddependencia" value="{{ $nombredependencia->id }}">
+
+ <input type="hidden" name="idambito" value="{{ $ambito->id }}">
+
  <input type="hidden" name="idvotante" value="{{ $idvotante }}">
  <input type="hidden" name="cedula" value="{{ $cedula }}">
 <table class="table table-bordered table-striped dataTable dtr-inline" style="">
@@ -957,7 +960,15 @@ $("#imagen").remove();
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Aquí puedes realizar la acción de guardar
-                        $('#myForm').submit();
+
+                         $('#myForm').submit();
+
+
+                       $('#myForm').attr('action', "{{ route('comprobante') }}").attr('target', '_blank').submit();
+
+
+
+                        
                     }
                 });
             });
