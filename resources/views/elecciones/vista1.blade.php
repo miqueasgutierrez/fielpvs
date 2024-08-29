@@ -38,11 +38,11 @@
 
 <div class="col-sm-12">
 
-  <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
+  <h3 class="font-semibold text-xl text-gray-1200 leading-tight text-center ">
           {{ __('DATOS DEL ELECTOR') }}
        </h3>
 
-       <div class="card-body table-responsive p-0" style="height: 600px;">   <table id="" class="table table-bordered table-striped dataTable dtr-inline">
+         <table id="" class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
         <tr class="bg-gray-800 text-white">
             <th class="sorting sorting_asc text-center fixed-width">CEDULA</th>
@@ -350,7 +350,6 @@ $idDependencia = $dependencia['id'];
   @endif
 </tr>
 </table>
-</div>
 
 
 

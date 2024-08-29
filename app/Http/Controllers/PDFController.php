@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Libraries\FPDF\FPDFWrapper;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\Dependencia;
 
@@ -627,14 +628,8 @@ $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
 
             $pdf->Ln(5);
 
-  
-
-
         }
 
-
-
-        // Mostrar el total de votos para el último cargo
         
     }
 
@@ -1220,6 +1215,11 @@ switch ($idambito) {
         break;
 }
 
+date_default_timezone_set('America/Caracas');
+
+$fecha= now()->format('d-m-Y'); // Fecha en formato YYYY-MM-DD
+$hora = now()->format('h:i A'); 
+
 
 
 
@@ -1228,12 +1228,12 @@ switch ($idambito) {
 
 
  // Crear un nuevo PDF con dimensiones específicas
-    $pdf = new FPDFWrapper('P', 'mm', array(80, 157));
+    $pdf = new FPDFWrapper('P', 'mm', array(80, 170));
     $pdf->SetMargins(4, 10, 4);
     $pdf->AddPage();
 
     // Configurar la fuente y el color del texto
-    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetFont('Arial', 'B', 13);
     $pdf->SetTextColor(0, 0, 0);
 
     // Añadir espacio en blanco
@@ -1249,7 +1249,78 @@ switch ($idambito) {
 
        $pdf->Ln(25);
 
-     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("ELECCIONES: $currentYear ")), 0, 'C', false);
+       $pdf->SetFont('Arial', 'B', 12);
+
+     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper(" $nombredeeleccion: $currentYear ")), 0, 'C', false);
+
+      $pdf->Cell(0,5,iconv("UTF-8", "ISO-8859-1","---------------------------------------------------------"),0,0,'C');
+
+$pdf->Ln(3);
+
+ $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","DEPARTAMENTO:"),0,'C',false);
+
+
+    $pdf->SetFont('Arial', 'B', 11);
+
+ $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1"," $nombredepartamento"),0,'C',false);
+
+  $pdf->SetFont('Arial', 'B', 10);
+
+ $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","FECHA: $fecha  HORA:$hora "),0,'C',false);
+
+
+
+      $pdf->Cell(0,5,iconv("UTF-8", "ISO-8859-1","-------------------------------------------------------------------------"),0,0,'C');
+
+$pdf->Ln(4);
+
+$pdf->SetFont('Arial', 'B', 12);
+      $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","Su Elección:"),0,'C',false);
+
+$pdf->SetFont('Arial', '', 12);
+     $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","Cargos: "),0,'',false);
+
+
+$pdf->Ln(3);
+
+//dd($request);
+
+$cargos = $request->cargo;         // Ejemplo: ["Presidente", "Vicepresidente"]
+$nombres = $request->nombres; // Ejemplo: ["237", "238"]
+$apellidos = $request->apellidos;
+
+
+$contador = 1; 
+
+// Verifica que ambos arrays tengan la misma longitud
+if (count($cargos) == count($nombres)) {
+    // Iteración sobre los cargos y idcandidatos
+    foreach ($cargos as $index => $cargo) {
+        $nombre = Str::title(strtolower($nombres[$index]));
+         $apellido = Str::title(strtolower($apellidos[$index]));
+
+         $cargoM=strtoupper($cargo);
+$pdf->SetFont('Arial', '', 11);
+
+        $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","$contador. $cargoM : $nombre $apellido"),0,'0',false);
+
+    $pdf->Ln(2); 
+
+           $contador++;
+       }
+      
+    
+} else {
+    // Manejo de error si los arrays no tienen la misma longitud
+    echo "Los arrays de cargos e idcandidatos no tienen la misma longitud.";
+}
+
+
+    
+
+ $imagelogofielvs2 = public_path('imagen/fielpvs.png');
+    $pdf->Image($imagelogofielvs2,14, 140, 50, 0, 'PNG');
+
 
     // Añadir más espacio en blanco
     $pdf->Ln(9);
