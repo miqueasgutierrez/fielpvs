@@ -65,7 +65,7 @@
 
 
 <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('Opciones a Votar:') }}
+          {{ __('Opciones de Votación:') }}
        </h3>
 
    @php   
@@ -84,7 +84,7 @@ $id_votante = $elector->id;
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-          {{ __('1-Ambito Nacional:') }}
+          {{ __('1-ÁMBITO NACIONAL:') }}
        </h5>
 
  
@@ -138,7 +138,7 @@ $idDependencia = $dependencia['id'];
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-        2-Ambito Regional:   {{  $infovotante->circuito }}
+        2-ÁMBITO REGIONAL:   {{  $infovotante->circuito }}
        </h5>
 
  
@@ -239,7 +239,7 @@ $idambito2 = 2;
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-        3-Ambito Zonal:   {{  $infovotante->zona }}
+        3-ÁMBITO ZONAL:   {{  $infovotante->zona }}
        </h5>
 
  
@@ -302,7 +302,7 @@ $idDependencia = $dependencia['id'];
 
  <table id="" class="table table-bordered table-striped dataTable dtr-inline">
   <h5 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
-        4-Ambito Local: Iglesia {{  $infovotante->iglesia }}
+        4-ÁMBITO LOCAL: IGLESIA {{  $infovotante->iglesia }}
        </h5>
 
  
