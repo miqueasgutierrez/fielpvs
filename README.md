@@ -1,4 +1,6 @@
-
+     Route::get('/', function () {
+        return redirect()->route('elecciones.vista1');
+    })->name('dashboard');
 
 
 
