@@ -6,7 +6,11 @@ use App\Models\Registro;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
+use App\Models\User;
 
 class RegistrosImport implements ToModel,WithHeadingRow
 {
@@ -66,6 +70,23 @@ class RegistrosImport implements ToModel,WithHeadingRow
             'ministro_ungido' => $row['ministro_ungido'], 
             'fecha_uncion' => $row['fecha_uncion'], 
         ]);
+
+
+     $rolUsuario = Role::firstOrCreate(['name' => 'votante']);
+     $user = new User();
+            $user->name = $row['cedula'];
+
+            // Obtener el año de la fecha de nacimiento
+            $yearOfBirth = Carbon::parse($fecha->format('Y-m-d'))->year;
+
+            // Usar el año como contraseña y encriptarla
+            $user->password = Hash::make($yearOfBirth);
+            $user->save();
+
+            // Asignar el rol al usuario
+            $user->assignRole($rolUsuario);
+
+
     }
 
 

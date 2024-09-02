@@ -284,7 +284,7 @@
                             
                            <div class="grid grid-cols-1">
     <label for="modalSelector">¿Es usted un ministro ungido?</label>
-    <select id="modalSelector" name="ministro_ungido" class="p-2 border rounded" required>
+    <select id="modalSelector" name="ministro_ungido" class="p-2 border rounded" >
       <option value="">Seleccione</option>
       <option value="modal2" {{ $registro->ministro_ungido === 'modal2' ? 'selected' : '' }}>Sí</option>
         <option value="modal3" {{ $registro->ministro_ungido === 'modal3' ? 'selected' : '' }}>No</option>

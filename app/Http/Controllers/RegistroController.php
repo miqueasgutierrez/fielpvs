@@ -6,6 +6,13 @@ use App\Models\Registro;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Carbon\Carbon;
+
+
+
 use App\Models\dependencia_cargo;
 
 use App\Models\Dependencia;
@@ -27,6 +34,8 @@ use App\Models\Iglesia;
 use App\Models\RegistroIglesia;
 
 use App\Models\Ambitodependencias;
+
+use App\Models\User;
 
 
 
@@ -168,7 +177,24 @@ else
 }
 
 
-    
+ $rolUsuario = Role::firstOrCreate(['name' => 'votante']);
+$user = new User();
+            $user->name = $request->cedula;
+
+
+
+        
+
+            // Obtener el año de la fecha de nacimiento
+            $yearOfBirth = Carbon::parse($request->fecha_nacimiento)->year;
+
+            // Usar el año como contraseña y encriptarla
+            $user->password = Hash::make($yearOfBirth);
+            $user->save();
+
+            // Asignar el rol al usuario
+            $user->assignRole($rolUsuario);
+
            return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
 
     }
