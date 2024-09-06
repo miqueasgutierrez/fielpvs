@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-08-2024 a las 20:01:22
+-- Tiempo de generación: 06-09-2024 a las 13:15:52
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -57,6 +57,22 @@ CREATE TABLE `candidatos` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `candidatos`
+--
+
+INSERT INTO `candidatos` (`id`, `id_dependencia_cargos`, `id_candidato`, `created_at`, `updated_at`) VALUES
+(236, 242, 1, '2024-09-03 05:59:07', '2024-09-03 05:59:07'),
+(237, 242, 2, '2024-09-03 05:59:07', '2024-09-03 05:59:07'),
+(238, 242, 3, '2024-09-03 05:59:07', '2024-09-03 05:59:07'),
+(239, 243, 2, '2024-09-03 05:59:29', '2024-09-03 05:59:29'),
+(240, 243, 3, '2024-09-03 05:59:30', '2024-09-03 05:59:30'),
+(241, 243, 4, '2024-09-03 05:59:30', '2024-09-03 05:59:30'),
+(242, 244, 5, '2024-09-03 05:59:51', '2024-09-03 05:59:51'),
+(243, 244, 6, '2024-09-03 05:59:51', '2024-09-03 05:59:51'),
+(245, 306, 1, '2024-09-03 07:52:45', '2024-09-03 07:52:45'),
+(246, 193, 1, '2024-09-05 02:15:19', '2024-09-05 02:15:19');
 
 -- --------------------------------------------------------
 
@@ -147,7 +163,10 @@ CREATE TABLE `categoria_ungidos` (
 --
 
 INSERT INTO `categoria_ungidos` (`id`, `id_registro`, `nombre`, `created_at`, `updated_at`) VALUES
-(133, 1, 'selected', '2024-08-27 22:43:09', '2024-08-27 22:43:09');
+(146, 1, 'selected', '2024-09-05 09:28:45', '2024-09-05 09:28:45'),
+(149, 8, 'selected', '2024-09-05 09:38:03', '2024-09-05 09:38:03'),
+(150, 155, 'selected', '2024-09-05 11:42:55', '2024-09-05 11:42:55'),
+(151, 6, 'ninguna', '2024-09-05 16:25:14', '2024-09-05 16:25:14');
 
 -- --------------------------------------------------------
 
@@ -167,7 +186,6 @@ CREATE TABLE `circuitos` (
 --
 
 INSERT INTO `circuitos` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(3, 'GUARICO SUR', '2024-06-07 16:57:06', '2024-06-12 16:58:36'),
 (5, 'AMAZONAS', '2024-08-27 20:43:23', '2024-08-27 20:43:23');
 
 -- --------------------------------------------------------
@@ -310,9 +328,6 @@ INSERT INTO `dependencia_cargos` (`id`, `id_dependencia`, `id_ambito`, `id_cargo
 (301, 19, 2, 14, NULL, NULL, NULL),
 (328, 19, 4, 14, NULL, NULL, NULL),
 (295, 19, 1, 15, NULL, NULL, NULL),
-(296, 19, 1, 16, NULL, NULL, NULL),
-(302, 19, 2, 16, NULL, NULL, NULL),
-(329, 19, 4, 16, NULL, NULL, NULL),
 (297, 19, 1, 17, NULL, NULL, NULL),
 (292, 19, 1, 34, NULL, NULL, NULL),
 (299, 19, 2, 34, NULL, NULL, NULL),
@@ -395,26 +410,26 @@ CREATE TABLE `estado_dependencias` (
 
 INSERT INTO `estado_dependencias` (`id`, `id_dependencia`, `id_ambito`, `estado`, `created_at`, `updated_at`) VALUES
 (2, 18, 1, '1', '2024-07-20 16:19:21', '2024-07-22 08:28:24'),
-(3, 21, 1, '1', '2024-07-20 21:05:41', '2024-07-25 17:26:59'),
+(3, 21, 1, '1', '2024-07-20 21:05:41', '2024-09-03 11:17:50'),
 (4, 8, 1, '1', '2024-07-25 09:50:06', '2024-07-25 09:50:06'),
 (5, 25, 1, '1', '2024-07-25 09:51:36', '2024-07-25 09:51:36'),
-(6, 14, 1, '1', '2024-07-25 09:52:13', '2024-07-25 09:52:13'),
+(6, 14, 1, '1', '2024-07-25 09:52:13', '2024-09-03 10:28:45'),
 (7, 12, 1, '1', '2024-07-25 09:52:44', '2024-07-25 09:52:44'),
-(8, 19, 1, '1', '2024-07-25 09:53:05', '2024-07-25 09:53:05'),
-(9, 16, 1, '1', '2024-07-25 09:53:39', '2024-07-25 09:53:39'),
-(10, 23, 3, '1', '2024-07-02 12:40:55', '2024-07-03 12:41:02'),
+(8, 19, 1, '1', '2024-07-25 09:53:05', '2024-09-03 07:56:22'),
+(9, 16, 1, '1', '2024-07-25 09:53:39', '2024-09-03 07:55:58'),
+(10, 23, 3, '1', '2024-07-02 12:40:55', '2024-09-03 07:56:02'),
 (11, 25, 4, '1', '2024-07-27 16:51:47', '2024-07-27 17:28:30'),
 (12, 25, 2, '1', '2024-07-29 01:50:59', '2024-07-29 01:50:59'),
-(13, 8, 2, '1', '2024-07-29 01:51:14', '2024-07-29 01:51:14'),
-(14, 14, 2, '1', '2024-07-29 01:51:28', '2024-07-29 01:51:28'),
-(17, 19, 2, '1', '2024-07-29 01:52:11', '2024-07-29 01:52:11'),
+(13, 8, 2, '1', '2024-07-29 01:51:14', '2024-09-03 10:39:16'),
+(14, 14, 2, '1', '2024-07-29 01:51:28', '2024-09-03 10:28:44'),
+(17, 19, 2, '1', '2024-07-29 01:52:11', '2024-09-05 10:01:07'),
 (18, 8, 4, '1', '2024-07-29 02:05:50', '2024-07-29 02:05:50'),
-(19, 14, 4, '1', '2024-07-29 02:06:04', '2024-07-29 02:06:04'),
-(20, 19, 4, '1', '2024-07-29 02:06:19', '2024-07-29 02:06:19'),
+(19, 14, 4, '1', '2024-07-29 02:06:04', '2024-09-03 07:56:26'),
+(20, 19, 4, '1', '2024-07-29 02:06:19', '2024-09-03 07:56:17'),
 (21, 12, 2, '1', '2024-07-29 02:06:46', '2024-07-29 02:06:46'),
 (22, 12, 4, '1', '2024-07-29 07:34:01', '2024-07-29 07:34:01'),
-(23, 27, 2, '1', '2024-07-31 08:32:40', '2024-07-31 08:32:40'),
-(24, 16, 2, '1', '2024-08-14 08:01:41', '2024-08-14 08:01:41');
+(23, 27, 2, '0', '2024-07-31 08:32:40', '2024-09-03 10:43:10'),
+(24, 16, 2, '1', '2024-08-14 08:01:41', '2024-09-03 10:28:54');
 
 -- --------------------------------------------------------
 
@@ -435,6 +450,29 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `historiaelecciones`
+--
+
+CREATE TABLE `historiaelecciones` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_votante` bigint(20) UNSIGNED NOT NULL,
+  `id_candidato` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `historiaelecciones`
+--
+
+INSERT INTO `historiaelecciones` (`id`, `id_votante`, `id_candidato`, `created_at`, `updated_at`) VALUES
+(4, 1, 236, '2024-09-06 00:02:16', '2024-09-06 00:02:16'),
+(5, 1, 239, '2024-09-06 00:02:16', '2024-09-06 00:02:16'),
+(6, 1, 242, '2024-09-06 00:02:16', '2024-09-06 00:02:16');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `iglesias`
 --
 
@@ -451,7 +489,6 @@ CREATE TABLE `iglesias` (
 --
 
 INSERT INTO `iglesias` (`id`, `nombre`, `zona_id`, `created_at`, `updated_at`) VALUES
-(1, 'Lirio los valles', 1, NULL, NULL),
 (5, 'LA NUEVA VIDA', 9, '2024-08-27 20:46:08', '2024-08-27 20:46:08'),
 (6, 'JESUCRISTO AMIGO FIEL II', 9, '2024-08-27 20:54:05', '2024-08-27 20:54:05'),
 (7, 'IMPACTO DE DIOS II', 9, '2024-08-27 20:54:05', '2024-08-27 20:54:05'),
@@ -522,7 +559,10 @@ CREATE TABLE `ministerio` (
 --
 
 INSERT INTO `ministerio` (`id`, `id_registro`, `nombre`, `created_at`, `updated_at`) VALUES
-(197, 1, 'ninguno', '2024-08-27 22:43:09', '2024-08-27 22:43:09');
+(210, 1, 'ninguno', '2024-09-05 09:28:45', '2024-09-05 09:28:45'),
+(213, 8, 'ninguno', '2024-09-05 09:38:02', '2024-09-05 09:38:02'),
+(214, 155, 'PASTOR', '2024-09-05 11:42:55', '2024-09-05 11:42:55'),
+(215, 6, 'ninguno', '2024-09-05 16:25:14', '2024-09-05 16:25:14');
 
 -- --------------------------------------------------------
 
@@ -643,6 +683,21 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (4, 'App\\Models\\User', 116),
 (4, 'App\\Models\\User', 117),
 (4, 'App\\Models\\User', 118),
+(4, 'App\\Models\\User', 121),
+(4, 'App\\Models\\User', 122),
+(4, 'App\\Models\\User', 141),
+(4, 'App\\Models\\User', 142),
+(4, 'App\\Models\\User', 163),
+(4, 'App\\Models\\User', 164),
+(4, 'App\\Models\\User', 169),
+(4, 'App\\Models\\User', 170),
+(4, 'App\\Models\\User', 175),
+(4, 'App\\Models\\User', 176),
+(4, 'App\\Models\\User', 177),
+(4, 'App\\Models\\User', 178),
+(4, 'App\\Models\\User', 181),
+(4, 'App\\Models\\User', 182),
+(4, 'App\\Models\\User', 183),
 (5, 'App\\Models\\User', 46);
 
 -- --------------------------------------------------------
@@ -744,14 +799,14 @@ CREATE TABLE `registros` (
 --
 
 INSERT INTO `registros` (`id`, `cedula`, `nombres`, `apellidos`, `fecha_nacimiento`, `telefono`, `edad`, `genero`, `profesion`, `pastor`, `ministro_ungido`, `imagen`, `direccion`, `estado_civil`, `fecha_uncion`, `created_at`, `updated_at`) VALUES
-(1, '1568826', 'MIROSLABA', 'RODRIGUEZ', '1971-01-02', NULL, '53', 'F', 'AMA DE CASA', 'J0SE SALAS', 'modal2', '20240827174308.jpg', NULL, 'VIUDA', NULL, '2024-08-27 20:52:10', '2024-08-27 22:43:08'),
+(1, '1568826', 'MIROSLABA', 'RODRIGUEZ', '1971-01-02', '123123213', '53', 'masculino', 'AMA DE CASA', 'J0SE SALAS', 'modal2', '20240827174308.jpg', 'Av.jose Olaya 215', 'VIUDA', '1992', '2024-08-27 20:52:10', '2024-09-05 02:52:31'),
 (2, '5360420', 'AURA VIOLETA', 'TENEFFE', '1955-02-03', '0416-4799560', '70', 'F', 'AMA DE CASA', 'BENEDITO MEDINA', 'NO', NULL, NULL, 'SOLTERA', NULL, '2024-08-27 20:52:10', '2024-08-27 20:52:10'),
 (3, '7657934', 'MARIA DILUVINA', 'REBOLLEDO', '1952-09-22', NULL, '70', 'F', 'AMA DE CASA', 'ELVIS ROJAS', 'NO', NULL, NULL, 'CASADA', NULL, '2024-08-27 20:52:10', '2024-08-27 20:52:10'),
 (4, '8912594', 'CARMEN', 'MEDINA', '1968-11-30', '0416-2686503', '55', 'F', NULL, 'J0SE SALAS', 'NO', NULL, NULL, 'VIUDA', NULL, '2024-08-27 20:52:10', '2024-08-27 20:52:10'),
 (5, '8948875', 'CARMEN AIDE', 'REQUENA ARANA', '1967-05-10', NULL, '56', 'F', 'AMA DE CASA', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'CASADA', NULL, '2024-08-27 20:52:10', '2024-08-27 20:52:10'),
-(6, '8949942', 'MIREYA', 'CORTEZ', '1968-02-03', '0426-7770529', '56', 'F', 'AMA DE CASA', 'BENEDITO MEDINA', 'NO', NULL, NULL, 'CASADA', NULL, '2024-08-27 20:52:10', '2024-08-27 20:52:10'),
+(6, '8949942', 'MIREYA', 'CORTEZ', '1968-02-03', '0426-7770529', '56', 'F', 'AMA DE CASA', 'BENEDITO MEDINA', NULL, NULL, NULL, 'casado', '1993', '2024-08-27 20:52:10', '2024-09-05 16:25:13'),
 (7, '10617061', 'LUIS MANUEL', 'GUTIERREZ RODRIGUEZ', '1970-01-21', '0416-6869937', '54', 'M', 'COMERCIANTE', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'CASADO', NULL, '2024-08-27 20:52:10', '2024-08-27 20:52:10'),
-(8, '10663723', 'LUIS RAFAEL', 'JIMENEZ', '1975-08-10', '0426-4604044', '48', 'M', NULL, 'LUIS JIMENEZ', 'SI', NULL, NULL, 'CASADO', '2007', '2024-08-27 20:52:11', '2024-08-27 20:52:11'),
+(8, '10663723', 'LUIS RAFAEL', 'JIMENEZ', '1975-08-10', '0426-4604044', '48', 'M', NULL, 'LUIS JIMENEZ2', 'modal2', NULL, 'sdfdsfsdf', 'casado', '2007', '2024-08-27 20:52:11', '2024-09-05 09:38:02'),
 (9, '10920467', 'DORIS ADINA', 'RANGEL TRUJILLO', '1967-07-19', NULL, '57', 'F', 'COSTURERA', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'CASADA', NULL, '2024-08-27 20:52:11', '2024-08-27 20:52:11'),
 (10, '11759480', 'VILMA YARITZA', 'CAMEJO PINEDA', '1972-07-19', '0416-6869937', '51', 'F', 'COMERCIANTE', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'CASADA', NULL, '2024-08-27 20:52:11', '2024-08-27 20:52:11'),
 (11, '12173342', 'J0SE', 'SALAS', '1968-11-16', '0426-7897288', '54', 'M', 'EMPLEADO', 'J0SE SALAS', 'NO', NULL, NULL, 'CASADO', NULL, '2024-08-27 20:52:11', '2024-08-27 20:52:11'),
@@ -808,7 +863,20 @@ INSERT INTO `registros` (`id`, `cedula`, `nombres`, `apellidos`, `fecha_nacimien
 (62, '32327723', 'GENESIS LAURELIS', 'SALAS', '2006-09-28', '0416-0674034', '17', 'F', 'ESTUDIANTE', 'J0SE SALAS', 'NO', NULL, NULL, 'SOLTERA', NULL, '2024-08-27 20:52:13', '2024-08-27 20:52:13'),
 (63, '32407435', 'EUKARIS D', 'RIVAS CALDERON', '2005-03-11', '0426-4448945', '19', 'F', 'ESTUDIANTE', 'NELSON ROJAS', 'NO', NULL, NULL, 'SOLTERA', NULL, '2024-08-27 20:52:13', '2024-08-27 20:52:13'),
 (64, '32658754', 'GENESIS LAURELIS', 'PARRA PINZON', '2005-11-14', NULL, '18', 'F', 'ESTUDIANTE ', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'SOLTERA', NULL, '2024-08-27 20:52:13', '2024-08-27 20:52:13'),
-(65, '32822237', 'JOSUE', 'GARRIDO ANZOATEGUI ', '2005-05-02', '0426-4109252', '18', 'M', 'ESTUDIANTE', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'SOLTERO', NULL, '2024-08-27 20:52:13', '2024-08-27 20:52:13');
+(65, '32822237', 'JOSUE', 'GARRIDO ANZOATEGUI ', '2005-05-02', '0426-4109252', '18', 'M', 'ESTUDIANTE', 'LUIS JIMENEZ', 'NO', NULL, NULL, 'SOLTERO', NULL, '2024-08-27 20:52:13', '2024-08-27 20:52:13'),
+(98, '119798351', 'NIOWALDO', 'SANCHEZ', '1974-06-25', '4161110016', '50', 'M', 'TECNICO MEDIO PRESERVACION DE GRANOS', 'DOMINGO COTO', 'SI', NULL, NULL, 'CASADO', '2020', '2024-09-03 09:15:43', '2024-09-03 09:15:43'),
+(99, '119747030', 'CARMEN', 'AVILAN', '1974-05-21', '4262391846', '50', 'F', 'TECNICO SUPERIOR CONSTRUCCION CIVIL', 'DOMINGO COTO', 'NO', NULL, NULL, 'CASADO', NULL, '2024-09-03 09:15:43', '2024-09-03 09:15:43'),
+(130, '11979851', 'NIOWALDO', 'SANCHEZ', '1974-06-25', '4161110016', '50', 'M', 'TECNICO MEDIO PRESERVACION DE GRANOS', 'DOMINGO COTO', 'SI', NULL, NULL, 'CASADO', '2020', '2024-09-03 09:39:55', '2024-09-03 09:39:55'),
+(131, '11977030', 'CARMEN', 'AVILAN', '1974-05-21', '4262391846', '50', 'F', 'TECNICO SUPERIOR CONSTRUCCION CIVIL', 'DOMINGO COTO', 'NO', NULL, NULL, 'CASADO', NULL, '2024-09-03 09:39:56', '2024-09-03 09:39:56'),
+(138, '119798551', 'NIOWALDO', 'SANCHEZ', '1974-06-25', '4161110016', '50', 'M', 'TECNICO MEDIO PRESERVACION DE GRANOS', 'DOMINGO COTO', 'SI', NULL, NULL, 'CASADO', '2020', '2024-09-03 09:42:54', '2024-09-03 09:42:54'),
+(139, '119770530', 'CARMEN', 'AVILAN', '1974-05-21', '4262391846', '50', 'F', 'TECNICO SUPERIOR CONSTRUCCION CIVIL', 'DOMINGO COTO', 'NO', NULL, NULL, 'CASADO', NULL, '2024-09-03 09:42:54', '2024-09-03 09:42:54'),
+(146, '1195579851', 'NIOWALDO', 'SANCHEZ', '1974-06-25', '4161110016', '50', 'M', 'TECNICO MEDIO PRESERVACION DE GRANOS', 'DOMINGO COTO', 'SI', NULL, NULL, 'CASADO', '2020', '2024-09-03 09:49:16', '2024-09-03 09:49:16'),
+(147, '1195577030', 'CARMEN', 'AVILAN', '1974-05-21', '4262391846', '50', 'F', 'TECNICO SUPERIOR CONSTRUCCION CIVIL', 'DOMINGO COTO', 'NO', NULL, NULL, 'CASADO', NULL, '2024-09-03 09:49:16', '2024-09-03 09:49:16'),
+(148, '11953579851', 'NIOWALDO', 'SANCHEZ', '1974-06-25', '4161110016', '50', 'M', 'TECNICO MEDIO PRESERVACION DE GRANOS', 'DOMINGO COTO', 'SI', NULL, NULL, 'CASADO', '2020', '2024-09-03 09:49:56', '2024-09-03 09:49:56'),
+(149, '11955477030', 'CARMEN', 'AVILAN', '1974-05-21', '4262391846', '50', 'F', 'TECNICO SUPERIOR CONSTRUCCION CIVIL', 'DOMINGO COTO', 'NO', NULL, NULL, 'CASADO', NULL, '2024-09-03 09:49:56', '2024-09-03 09:49:56'),
+(153, '119555579851', 'NIOWALDO', 'SANCHEZ', '1974-06-25', '4161110016', '50', 'M', 'TECNICO MEDIO PRESERVACION DE GRANOS', 'DOMINGO COTO', 'SI', NULL, NULL, 'CASADO', '2020', '2024-09-03 09:51:20', '2024-09-03 09:51:20'),
+(154, '1197755030', 'CARMEN', 'AVILAN', '1974-05-21', '4262391846', '50', 'F', 'TECNICO SUPERIOR CONSTRUCCION CIVIL', 'DOMINGO COTO', 'NO', NULL, NULL, 'CASADO', NULL, '2024-09-03 09:51:20', '2024-09-03 09:51:20'),
+(155, '7777777', 'juan rios', 'rios', '2024-09-25', '2324324', '21', 'masculino', 'ingeniero', 'Carlos jose', 'modal2', '20240903230605.jpg', 'Centro cr 30 #29-05', 'casado', '1992', '2024-09-04 04:06:05', '2024-09-05 11:42:54');
 
 -- --------------------------------------------------------
 
@@ -829,7 +897,10 @@ CREATE TABLE `registro_dependencia_cargo` (
 --
 
 INSERT INTO `registro_dependencia_cargo` (`id`, `registro_id`, `dependencia_cargos_id`, `created_at`, `updated_at`) VALUES
-(263, 1, 152, '2024-08-27 22:43:09', '2024-08-27 22:43:09');
+(277, 1, 152, '2024-09-05 09:28:44', '2024-09-05 09:28:44'),
+(280, 8, 152, '2024-09-05 09:38:02', '2024-09-05 09:38:02'),
+(281, 155, 205, '2024-09-05 11:42:55', '2024-09-05 11:42:55'),
+(282, 6, 152, '2024-09-05 16:25:13', '2024-09-05 16:25:13');
 
 -- --------------------------------------------------------
 
@@ -857,7 +928,6 @@ INSERT INTO `registro_iglesias` (`id`, `id_registro`, `id_iglesia`, `created_at`
 (163, 47, 5, NULL, NULL),
 (164, 62, 5, NULL, NULL),
 (165, 2, 6, NULL, NULL),
-(166, 6, 6, NULL, NULL),
 (167, 15, 6, NULL, NULL),
 (168, 18, 6, NULL, NULL),
 (169, 44, 6, NULL, NULL),
@@ -868,7 +938,6 @@ INSERT INTO `registro_iglesias` (`id`, `id_registro`, `id_iglesia`, `created_at`
 (174, 46, 7, NULL, NULL),
 (175, 5, 8, NULL, NULL),
 (176, 7, 8, NULL, NULL),
-(177, 8, 8, NULL, NULL),
 (178, 9, 8, NULL, NULL),
 (179, 10, 8, NULL, NULL),
 (180, 13, 8, NULL, NULL),
@@ -914,7 +983,10 @@ INSERT INTO `registro_iglesias` (`id`, `id_registro`, `id_iglesia`, `created_at`
 (220, 50, 14, NULL, NULL),
 (221, 51, 15, NULL, NULL),
 (222, 57, 16, NULL, NULL),
-(225, 1, 5, '2024-08-27 22:43:09', '2024-08-27 22:43:09');
+(238, 1, 5, '2024-09-05 09:28:45', '2024-09-05 09:28:45'),
+(241, 8, 8, '2024-09-05 09:38:02', '2024-09-05 09:38:02'),
+(242, 155, 5, '2024-09-05 11:42:55', '2024-09-05 11:42:55'),
+(243, 6, 6, '2024-09-05 16:25:14', '2024-09-05 16:25:14');
 
 -- --------------------------------------------------------
 
@@ -1006,7 +1078,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'fielpvs@gmail.com', NULL, '$2y$10$ItzKq6WD9joSaaBNj3FfyemDZX4qa7qB8LjQ//yM1AsG7QufqTrwu', NULL, NULL, 'LIlXIQ0BM2CUumUwd9nEiFNjM7PWC5eXrdaF7lDRdxJEHRNGoj2pkKJrxRzD', NULL, NULL, '2024-03-16 18:06:42', '2024-03-16 18:06:42'),
+(1, 'admin', 'fielpvs@gmail.com', NULL, '$2y$10$ItzKq6WD9joSaaBNj3FfyemDZX4qa7qB8LjQ//yM1AsG7QufqTrwu', NULL, NULL, 'i9Izhncw6gnMcDCY2YUscR8D1M2AnYd3V0UjayJiMnmAkZQKCidGQVwar7Ps', NULL, NULL, '2024-03-16 18:06:42', '2024-03-16 18:06:42'),
 (41, '21280756', NULL, NULL, '$2y$10$vffr0ANRdN8acOr/IOIGwORncJBguibNj1uF3wZff4QFicN3dQvAK', NULL, NULL, NULL, NULL, NULL, '2024-07-16 16:13:50', '2024-07-16 16:13:50'),
 (42, '31456587', NULL, NULL, '$2y$10$lYOZu0XGiK93QUK4dXYgJ.k7ZCc46tTfKyRDyHX9NEcFEVE3JTMpq', NULL, NULL, NULL, NULL, NULL, '2024-07-16 16:13:51', '2024-07-16 16:13:51'),
 (43, '22345654', NULL, NULL, '$2y$10$wBDFujAKU8bUfEJ3OreLHOVG4eWjWdkVmhJxhNYo/7X1rU/SuO0k.', NULL, NULL, NULL, NULL, NULL, '2024-07-16 16:13:51', '2024-07-16 16:13:51'),
@@ -1084,7 +1156,22 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `tw
 (115, '32327723', NULL, NULL, '$2y$10$bivOjHVbPCQfDwv3XU1.V.G.1mPPWpNw.8e9r4VCSJE5D8.z.riiG', NULL, NULL, NULL, NULL, NULL, '2024-08-27 20:22:07', '2024-08-27 20:22:07'),
 (116, '32407435', NULL, NULL, '$2y$10$NTpglTY.MFQhSc.CdPqhNOYQRwRbV9GW/DKlWxxPm6e8DvyzkZKdi', NULL, NULL, NULL, NULL, NULL, '2024-08-27 20:22:07', '2024-08-27 20:22:07'),
 (117, '32658754', NULL, NULL, '$2y$10$BPgxCLmrUOvAE5iyCZz/iezWQxGIZl7bX3/k1CUhpHncYM8e6nCDa', NULL, NULL, NULL, NULL, NULL, '2024-08-27 20:22:07', '2024-08-27 20:22:07'),
-(118, '32822237', NULL, NULL, '$2y$10$UAAFWKNkz4VjSNDNzpCIZuOsepwyUxlHTUlHXs4gKJvpUAxdsVRVK', NULL, NULL, NULL, NULL, NULL, '2024-08-27 20:22:08', '2024-08-27 20:22:08');
+(118, '32822237', NULL, NULL, '$2y$10$UAAFWKNkz4VjSNDNzpCIZuOsepwyUxlHTUlHXs4gKJvpUAxdsVRVK', NULL, NULL, NULL, NULL, NULL, '2024-08-27 20:22:08', '2024-08-27 20:22:08'),
+(121, '11979851', NULL, NULL, '$2y$10$uVz2B6ZbUSDqvwpmb2HFfufmcSyLEI6bupVfa5z3BUYEDsorVL0Q6', NULL, NULL, NULL, NULL, NULL, '2024-09-03 08:53:19', '2024-09-03 08:53:19'),
+(122, '11977030', NULL, NULL, '$2y$10$lS7NMlSjdU5qzZCcVbzQBO6Muw7Mrr.dMJuTvGjSriVcB9PLtwHOi', NULL, NULL, NULL, NULL, NULL, '2024-09-03 08:53:19', '2024-09-03 08:53:19'),
+(141, '119798351', NULL, NULL, '$2y$10$EiU.8GB3.7enJl7AdCCrd.eiQZ7P5lPDxXPvcYuiHf1ktnWmZYtEi', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:15:43', '2024-09-03 09:15:43'),
+(142, '119747030', NULL, NULL, '$2y$10$Sqk7UEWshGBsgGUC4.6LbeKtQFfmHUPVAnnBnz0DMKpg/vj35xzQO', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:15:44', '2024-09-03 09:15:44'),
+(163, '11979851', NULL, NULL, '$2y$10$O.NK5twUUrFW/zsyiPfgWuyEuXVxneQWBFV1yko22MqfKqGmBWw46', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:39:56', '2024-09-03 09:39:56'),
+(164, '11977030', NULL, NULL, '$2y$10$lWiv.5qUB9lgPpDGqu4T6uRjMIj5lG.5D.WH6iFsN875uR5lSnxje', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:39:56', '2024-09-03 09:39:56'),
+(169, '119798551', NULL, NULL, '$2y$10$JixNyfPG3czM7PGTiONMkOXsdxo2wIXZnYkqJZgCWPCpC6hqnXrXO', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:42:54', '2024-09-03 09:42:54'),
+(170, '119770530', NULL, NULL, '$2y$10$lCnYMFk9UWZFyFg0MN.AHORe0rTYFveDSM89pbPFdtnKJG81RQhhO', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:42:54', '2024-09-03 09:42:54'),
+(175, '1195579851', NULL, NULL, '$2y$10$b7hf4n8YXJURSojfKFmz8.bRq.nXX46LZz.U4i9ydfNCJ5fLrXhT.', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:49:16', '2024-09-03 09:49:16'),
+(176, '1195577030', NULL, NULL, '$2y$10$0q0y6Z7yGxQQSeAb5SDuGe5TjjyoUJtwFcy1pKr8FlfSn.eTqJA6y', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:49:17', '2024-09-03 09:49:17'),
+(177, '11953579851', NULL, NULL, '$2y$10$FLNDiqHg1cX1njhzZCDb/uVAQoouPX4JflwiOkphG7aIlEngoa3qi', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:49:56', '2024-09-03 09:49:56'),
+(178, '11955477030', NULL, NULL, '$2y$10$Jg9rYuHQc3tyhUVozj99MuGwEocmqAml7tQLa9QNSewCjZkAHoHbu', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:49:57', '2024-09-03 09:49:57'),
+(181, '119555579851', NULL, NULL, '$2y$10$9/l6IO8tqoaoR2hVw5yoxOox9nlfJ6Ltbt/KZdo6qGew0poEXBK/O', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:51:20', '2024-09-03 09:51:20'),
+(182, '1197755030', NULL, NULL, '$2y$10$HiOf85CGddR459J8mREUnumZ.WVaGFhGdVT6O6b4j1Ci6cXw9KHXC', NULL, NULL, NULL, NULL, NULL, '2024-09-03 09:51:21', '2024-09-03 09:51:21'),
+(183, '7777777', NULL, NULL, '$2y$10$WibCPAFhDE7GmcDJ/Vilf.q/CkEpLyfFKlcxBWru0Yl1auIcMIEjq', NULL, NULL, NULL, NULL, NULL, '2024-09-04 04:06:06', '2024-09-04 04:06:06');
 
 -- --------------------------------------------------------
 
@@ -1105,7 +1192,6 @@ CREATE TABLE `zonas` (
 --
 
 INSERT INTO `zonas` (`id`, `nombre`, `circuito_id`, `created_at`, `updated_at`) VALUES
-(1, '1', 3, NULL, NULL),
 (9, '1', 5, '2024-08-27 20:45:37', '2024-08-27 20:45:37');
 
 --
@@ -1192,6 +1278,12 @@ ALTER TABLE `estado_dependencias`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indices de la tabla `historiaelecciones`
+--
+ALTER TABLE `historiaelecciones`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `iglesias`
@@ -1327,7 +1419,7 @@ ALTER TABLE `ambitos_dependencias`
 -- AUTO_INCREMENT de la tabla `candidatos`
 --
 ALTER TABLE `candidatos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=236;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 
 --
 -- AUTO_INCREMENT de la tabla `cargos`
@@ -1339,13 +1431,13 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `categoria_ungidos`
 --
 ALTER TABLE `categoria_ungidos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT de la tabla `circuitos`
 --
 ALTER TABLE `circuitos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `dependencias`
@@ -1363,7 +1455,7 @@ ALTER TABLE `dependencia_cargos`
 -- AUTO_INCREMENT de la tabla `elecciones`
 --
 ALTER TABLE `elecciones`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=527;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_dependencias`
@@ -1378,10 +1470,16 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `historiaelecciones`
+--
+ALTER TABLE `historiaelecciones`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `iglesias`
 --
 ALTER TABLE `iglesias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -1393,7 +1491,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `ministerio`
 --
 ALTER TABLE `ministerio`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 
 --
 -- AUTO_INCREMENT de la tabla `permissions`
@@ -1417,19 +1515,19 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_dependencia_cargo`
 --
 ALTER TABLE `registro_dependencia_cargo`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=283;
 
 --
 -- AUTO_INCREMENT de la tabla `registro_iglesias`
 --
 ALTER TABLE `registro_iglesias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=244;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1441,13 +1539,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT de la tabla `zonas`
 --
 ALTER TABLE `zonas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
