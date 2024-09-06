@@ -311,13 +311,15 @@
                         
                         <div class="grid grid-cols-1">
                             <label for="exampleInputEmail1">CIRCUITO:</label>
-                              <select name="circuito" id="circuito" class="form-control" >
-                            <option value="">Seleccione un circuito</option>
-
-                           
+                              <select name="circuito" id="circuito" class="form-control" >  
 
                             @foreach($circuitos as $circuito)
-                                <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
+
+                              
+                               <option value="{{ $circuito->id }}" {{ $circuito->id == $circuito2->id ? 'selected' : '' }}>
+                {{ $circuito->nombre }}
+            </option>
+
                             @endforeach
                         </select>
 

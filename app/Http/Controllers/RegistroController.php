@@ -50,11 +50,8 @@ class RegistroController extends Controller
 
     {
          
-
-
         $registros = Registro::paginate(5000);
          return view('registros.index', compact('registros'));
-
     }
 
     /**
@@ -90,7 +87,6 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-
 
         $request->validate([
             'cedula' => 'required|unique:registros' ,'nombres' => 'required', 'apellidos' => 'required', 'imagen' => 'image|mimes:jpeg,png,svg|max:1024','fecha_nacimiento' => 'required','telefono' => 'required','edad' => 'required','genero' => 'required','profesion' => 'required','pastor' => 'required','direccion' => 'required','estado_civil' => 'required','fecha_uncion' => 'nullable','ministro_ungido' => 'nullable'
@@ -272,7 +268,7 @@ if ($registroIglesia) {
     if ($iglesia) {
          $zona= $registro->registroIglesias->first()->iglesia->first()->zona ?? null;
         if ($zona) {
-           $circuito= $registro->registroIglesias->first()->iglesia->first()->zona->first()->circuito ?? null;
+           $circuito2= $registro->registroIglesias->first()->iglesia->first()->zona->first()->circuito ?? null;
         } else {
             $circuito = null;
         }
@@ -285,6 +281,7 @@ if ($registroIglesia) {
     $zona = null;
     $circuito = null;
 }
+
 
 
       $selectedMinisterios = $ministerios->pluck('nombre')->toArray();
@@ -303,7 +300,7 @@ if ($registroIglesia) {
 
              $dependencias = Dependencia::paginate(1000);
 
-    return view('registros.editar', compact('registro', 'selectedMinisterios','cargosDependencias','registroDependenciaCargos','dependencias','iglesia','circuitos','zona','circuito','categoriaungido'));
+    return view('registros.editar', compact('registro', 'selectedMinisterios','cargosDependencias','registroDependenciaCargos','dependencias','iglesia','circuitos','zona','circuito2','categoriaungido'));
     }
 
 

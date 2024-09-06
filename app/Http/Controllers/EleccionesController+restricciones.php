@@ -16,7 +16,6 @@ use App\Models\RegistroIglesia;
 use App\Models\dependencia_cargo;
 use App\Models\Ambitodependencias;
 use App\Models\Elecciones;
-use App\Models\HistoriaElecciones;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -181,9 +180,81 @@ class EleccionesController extends Controller
     {
 
 
-    
-            $this->dependenciasrestriccion1nacional();
+
+
+
+    // RESTRICCION AMBITO NACIONAL
         
+
+ ////////// RESTRICCION 1 //////////
+
+
+        $restriccionnacional1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
+
+        $resultadorestriccionnacional1 = DB::select($restriccionnacional1, [$idcedula]);
+
+
+ ////////// RESTRICCION 2 //////////
+
+$restriccionnacional2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida" OR m.nombre="Obrero Pastor" )';
+
+$resultadorestriccionnacional2 = DB::select($restriccionnacional2, [$idcedula]);
+
+
+ ////////// RESTRICCION 3  //////////
+
+$restriccionnacional3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) nacional" )';
+
+$resultadorestriccionnacional3 = DB::select($restriccionnacional3, [$idcedula]);
+
+
+////////// RESTRICCION 4  //////////
+
+$restriccionnacional4 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Docente Titular" )';
+
+$resultadorestriccionnacional4 = DB::select($restriccionnacional4, [$idcedula]);
+
+
+
+
+ ////////// RESTRICCION 1 //////////
+        if ($resultadorestriccionnacional1) {
+            $this->dependenciasrestriccion1nacional();
+        }
+
+        else { 
+
+            ////////// RESTRICCION 2 //////////
+
+        if($resultadorestriccionnacional2) {
+
+            $this->dependenciasrestriccion2nacional();
+
+             }
+
+             else {
+
+                if($resultadorestriccionnacional3) {
+
+                $this->dependenciasrestriccion3nacional();
+
+             }  
+
+             else {
+
+
+                if($resultadorestriccionnacional4) {
+
+                $this->dependenciasrestriccion4nacional();
+
+             }  
+
+
+             }
+
+             }
+         }
+         
     }
 
 
@@ -361,11 +432,71 @@ protected function dependenciasrestriccion4nacional()
     protected function restriccionesregionales($idcedula)
     {
         
-      
+        $restriccionregional1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
 
-        
+        $resultadorestriccionregional1 = DB::select($restriccionregional1, [$idcedula]);
+
+        $restriccionregional2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida" OR m.nombre="Obrero Pastor" )';
+
+        $resultadorestriccionregional2 = DB::select($restriccionregional2, [$idcedula]);
+
+
+         ////////// RESTRICCION 3  //////////
+
+$restriccionregional3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) de circuito" OR m.nombre="Predicador (a) nacional" )';
+
+$resultadorestriccionregional3 = DB::select($restriccionregional3, [$idcedula]);
+
+
+
+////////// RESTRICCION 4  //////////
+
+$restriccionregional4 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Docente Titular" )';
+
+$resultadorestriccionregional4 = DB::select($restriccionregional4, [$idcedula]);
+
+
+        if ($resultadorestriccionregional1) {
             $this->mostrartodaslasdependenciasambitoregional();
-       
+        }
+
+        else { 
+
+        if($resultadorestriccionregional2) {
+
+            $this->dependenciasrestriccion2regional();
+
+
+             }
+
+             else
+                 {
+
+                    if($resultadorestriccionregional3) {
+
+                $this->dependenciasrestriccion3regional();
+
+
+                     }
+
+                     else {
+
+                        if($resultadorestriccionregional4) {
+
+
+
+                       $this->dependenciasrestriccion4regional();
+
+
+                     }
+
+
+                     }
+
+
+                 }
+
+         }
 
     }
 
@@ -541,9 +672,44 @@ protected function dependenciasrestriccion4regional()
 
     protected function restriccioneszonales($idcedula)
     {
-     
+        $restriccionzonal1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
+
+        $resultadorestriccionzonal1 = DB::select($restriccionzonal1, [$idcedula]);
+
+        $restriccionzonal2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida" )';
+
+        $resultadorestriccionzonal2 = DB::select($restriccionzonal2, [$idcedula]);
+
+
+        $restriccionzonal3 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre="Predicador (a) nacional" )';
+
+        $resultadorestriccionzonal3 = DB::select($restriccionzonal3, [$idcedula]);
+ 
+
+        if ($resultadorestriccionzonal1) {
             $this->mostrartodaslasdependenciasambitozonal();
-       
+        }
+
+        else { 
+
+        if($resultadorestriccionzonal2) {
+
+            $this->dependenciaszonalesrestriccion2();
+
+
+             }
+
+             else { 
+
+        if($resultadorestriccionzonal3) {
+
+            $this->dependenciaszonalesrestriccion3();
+
+
+             }
+
+         }
+    }
 
      }
 
@@ -689,12 +855,34 @@ protected function dependenciaszonalesrestriccion2()
 
   protected function restriccioneslocales($idcedula)
 {
-    
+    // RESTRICCION AMBITO NACIONAL 1 PRESBITEROS VICEPRESBITEROS ANCIANOS NACIONALES
+     $restriccionlocal1 = 'SELECT * FROM registros r INNER JOIN registro_dependencia_cargo rdc ON r.id = rdc.registro_id INNER JOIN dependencia_cargos dc ON dc.id = rdc.dependencia_cargos_id INNER JOIN dependencias d ON dc.id_dependencia=d.id INNER JOIN cargos c ON dc.id_cargo = c.id INNER JOIN categoria_ungidos cu ON cu.id_registro = r.id WHERE r.cedula = ? AND (c.nombre = "Presbítero" OR c.nombre = "Vice-presbítero" OR cu.nombre = "ANCIANO NACIONAL" OR cu.nombre = "ANCIANO REGIONAL" OR d.nombre="DIRECTIVA NACIONAL DE LA FIELPVS" )';
+
+    $resultadorestriccionlocal1 = DB::select($restriccionlocal1, [$idcedula]);
+
+
+     $restriccionlocal2 = 'SELECT * FROM registros r INNER JOIN ministerio m ON m.id_registro = r.id WHERE r.cedula = ? AND (m.nombre = "PASTOR" OR m.nombre = "EVANGELISTA" OR m.nombre = "PASTOR MISIONERO" OR m.nombre = "MAESTROS" OR m.nombre="Misionera Reconocida")';
+
+        $resultadorestriccionlocal2 = DB::select($restriccionlocal2, [$idcedula]);
 
  $this->mostrartodaslasdependenciasambitolocal();
  
 
- 
+    if ($resultadorestriccionlocal1) {
+        $this->mostrartodaslasdependenciasambitolocal();
+    }
+
+
+        else { 
+
+        if($resultadorestriccionlocal2) {
+
+            $this->dependenciaslocalesesrestriccion2();
+
+
+             }
+
+         }
 }
 
 
@@ -1500,46 +1688,4 @@ $dependencia = DB::select($sql, [$currentYear, $iddependencia, $idambito]);
     {
         //
     }
-
-
-    public function reiniciar()
-{
-    // Lógica para reiniciar el proceso electoral
-    // Ejemplo: Vaciar las tablas o restaurar el estado inicial
-    // Obtener todos los registros de la tabla elecciones
-    $elecciones = Elecciones::all();
-
-    // Iniciar una transacción para asegurar que la operación sea atómica
-    DB::transaction(function () use ($elecciones) {
-        foreach ($elecciones as $eleccion) {
-            // Crear un nuevo registro en la tabla historiaelecciones
-            HistoriaElecciones::create([
-                'id' => $eleccion->id,
-                'id_votante' => $eleccion->id_votante,
-                'id_candidato' => $eleccion->id_candidato,
-                'created_at' => $eleccion->created_at,
-                'updated_at' => $eleccion->updated_at,
-            ]);
-
-            // Eliminar el registro de la tabla elecciones
-            $eleccion->delete();
-        }
-    });
-
-    return redirect()->back()->with('success', 'Datos reiniciados');
-
-
-
-}
-
-
-public function eliminar()
-{
-    // Lógica para reiniciar el proceso electoral
-    // Ejemplo: Vaciar las tablas o restaurar el estado inicial
-    DB::table('elecciones')->truncate();
-    
-    return redirect()->back()->with('success', 'El proceso electoral ha sido colocado en 0.');
-}
-
 }

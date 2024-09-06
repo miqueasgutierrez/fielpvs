@@ -4,6 +4,20 @@
 
 
 
+<script src="{{ asset('js/app.js') }}"></script>
+
+         <script src="{{ asset('js/app2.js') }}"></script>
+  
+           <script src="{{ asset('js/weetalert.js') }}"></script>
+
+
+   <script src="{{ asset('js/dataTables.js') }}"></script>
+
+
+
+
+
+
 
 $iddependencia = $request->input('iddependencia');
     $idambito = $request->input('idambito');

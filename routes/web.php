@@ -69,6 +69,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Rutas accesibles solo para administradores
     Route::middleware(['role:admin'])->group(function () {
+
+
+Route::get('/reiniciar-elecciones', [EleccionesController::class, 'reiniciar'])->name('elecciones.reiniciar');
+
+Route::get('/eliminar-elecciones', [EleccionesController::class, 'eliminar'])->name('elecciones.eliminar');
+
+
         Route::get('/estado_dependencias/{iddependencia}/{estado}', [EstadoDependenciaController::class, 'update'])->name('update');
         Route::resource('/registros', RegistroController::class);
         Route::resource('/dependencias', DependenciaController::class);

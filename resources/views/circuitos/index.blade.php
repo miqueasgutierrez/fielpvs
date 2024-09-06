@@ -72,7 +72,7 @@
           event.preventDefault()
           event.stopPropagation()        
           Swal.fire({
-                title: '¿Confirma la eliminación de la dependencia?',        
+                title: '¿Confirma la eliminación del circuito?',        
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonColor: '#20c997',

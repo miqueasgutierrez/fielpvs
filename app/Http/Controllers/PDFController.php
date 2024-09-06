@@ -15,6 +15,8 @@ use App\Models\Iglesia;
 
 use App\Models\dependencia_cargo;
 use App\Models\Ambitodependencias;
+use App\Models\HistoriaElecciones;
+
 use App\Models\Elecciones;
 use Illuminate\Support\Facades\DB;
 
@@ -271,7 +273,7 @@ public function resultadonacional(Request $request)
         INNER JOIN 
             registros r ON r.id = ca.id_candidato
         LEFT JOIN 
-            elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
+            historiaelecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
         WHERE 
         YEAR(ca.created_at) = ?
            AND d.id = ?
@@ -500,7 +502,7 @@ $nombre = isset($nombrecircuito[0]) ? $nombrecircuito[0]->nombre : null;
         INNER JOIN zonas z ON z.id= i.zona_id 
         INNER JOIN circuitos ci ON ci.id=z.circuito_id 
         LEFT JOIN 
-            elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
+            historiaelecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
         WHERE 
             YEAR(ca.created_at) = ?
             AND d.id = ?
@@ -739,7 +741,7 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
         INNER JOIN zonas z ON z.id= i.zona_id 
         INNER JOIN circuitos ci ON ci.id=z.circuito_id 
         LEFT JOIN 
-            elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
+            historiaelecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
         WHERE 
             d.id = ?
             AND ad.id = ?
@@ -988,7 +990,7 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
         INNER JOIN zonas z ON z.id= i.zona_id 
         INNER JOIN circuitos ci ON ci.id=z.circuito_id 
         LEFT JOIN 
-            elecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
+            historiaelecciones e ON e.id_candidato = ca.id AND YEAR(e.created_at) = ?
         WHERE 
             YEAR(ca.created_at) = ?
             AND  d.id = ?
@@ -1228,7 +1230,7 @@ $hora = now()->format('h:i A');
 
 
  // Crear un nuevo PDF con dimensiones específicas
-    $pdf = new FPDFWrapper('P', 'mm', array(80, 170));
+    $pdf = new FPDFWrapper('P', 'mm', array(80, 185));
     $pdf->SetMargins(4, 10, 4);
     $pdf->AddPage();
 
@@ -1296,13 +1298,15 @@ $contador = 1;
 if (count($cargos) == count($nombres)) {
     // Iteración sobre los cargos y idcandidatos
     foreach ($cargos as $index => $cargo) {
-        $nombre = Str::title(strtolower($nombres[$index]));
-         $apellido = Str::title(strtolower($apellidos[$index]));
+        $primerNombre = Str::title(strtolower(explode(' ', $nombres[$index])[0]));
+        
+        // Divide el apellido completo en partes y toma el primer apellido
+        $primerApellido = Str::title(strtolower(explode(' ', $apellidos[$index])[0]));
 
          $cargoM=strtoupper($cargo);
 $pdf->SetFont('Arial', '', 11);
 
-        $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","$contador. $cargoM : $nombre $apellido"),0,'0',false);
+        $pdf->MultiCell(0,5,iconv("UTF-8", "ISO-8859-1","$contador. $cargoM : $primerNombre $primerApellido"),0,'0',false);
 
     $pdf->Ln(2); 
 
@@ -1319,7 +1323,7 @@ $pdf->SetFont('Arial', '', 11);
     
 
  $imagelogofielvs2 = public_path('imagen/fielpvs.png');
-    $pdf->Image($imagelogofielvs2,14, 140, 50, 0, 'PNG');
+    $pdf->Image($imagelogofielvs2,14, 150, 50, 0, 'PNG');
 
 
     // Añadir más espacio en blanco

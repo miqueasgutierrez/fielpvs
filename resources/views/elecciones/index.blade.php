@@ -38,6 +38,22 @@
 
    <br>
 
+        <br>
+<br>
+<br>
+
+        
+     
+       
+
+<button class="btn-reiniciar" onclick="confirmReinicio()"> 
+     <i class="fa fa-sync fa-5x" aria-hidden="true"></i> Finaliza y guardar Procesos Electorales
+</button>
+
+<button class="btn-reiniciar" onclick="eliminarproceso()"> 
+     <i class="fa fa-trash fa-5x" aria-hidden="true"></i>Eliminar resultados de Proceso Electoral
+</button>
+
 <div class="col-sm-12">
 
   <h3 class="font-semibold text-xl text-gray-800 leading-tight text-center ">
@@ -285,6 +301,21 @@
 <script>
 
 
+    function confirmReinicio() {
+   if (confirm("¿Estás seguro de que deseas reiniciar el proceso electoral? Esta acción restablecerá los resultados a cero 0,pero guardara copia de los resultados para el reporte, pero no afectará a los candidatos.")) {
+        window.location.href = "{{ route('elecciones.reiniciar') }}"; // Laravel route para reiniciar el proceso
+    }
+}
+
+
+ function eliminarproceso() {
+   if (confirm("¿Estás seguro de que deseas reiniciar el proceso electoral? Esta acción restablecerá los resultados a cero 0. pero no afectara a los candidatos")) {
+        window.location.href = "{{ route('elecciones.eliminar') }}"; // Laravel route para reiniciar el proceso
+    }
+}
+
+
+
 function updateButtonContent(button) {
     var status = button.data('status');
 
@@ -360,8 +391,15 @@ $(document).ready(function() {
 
 <script >
     
-    new DataTable('#elecciones');
-
+    $(document).ready(function() {
+        new DataTable('#elecciones', {
+            "paging": false, // Desactiva la paginación
+            "info": false, // Desactiva la información sobre el número de entradas
+            "searching": false, // Desactiva la barra de búsqueda
+            "ordering": false, // Desactiva el ordenamiento
+            "pageLength": -1 // Muestra todas las filas
+        });
+    });
 
 
 </script>
