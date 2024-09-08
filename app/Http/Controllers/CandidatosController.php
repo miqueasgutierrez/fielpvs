@@ -8,6 +8,8 @@ use App\Models\Dependencia;
 use App\Models\Registro;
 use App\Models\Candidatos;
 use App\Models\EstadoDependencia;
+use Illuminate\Support\Facades\DB;
+use App\Models\Ambitodependencias;
 
 use Illuminate\Http\Request;
 
@@ -43,9 +45,11 @@ class CandidatosController extends Controller
     {
       $dependencias = Dependencia::orderBy('orden', 'asc')->get();
 
+                 $ambitosdependencias =Ambitodependencias::paginate(1000);
+
          $registros = Registro::paginate(1000);
 
-        return view('candidatos.crear', compact('dependencias','registros'));
+        return view('candidatos.crear', compact('dependencias','registros','ambitosdependencias'));
     }
 
     /**
@@ -177,5 +181,54 @@ $cargos = dependencia_cargo::where('id_dependencia', $dependeciaId)
 
     }
 
+
+     public function agregarcandidatos(Request $request)    
+    {
+ 
+  $registros = Registro::paginate(5000);
+
+  $iddependencia = $request->input('id_dependencia');
+  $idambito = $request->input('idambito');
+
+  $sqldependencia = "
+    SELECT id, nombre, descripcion_local, descripcion_regional FROM dependencias WHERE id=? 
+";
+
+  $nombredependencia = DB::selectOne($sqldependencia, [$iddependencia]);
+
+
+
+
+   $consulta1 = 'SELECT dc.id as iddependenciacargo,dc.id, c.nombre FROM ambitos_dependencias ad INNER JOIN dependencia_cargos dc ON ad.id = dc.id_ambito INNER JOIN dependencias d ON dc.id_dependencia = d.id INNER JOIN cargos c ON c.id = dc.id_cargo WHERE d.id=? AND ad.id=? ORDER BY c.orden ASC ';
+
+    $cargos= DB::select($consulta1, [$iddependencia, $idambito]);
+
+
+
+    switch ($idambito) {
+        case 1:
+            $nombredepartamento = $nombredependencia->nombre;
+            break;
+
+        case 2:
+            $nombredepartamento = $nombredependencia->descripcion_regional;
+            break;
+
+        case 3:
+            $nombredepartamento = $nombredependencia->nombre;
+            break;
+
+        case 4:
+            $nombredepartamento = $nombredependencia->descripcion_local;
+            break;
+
+        default:
+            $nombredepartamento = 'No applicable ámbito';
+            break;
+    }
+
+    return view('candidatos.cargarcandidatos', compact('nombredepartamento', 'cargos','registros','idambito'));
+
+    }
 
 }

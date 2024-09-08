@@ -86,7 +86,20 @@ Route::get('/eliminar-elecciones', [EleccionesController::class, 'eliminar'])->n
         Route::post('zonas/storeMultiple', [ZonaController::class, 'storeMultiple'])->name('zonas.storeMultiple');
         Route::resource('/circuitos', CircuitoController::class);
         Route::resource('/candidatos', CandidatosController::class);
+
+
         Route::post('candidatos/storeMultiple', [CandidatosController::class, 'storeMultiple'])->name('candidatos.storeMultiple');
+
+
+          Route::post('candidatos/cargar', [CandidatosController::class, 'cargarcandidatos'])->name('candidatos.cargarcandidatos');
+
+
+
+
+
+        Route::post('candidatos/agregar', [CandidatosController::class, 'agregarcandidatos'])->name('candidatos.agregarcandidatos');
+
+
         Route::resource('/iglesias', IglesiaController::class);
         Route::post('iglesias/storeMultiple', [IglesiaController::class, 'storeMultiple'])->name('iglesias.storeMultiple');
         Route::get('/resultados/nacionales', [ResultadosController::class, 'nacionales'])->name('resultados.nacionales');

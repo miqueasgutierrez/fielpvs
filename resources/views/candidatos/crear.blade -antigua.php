@@ -32,7 +32,7 @@
             </div>
 			<div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
-				<form method="POST" action="{{ route('candidatos.agregarcandidatos') }}">
+				<form method="POST" action="{{ route('candidatos.store') }}">
     @csrf
 
     <div class="form-group">
@@ -46,16 +46,40 @@
     </div>
 
     <div class="form-group">
-        <label for="dependencia">Ambitos:</label>
-        <select name="idambito" id="ambito" class="form-control">
-            @foreach($ambitosdependencias as $ambitos)
-                <option value="{{ $ambitos->id }}">{{ $ambitos->nombre }}</option>
-            @endforeach
+        <label for="cargo">Cargo:</label>
+        <select name="id_cargo" id="cargo" class="form-control">
+
+             <option value="">Seleccione un cargo</option>
         </select>
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Agregar Candidatos</button>
+    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+     <a data-toggle="modal" href="#myModal">
+       <button id="btnAgregarArt" type="button" class="btn btn-primary"><span class="fa fa-plus"></span>Agregar Candidatos</button>
+     </a>
+    </div>
+
+
+    <div class="form-group col-lg-12 col-md-12 col-xs-12">
+     <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
+       <thead style="background-color:#A9D0F5">
+        <th>Opciones</th>
+        <th>Cedula</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Perfil</th>
+    
+       </thead>
+       
+       <tbody>
+         
+       </tbody>
+     </table>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 
 			</div>
@@ -172,15 +196,16 @@ var detalles = 0; //
     if (id!="") {
 
      
-        var fila='<tr class="filas" id="fila'+cont+'">'+
-        '<td><button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button></td>'+
-        '<td><input type="hidden" name="idcandidato[]" value="'+id+'">'+cedula+'</td>'+
-        '<td>'+nombres+'</td>">'+
-        '<td>'+apellidos+'</td>">'+
-        '<td class="px-4 py-2 text-center">' +
-    '<img src="../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
-    '</td>'+
+        vvar fila = '<tr class="filas" id="fila' + cont + '">' +
+            '<td><img src="../../../../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen"></td>' +
+            '<td><p>' + nombres + ' ' + apellidos + '</p></td>' +
+            '<input type="hidden" name="idcandidato[]" value="' + id + '">' +
+            '<input type="hidden" name="nombres[]" value="' + nombres + '">' +
+            '<input type="hidden" name="apellidos[]" value="' + apellidos + '">' +
+            '<input type="hidden" name="cargo[]" value="' + cargo + '">' +
+            '<td><button type="button" class="btn btn-danger" onclick="eliminarcargo11('+cont+')">X</button></td>' +
         '</tr>';
+        
         cont++;
         detalles++;
         $('#detalles').append(fila);
