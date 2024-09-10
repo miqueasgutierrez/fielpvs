@@ -280,6 +280,7 @@ if ($registroIglesia) {
     $iglesia = null;
     $zona = null;
     $circuito = null;
+     $circuito2 = null;
 }
 
 

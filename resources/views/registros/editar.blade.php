@@ -313,6 +313,9 @@
                             <label for="exampleInputEmail1">CIRCUITO:</label>
                               <select name="circuito" id="circuito" class="form-control" >  
 
+
+@if($circuitos && $circuito2)
+
                             @foreach($circuitos as $circuito)
 
                               
@@ -321,6 +324,17 @@
             </option>
 
                             @endforeach
+
+                            @else
+               
+               <option value="">Seleccione</option>
+
+                @foreach($circuitos as $circuito)
+                    <option value="{{ $circuito->id }}">{{ $circuito->nombre }}</option>
+                @endforeach
+           
+
+                            @endif
                         </select>
 
                              @error('circuito')
