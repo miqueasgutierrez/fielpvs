@@ -43,12 +43,8 @@
             justify-content: center;
            
 }
-.form-check-input {
-            width: 1.5em;
-            height: 1.5em;
-        }
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
+
 </style>
     <x-app-layout>
 
@@ -62,18 +58,35 @@
                         {{Session::get('success')}}
                     </div>
                 @endif   
+</div>
 
+<div class="row">
+    <div class="col-md-4">
             </div>
 
-            <h3 class="font-semibold text-xl text-gray-1200 leading-tight text-center ">
+
+<div class="col-md-4">
+
+    <h3 class="font-semibold text-xl text-gray-1200 leading-tight text-center ">
 
           {{  $nombredepartamento }}
        </h3>
-
+</div>
             
+<div class="col-md-4">
+
+    
+
+
+</div>
+</div>
+<br>
+<br>      
 
 <div class="col-sm-12">
   <table id="candidatos" class="table table-bordered table-striped dataTable dtr-inline">
+
+    
     <thead>
       <tr class="bg-gray-800 text-white">
               @foreach ($cargos as $cargo)
@@ -88,40 +101,42 @@
     <tbody>
       <tr>
 
-        
+    
  @foreach ($cargos as $cargo)
 
 
-   
+
             <td class="px-4 py-2 text-center centrar-imagen">
          <a data-toggle="modal" href="#myModal{{ $cargo->iddependenciacargo }}">
        <button id="btnAgregarArt()" type="button" class="btn btn-primary"><span class="fa fa-plus"></span>Agregar Candidatos</button>
      </a>
-        
+       
+
+      
+
 <div   id="cargo{{ $cargo->iddependenciacargo }}"  class="inner small-box bg-info fixed-width centrar-imagen">
 
-          
+
+
 
 </div>
+
+
+
         </td>
            @endforeach
         <td class="px-4 py-2">
           <div class="flex justify-center space-x-2">
             <!-- botón editar -->
         
-        
             <!-- botón borrar -->
-            <form action="" method="POST" class="formEliminar">
-              @csrf
-              @method('DELETE')
-              
-            </form>
       
         </td>
       </tr>
     
     </tbody>
   </table>
+
 
 
 
@@ -158,9 +173,8 @@
           <div class="flex justify-center space-x-2">
             <!-- botón editar -->
         
-         
-              @csrf
-              @method('DELETE')
+       
+    
           <button type="button" class="btn btn-primary" 
         onclick="agregarCandidato(
           '{{ $cargo->iddependenciacargo }}',
@@ -190,38 +204,29 @@
     </div>
   </div>
 
+
     @endforeach
+
+<form method="POST" action="{{ route('candidatos.store') }}">
+        @csrf
+      
+
+<button type="submit"  class="btn btn-primary">
+        <i class="fa fa-download fa-4x" aria-hidden="true"></i>
+        <p>Guardar Candidatos</p>
+    </button>
+
+      <input type="hidden" name="iddependencia" value="{{ $nombredependencia->id }}"> 
+
+    <div id="candidatosSeleccionados" style="display:none;" ></div> 
+
+
+</form>
 
 </x-app-layout>
 
-<script>
 
-    (function () {
-  'use strict'
-  //debemos crear la clase formEliminar dentro del form del boton borrar
-  //recordar que cada registro a eliminar esta contenido en un form  
-  var forms = document.querySelectorAll('.formEliminar')
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {        
-          event.preventDefault()
-          event.stopPropagation()        
-          Swal.fire({
-                title: '¿Confirma la eliminación de candidato?',        
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#20c997',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Confirmar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.submit();
-                    Swal.fire('¡Eliminado!', 'El registro ha sido eliminado exitosamente.','success');
-                }
-            })                      
-      }, false)
-    })
-})()
+<script>
 
 
 var cont = 0; // Definir cont fuera de la función para que mantenga el valor entre llamadas a la función
@@ -237,14 +242,18 @@ console.log(iddependenciacargo,id, nombres, apellidos, imagen);
         var fila='<div class="filas centrar-imagen" id="fila'+cont+'">'+
 
         '<img onclick="" src="../imagen/' + imagen + '" class="w-16 h-16 rounded-full" alt="Imagen">' +
+
+        '<input type="hidden" name="id_cargo[]" value="'+iddependenciacargo+'">'+
        
         '<input type="hidden" name="idcandidato[]" value="'+id+'">'+
         '<p>'+nombres+' '+apellidos+'</p>'+
          '<button type="button" class="btn btn-danger" onclick="eliminarDetalle('+cont+')">X</button>'+
-        '</div><br>';
+        '</div>';
         cont++;
         detalles++;
         $('#cargo'+iddependenciacargo+'').append(fila);
+          $('#candidatosSeleccionados').append(fila); 
+
 
     }else{
         alert("error al ingresar el detalle, revisar las datos del articulo ");
@@ -255,6 +264,8 @@ console.log(iddependenciacargo,id, nombres, apellidos, imagen);
 
 function eliminarDetalle(indice){
 $("#fila"+indice).remove();
+
+eliminarDetalle(indice);
 
 }
 

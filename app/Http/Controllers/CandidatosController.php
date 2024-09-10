@@ -61,27 +61,29 @@ class CandidatosController extends Controller
     public function store(Request $request)
      {
         
-
         $validatedData = $request->validate([
             'idcandidato' => 'required',
             'id_cargo' => 'required'
         ]);
 
-        $idcargo = $request->id_cargo;
+        
 
+        $idcargo = $request->id_cargo;
         $idambito= dependencia_cargo::where('id', $idcargo)->first();
 
 
-
-        foreach ($request->idcandidato as $idcandidato) {
-            Candidatos::create([
-                'id_candidato' => $idcandidato,
-                'id_dependencia_cargos' => $idcargo
-            ]);
-        }
+$idDependenciaCargos = $request->id_cargo;
 
 
-$id_dependencia=$request->input('id_dependencia');
+        foreach ($request->idcandidato as $index => $idcandidato) {
+    Candidatos::create([
+        'id_candidato' => $idcandidato,
+        'id_dependencia_cargos' => $idDependenciaCargos[$index] ?? null // Asigna el valor del array de cargos
+    ]);
+}
+
+
+$id_dependencia=$request->input('iddependencia');
    $currentYear = date('Y');
 
     $existingRecord = EstadoDependencia::where('id_dependencia', $id_dependencia)
@@ -93,8 +95,15 @@ $id_dependencia=$request->input('id_dependencia');
 if ($existingRecord) {
 
 
-     return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
+      $currentYear = Carbon::now()->year;
 
+          $candidatos = Candidatos::with(['registro', 'dependenciaCargo'])
+                            ->whereYear('created_at', $currentYear)
+                            ->get();
+
+                        
+
+    return view('candidatos.index', compact('candidatos'));
           
         }
         
@@ -108,11 +117,19 @@ if ($existingRecord) {
 
         // Guardar la instancia en la base de datos
         $estadoDependencia->save();
+ 
+ $currentYear = Carbon::now()->year;
+
+          $candidatos = Candidatos::with(['registro', 'dependenciaCargo'])
+                            ->whereYear('created_at', $currentYear)
+                            ->get();
+
+                        
+
+    return view('candidatos.index', compact('candidatos'));
 
 
 
-
-         return back()->with('success', 'Registro Realizado Exitosamente.')->with('success', 'Registro Realizado Exitosamente.');
     }
 
 
@@ -227,7 +244,7 @@ $cargos = dependencia_cargo::where('id_dependencia', $dependeciaId)
             break;
     }
 
-    return view('candidatos.cargarcandidatos', compact('nombredepartamento', 'cargos','registros','idambito'));
+    return view('candidatos.cargarcandidatos', compact('nombredependencia','nombredepartamento', 'cargos','registros','idambito'));
 
     }
 

@@ -27,9 +27,6 @@
         </div>
 
 
-
- 
-
 <div class="grid grid-cols-1">
 <form action="{{ route('import.registros') }}" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto mt-8">
     @csrf
