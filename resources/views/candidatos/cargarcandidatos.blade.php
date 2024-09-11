@@ -101,8 +101,12 @@
     <tbody>
       <tr>
 
+
+  
     
  @foreach ($cargos as $cargo)
+
+
 
 
 
@@ -124,6 +128,11 @@
 
 
         </td>
+
+
+          
+
+
            @endforeach
         <td class="px-4 py-2">
           <div class="flex justify-center space-x-2">
@@ -138,9 +147,18 @@
   </table>
 
 
+@php
+
+$contador = 1;
+
+  @endphp
 
 
 @foreach ($cargos as $cargo)
+
+
+ 
+
 
     <div class="modal fade " id="myModal{{ $cargo->iddependenciacargo }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" style="">
@@ -150,7 +168,7 @@
           <h4 class="modal-title">Seleccione los candidatos</h4>
         </div>
         <div class="modal-body">
-            <table id="Registros" class="table table-bordered table-striped dataTable dtr-inline">
+            <table id="Registros{{ $contador }}" class="table table-bordered table-striped dataTable dtr-inline">
     <thead>
       <tr class="bg-gray-800 text-white">
         <th class="sorting sorting_asc text-center">CEDULA</th>
@@ -203,7 +221,12 @@
       </div>
     </div>
   </div>
+  
+@php
 
+ $contador++;
+
+ @endphp
 
     @endforeach
 
@@ -276,7 +299,18 @@ eliminarDetalle(indice);
 
 <script >
     
-    new DataTable('#Registros');
+      new DataTable('#Registros1');
+      new DataTable('#Registros2');
+      new DataTable('#Registros3');
+      new DataTable('#Registros4');
+      new DataTable('#Registros5');
+      new DataTable('#Registros6');
+      new DataTable('#Registros7');
+      new DataTable('#Registros8');
+      new DataTable('#Registros9');
+      new DataTable('#Registros10');
+      new DataTable('#Registros11');
+      new DataTable('#Registros12');
 
 
 
