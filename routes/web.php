@@ -58,7 +58,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Rutas accesibles solo para usuarios con rol "votante"
     Route::middleware(['role:votante'])->group(function () {
         Route::get('elecciones/vista1', [EleccionesController::class, 'vista1'])->name('elecciones.vista1');
-        Route::post('/comprobante', [PDFController::class, 'comprobante'])->name('comprobante');
+        Route::post('/impresion', [PDFController::class, 'impresion'])->name('impresion');
+
+         Route::post('/comprobante', [PDFController::class, 'comprobante'])->name('comprobante');
+
+         Route::post('/comprobantePos', [PDFController::class, 'comprobantePos'])->name('comprobantePos');
+
         Route::post('elecciones/votacionfinal', [EleccionesController::class, 'votacionfinal'])->name('elecciones.votacionfinal');
         Route::get('elecciones/elector/{iddependencia}/{idambito}', [EleccionesController::class, 'elector'])->name('elecciones.elector');
         Route::get('elecciones/votacionnacional/{idvotante}/{iddependencia}/{idambito}', [EleccionesController::class, 'votacionnacional'])->name('elecciones.votacion');
@@ -92,10 +97,6 @@ Route::get('/eliminar-elecciones', [EleccionesController::class, 'eliminar'])->n
 
 
           Route::post('candidatos/cargar', [CandidatosController::class, 'cargarcandidatos'])->name('candidatos.cargarcandidatos');
-
-
-
-
 
         Route::post('candidatos/agregar', [CandidatosController::class, 'agregarcandidatos'])->name('candidatos.agregarcandidatos');
 

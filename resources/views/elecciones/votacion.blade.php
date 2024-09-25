@@ -966,13 +966,13 @@ $("#imagen").remove();
 
                        $('#myForm').attr('action', "{{ route('comprobante') }}").attr('target', '_blank').submit();
 
-
-
+            
                         
                     }
                 });
             });
         });
+
 
 
 </script>
@@ -985,6 +985,7 @@ $("#imagen").remove();
 
 </script>
 @stop
+
 
 @section('css')
     {{-- Add here extra stylesheets --}}

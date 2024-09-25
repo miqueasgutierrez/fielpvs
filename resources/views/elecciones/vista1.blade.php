@@ -15,13 +15,7 @@
 
     <x-app-layout>
 
-        @if(session('mensaje'))
-        <div class="alert alert-success">
-            {{ session('mensaje') }}
-        </div>
-    @endif
-
-    
+      
 
          <div class="container text-center">
   <div class="row">
@@ -223,12 +217,6 @@ $idambito2 = 2;
 </div>
 
 
-
-
-
-
-
-
 <!-- AMBITO ZONAL-->
 
 
@@ -387,6 +375,9 @@ $idDependencia = $dependencia['id'];
       }, false)
     })
 })()
+
+
+
 
 </script>
 

@@ -12,11 +12,11 @@
      
 
      <!--   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> -->
-  
 
 
+  <script src="{{ asset('js/print.min.js') }}"></script>
 
- <link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.css') }}">
+ <link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.css') }}"> 
 
 
  <script src="{{ asset('js/jquery-3.7.1.js') }}"></script>
@@ -33,13 +33,6 @@
    <script src="{{ asset('js/dataTables.js') }}"></script>
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-
-          
-
-
-
-   
         
     </head>
     

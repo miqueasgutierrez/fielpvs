@@ -20,6 +20,15 @@ use App\Models\HistoriaElecciones;
 use App\Models\Elecciones;
 use Illuminate\Support\Facades\DB;
 
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\CupsPrintConnector; 
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
+// O puedes usar otro conector según tu necesidad
+use Mike42\Escpos\EscposImage;
+
+
+
 class PDFController extends Controller
 {
     public function resultadofinalpdf(Request $request)
@@ -899,7 +908,6 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
 }
 
 
-
 public function resultadolocal(Request $request)
 {
     $pdf = new FPDFWrapper();
@@ -1015,8 +1023,6 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
 
 
     $dependencia = DB::select($sql, [$anio,$anio,$iddependencia, $idambito, $idcircuito , $idzona,$idiglesia]);
-
-
 
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("RESULTADO DE ELECIONES: $anio ")), 0, 'C', false);
     $pdf->MultiCell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("DEPENDENCIA: $nombredependencia  | ÁMBITO: $ambito | CIRCUITO: $nombre | ZONA: $nombrezona | IGLESIA: $nombreiglesia   ")), 0, 'C', false);
@@ -1148,6 +1154,9 @@ $nombrezona = isset($zona[0]) ? $zona[0]->nombre : null;
 
     $pdf->Output();
     exit;
+
+
+
 }
 
 
@@ -1221,12 +1230,6 @@ date_default_timezone_set('America/Caracas');
 
 $fecha= now()->format('d-m-Y'); // Fecha en formato YYYY-MM-DD
 $hora = now()->format('h:i A'); 
-
-
-
-
-
-
 
 
  // Crear un nuevo PDF con dimensiones específicas
@@ -1318,11 +1321,9 @@ $pdf->SetFont('Arial', '', 11);
     // Manejo de error si los arrays no tienen la misma longitud
     echo "Los arrays de cargos e idcandidatos no tienen la misma longitud.";
 }
-
-
     
 
- $imagelogofielvs2 = public_path('imagen/fielpvs.png');
+    $imagelogofielvs2 = public_path('imagen/fielpvs.png');
     $pdf->Image($imagelogofielvs2,14, 150, 50, 0, 'PNG');
 
 
@@ -1330,13 +1331,18 @@ $pdf->SetFont('Arial', '', 11);
     $pdf->Ln(9);
 
     // Definir el nombre del archivo
-    $nombreArchivo = 'comprobante.pdf';
+     $nombreArchivo = 'comprobante.pdf';
+    $rutaArchivo = public_path($nombreArchivo); // Guarda en la carpeta pública
 
-    // Generar y enviar el PDF al navegador
-    $pdf->Output('I', $nombreArchivo);
+    // Generar y guardar el PDF en la ruta especificada
+    $pdf->Output('F', $rutaArchivo); // Cambia 'I' por 'F' para guardar el archivo
+
+    // Retornar la vista con la ruta del archivo PDF
+  return view('elecciones.impresion');
+
 
     // Terminar el script
-    exit;
+  
 
 
 
@@ -1344,6 +1350,7 @@ $pdf->SetFont('Arial', '', 11);
 
 
 
+ 
 
 
 }

@@ -1351,7 +1351,6 @@ $user = Auth::user();
         // Retorna la vista con las variables necesarias
          return redirect()->route('elecciones.vista1')
                      ->with([
-                         'mensaje' => 'Votación realizada exitosamente.',
                          'elector' => $elector,
                          'infovotante' => $infovotante,
                          'eleccionesnacionales' => $this->eleccionesnacionales,
