@@ -14,7 +14,9 @@
      <!--   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" /> -->
 
 
-  <script src="{{ asset('js/print.min.js') }}"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
+
 
  <link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.css') }}"> 
 

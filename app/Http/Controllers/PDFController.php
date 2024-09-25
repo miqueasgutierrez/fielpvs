@@ -1323,9 +1323,7 @@ $pdf->SetFont('Arial', '', 11);
 }
     
 
-    $imagelogofielvs2 = public_path('imagen/fielpvs.png');
-    $pdf->Image($imagelogofielvs2,14, 150, 50, 0, 'PNG');
-
+    
 
     // Añadir más espacio en blanco
     $pdf->Ln(9);

@@ -22,10 +22,7 @@
     </div>
 
     {{-- Botones para reimprimir ticket y cerrar ventana --}}
-    <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-primary mx-2" onclick="imprimirPDF()">Reimprimir Ticket Comprobante</button>
-        <button class="btn btn-secondary mx-2" onclick="cerrarVentana()">Cerrar Ventana y continuar</button>
-    </div>
+    
 </x-app-layout>
 
 <script>
@@ -43,7 +40,15 @@
 
     setTimeout(function() {
         imprimirPDF();
-    }, 2000); // Ajusta el tiempo según sea necesario
+    }, 2000); 
+
+
+     setTimeout(function() {
+        cerrarVentana();
+    }, 7000); 
+
+
+    // Ajusta el tiempo según sea necesario
 </script>
 
 @stop
